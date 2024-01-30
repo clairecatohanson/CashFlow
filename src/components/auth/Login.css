@@ -1,0 +1,28 @@
+.auth-container {
+  border: 1px solid gray;
+  margin: 3rem 15rem;
+  padding: 2rem;
+  border-radius: 1rem;
+}
+
+.header {
+  font-size: 2rem;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.auth-form-input {
+  padding: 0.25rem;
+}
+
+.register-link {
+  text-align: center;
+}
+
+.auth-fieldset {
+  margin: 0.25rem 0rem;
+}

@@ -1,0 +1,18 @@
+.profile-container {
+  width: 100%;
+  margin: 1rem auto;
+  border: 1px red solid;
+  text-align: center;
+}
+
+.profile-currentUser {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.profile-teams,
+.profile-expenses {
+  flex-basis: 31%;
+  min-width: 250px;
+  border: 1px red dotted;
+}

@@ -1,0 +1,12 @@
+.nav {
+  width: 95%;
+  margin: 10px auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav-items {
+  flex-basis: 60%;
+  display: flex;
+  justify-content: space-around;
+}
