@@ -4,8 +4,7 @@ import { getCategories } from "../../managers/categoryManager"
 import "./Categories.css"
 import { CategoryList } from "./CategoryList"
 
-export const Categories = ({ user }) => {
-  const [categories, setCategories] = useState([])
+export const Categories = ({ user, categories, setCategories }) => {
   const [publicCategories, setPublicCategories] = useState([])
   const [privateCategories, setPrivateCategories] = useState([])
 
@@ -16,10 +15,10 @@ export const Categories = ({ user }) => {
     getCategories().then((res) => {
       setCategories(res)
     })
-  }, [])
+  }, [setCategories])
 
   useEffect(() => {
-    const publicToAll = categories.filter((c) => c.userId === 500)
+    const publicToAll = categories.filter((c) => c.userId === 100)
     setPublicCategories(publicToAll)
     const userCategories = categories.filter((c) => c.userId === user.id)
     setPrivateCategories(userCategories)

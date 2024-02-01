@@ -1,14 +1,31 @@
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { ExpenseForm } from "../forms/ExpenseForm"
-import { getExpenseById, updateExpense } from "../../managers/expenseManager"
+import {
+  deleteExpense,
+  getExpenseById,
+  getExpenses,
+  updateExpense,
+} from "../../managers/expenseManager"
+import {
+  deleteUserPayment,
+  getPayments,
+  getUserPayments,
+} from "../../managers/paymentManager"
 
 export const EditExpense = ({
   user,
   expense,
   setExpense,
+  setExpenses,
+  payments,
+  setPayments,
+  userPayments,
+  setUserPayments,
   userTeams,
   personalTeam,
+  categories,
+  setCategories,
 }) => {
   const navigate = useNavigate()
   const { expenseId } = useParams()
@@ -46,17 +63,55 @@ export const EditExpense = ({
     }
   }
 
+  const handleDelete = () => {
+    const associatedPayments = payments.filter(
+      (p) => p.expenseId === expense.id
+    )
+    const paymentIds = []
+    associatedPayments.map((p) => {
+      paymentIds.push(p.id)
+    })
+    const associatedUserPayments = userPayments.filter((up) =>
+      paymentIds.includes(up.paymentId)
+    )
+
+    const upPromises = associatedUserPayments.map((up) =>
+      deleteUserPayment(up.id)
+    )
+    Promise.all(upPromises).then(() => {
+      getUserPayments().then((upRes) => {
+        setUserPayments(upRes)
+        deleteExpense(expense.id).then(() => {
+          getExpenses().then((eRes) => {
+            setExpenses(eRes)
+            getPayments().then((pRes) => {
+              setPayments(pRes)
+              navigate("/expenses")
+            })
+          })
+        })
+      })
+    })
+  }
+
   return (
-    <ExpenseForm
-      handleSubmit={handleSubmit}
-      formHeading={formHeading}
-      user={user}
-      expense={expense}
-      setExpense={setExpense}
-      userTeams={userTeams}
-      personalTeam={personalTeam}
-      isShared={isShared}
-      setIsShared={setIsShared}
-    />
+    <>
+      <ExpenseForm
+        handleSubmit={handleSubmit}
+        formHeading={formHeading}
+        user={user}
+        expense={expense}
+        setExpense={setExpense}
+        userTeams={userTeams}
+        personalTeam={personalTeam}
+        isShared={isShared}
+        setIsShared={setIsShared}
+        categories={categories}
+        setCategories={setCategories}
+      />
+      <button className="delete-btn" onClick={handleDelete}>
+        Delete Expense
+      </button>
+    </>
   )
 }

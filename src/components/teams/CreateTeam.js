@@ -1,0 +1,97 @@
+import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { NewTeamForm } from "./NewTeamForm"
+import { TeamMembers } from "./TeamMembers"
+import { AddTeamMember } from "./AddTeamMember"
+import "./Teams.css"
+import { createTeam, createUserTeam } from "../../managers/teamManager"
+
+export const CreateTeam = ({ user }) => {
+  const navigate = useNavigate()
+
+  const [teamInput, setTeamInput] = useState("")
+  const [newTeam, setNewTeam] = useState({})
+  const [userTeams, setUserTeams] = useState([])
+  const [tempUserTeams, setTempUserTeams] = useState([])
+
+  useEffect(() => {
+    if (newTeam.name) {
+      const firstUserTeam = {
+        userId: user.id,
+        splitFraction: "",
+      }
+      const utArray = [firstUserTeam]
+      setUserTeams(utArray)
+      setTempUserTeams(utArray)
+    }
+  }, [newTeam, user])
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+
+    const tempUtsCopy = structuredClone(tempUserTeams)
+
+    let totalPercent = 0
+    tempUtsCopy.map((tm) => {
+      totalPercent += tm.splitFraction
+    })
+
+    if (tempUtsCopy.length === 1 && tempUtsCopy[0].userId === user.id) {
+      window.alert("Error: new teams must contain at least two members.")
+    } else if (tempUtsCopy.find((ut) => ut.splitFraction <= 0)) {
+      window.alert(
+        "Error: team members must be assigned a percent that is greater than 0."
+      )
+    } else {
+      if (totalPercent === 100.0) {
+        createTeam(newTeam).then((res) => {
+          const promises = tempUtsCopy.map((tm) => {
+            tm.teamId = res.id
+            createUserTeam(tm)
+          })
+          Promise.all(promises).then(() => {
+            navigate(`/team/${res.id}`)
+          })
+        })
+      } else {
+        window.alert("The sum of all percentages must equal 100.")
+      }
+    }
+  }
+
+  return (
+    <>
+      <NewTeamForm
+        teamInput={teamInput}
+        setTeamInput={setTeamInput}
+        setNewTeam={setNewTeam}
+      />
+      {newTeam.name && (
+        <div className="build-team-section">
+          <div className="team-builder">
+            <AddTeamMember
+              userTeams={userTeams}
+              setUserTeams={setUserTeams}
+              tempUserTeams={tempUserTeams}
+              setTempUserTeams={setTempUserTeams}
+            />
+          </div>
+          <div className="team-member-list">
+            <TeamMembers
+              user={user}
+              userTeams={userTeams}
+              setUserTeams={setUserTeams}
+              tempUserTeams={tempUserTeams}
+              setTempUserTeams={setTempUserTeams}
+            />
+          </div>
+          <div className="btn-container">
+            <button className="submit-btn" onClick={handleSubmit}>
+              Create Team
+            </button>
+          </div>
+        </div>
+      )}
+    </>
+  )
+}

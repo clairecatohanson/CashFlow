@@ -19,7 +19,23 @@ export const updateExpense = async (updatedExpense) => {
   )
 }
 
+export const deleteExpense = async (expenseId) => {
+  const deleteOptions = {
+    method: "DELETE",
+  }
+
+  return await fetch(
+    `http://localhost:8088/expenses/${expenseId}`,
+    deleteOptions
+  )
+}
+
 export const getExpenseById = async (expenseId) => {
   const response = await fetch(`http://localhost:8088/expenses/${expenseId}`)
+  return await response.json()
+}
+
+export const getExpenses = async () => {
+  const response = await fetch("http://localhost:8088/expenses")
   return await response.json()
 }

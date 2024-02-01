@@ -111,7 +111,7 @@ export const Category = ({ c, categories, setCategories }) => {
       ) : (
         <div className="list-text">{c.name}</div>
       )}
-      {c.userId !== 500 && renderButtons(c)}
+      {c.userId !== 100 && renderButtons(c)}
     </li>
   )
 }

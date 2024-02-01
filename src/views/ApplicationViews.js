@@ -8,12 +8,20 @@ import { EditExpense } from "../components/expenses/EditExpense"
 import { getUserTeamsByUser } from "../managers/teamManager"
 import { NavBar } from "../components/nav/NavBar"
 import { Categories } from "../components/categories/Categories"
+import { CreateTeam } from "../components/teams/CreateTeam"
+import { getPayments, getUserPayments } from "../managers/paymentManager"
+import { getExpenses } from "../managers/expenseManager"
+import { Expenses } from "../components/expenses/Expenses"
 
 export const ApplicationViews = () => {
   const [user, setUser] = useState({})
   const [expense, setExpense] = useState({})
+  const [expenses, setExpenses] = useState([])
+  const [payments, setPayments] = useState([])
+  const [userPayments, setUserPayments] = useState([])
   const [userTeams, setUserTeams] = useState([])
   const [personalTeam, setPersonalTeam] = useState({})
+  const [categories, setCategories] = useState([])
 
   useEffect(() => {
     const localNumbiesUser = JSON.parse(localStorage.getItem("numbies_user"))
@@ -22,7 +30,20 @@ export const ApplicationViews = () => {
         setUser(userObj)
       })
     }
+
+    getExpenses().then((res) => {
+      setExpenses(res)
+    })
+
+    getPayments().then((res) => {
+      setPayments(res)
+    })
+
+    getUserPayments().then((res) => {
+      setUserPayments(res)
+    })
   }, [])
+
   useEffect(() => {
     getUserTeamsByUser(user).then((res) => {
       const selfRemoved = res.filter((userTeam) => userTeam.splitFraction !== 1)
@@ -43,11 +64,7 @@ export const ApplicationViews = () => {
           </>
         }
       >
-        <Route path="profile/:userId" element={<UserProfile user={user} />} />
-        <Route
-          path="profile/edit"
-          element={<EditProfile user={user} setUser={setUser} />}
-        />
+        <Route path="expenses" element={<Expenses />} />
         <Route
           path="new-expense"
           element={
@@ -57,6 +74,8 @@ export const ApplicationViews = () => {
               setExpense={setExpense}
               userTeams={userTeams}
               personalTeam={personalTeam}
+              categories={categories}
+              setCategories={setCategories}
             />
           }
         />
@@ -67,12 +86,34 @@ export const ApplicationViews = () => {
               user={user}
               expense={expense}
               setExpense={setExpense}
+              setExpenses={setExpenses}
+              payments={payments}
+              setPayments={setPayments}
+              userPayments={userPayments}
+              setUserPayments={setUserPayments}
               userTeams={userTeams}
               personalTeam={personalTeam}
+              categories={categories}
+              setCategories={setCategories}
             />
           }
         />
-        <Route path="categories" element={<Categories user={user} />} />
+        <Route
+          path="categories"
+          element={
+            <Categories
+              user={user}
+              categories={categories}
+              setCategories={setCategories}
+            />
+          }
+        />
+        <Route path="new-team" element={<CreateTeam user={user} />} />
+        <Route path="profile/:userId" element={<UserProfile user={user} />} />
+        <Route
+          path="profile/edit"
+          element={<EditProfile user={user} setUser={setUser} />}
+        />
       </Route>
     </Routes>
   )

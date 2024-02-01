@@ -2,6 +2,8 @@ import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { addExpense } from "../../managers/expenseManager"
 import { ExpenseForm } from "../forms/ExpenseForm"
+import { CategoryForm } from "../categories/CategoryForm"
+import "./Expenses.css"
 
 export const NewExpense = ({
   user,
@@ -9,6 +11,8 @@ export const NewExpense = ({
   setExpense,
   userTeams,
   personalTeam,
+  categories,
+  setCategories,
 }) => {
   const navigate = useNavigate()
 
@@ -52,16 +56,25 @@ export const NewExpense = ({
   }
 
   return (
-    <ExpenseForm
-      handleSubmit={handleSubmit}
-      formHeading={formHeading}
-      user={user}
-      expense={expense}
-      setExpense={setExpense}
-      userTeams={userTeams}
-      personalTeam={personalTeam}
-      isShared={isShared}
-      setIsShared={setIsShared}
-    />
+    <div className="new-expense-container">
+      <ExpenseForm
+        handleSubmit={handleSubmit}
+        formHeading={formHeading}
+        user={user}
+        expense={expense}
+        setExpense={setExpense}
+        userTeams={userTeams}
+        personalTeam={personalTeam}
+        isShared={isShared}
+        setIsShared={setIsShared}
+        categories={categories}
+        setCategories={setCategories}
+      />
+      <CategoryForm
+        user={user}
+        categories={categories}
+        setCategories={setCategories}
+      />
+    </div>
   )
 }
