@@ -36,6 +36,8 @@ export const getExpenseById = async (expenseId) => {
 }
 
 export const getExpenses = async () => {
-  const response = await fetch("http://localhost:8088/expenses")
+  const response = await fetch(
+    "http://localhost:8088/expenses?_expand=category&_expand=user&_embed=payments"
+  )
   return await response.json()
 }

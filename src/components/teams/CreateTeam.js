@@ -18,7 +18,7 @@ export const CreateTeam = ({ user }) => {
     if (newTeam.name) {
       const firstUserTeam = {
         userId: user.id,
-        splitFraction: "",
+        splitPercent: "",
       }
       const utArray = [firstUserTeam]
       setUserTeams(utArray)
@@ -33,12 +33,12 @@ export const CreateTeam = ({ user }) => {
 
     let totalPercent = 0
     tempUtsCopy.map((tm) => {
-      totalPercent += tm.splitFraction
+      totalPercent += tm.splitPercent
     })
 
     if (tempUtsCopy.length === 1 && tempUtsCopy[0].userId === user.id) {
       window.alert("Error: new teams must contain at least two members.")
-    } else if (tempUtsCopy.find((ut) => ut.splitFraction <= 0)) {
+    } else if (tempUtsCopy.find((ut) => ut.splitPercent <= 0)) {
       window.alert(
         "Error: team members must be assigned a percent that is greater than 0."
       )

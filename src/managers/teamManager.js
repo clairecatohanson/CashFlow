@@ -5,6 +5,13 @@ export const getUserTeamsByUser = async (user) => {
   return await response.json()
 }
 
+export const getUserTeamsByTeam = async (teamId) => {
+  const response = await fetch(
+    `http://localhost:8088/userTeams?teamId=${teamId}`
+  )
+  return await response.json()
+}
+
 export const createTeam = async (newTeam) => {
   const postOptions = {
     method: "POST",

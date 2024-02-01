@@ -34,7 +34,7 @@ export const AddTeamMember = ({
 
     const newUserTeam = {
       userId: foundUser.id,
-      splitFraction: "",
+      splitPercent: "",
     }
     const utArrayCopy = structuredClone(userTeams)
     const utArrayUserIds = []

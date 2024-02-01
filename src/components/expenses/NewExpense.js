@@ -28,7 +28,7 @@ export const NewExpense = ({
       amount: "",
       categoryId: "",
       userId: user.id,
-      teamId: personalTeam ? personalTeam.teamId : "",
+      team_Id: personalTeam ? personalTeam.teamId : "",
     }
     setExpense(blankExpense)
   }, [user, setExpense, personalTeam])
@@ -37,7 +37,7 @@ export const NewExpense = ({
     e.preventDefault()
 
     const newExpense = { ...expense }
-    if (newExpense.categoryId && isShared !== "" && newExpense.teamId) {
+    if (newExpense.categoryId && isShared !== "" && newExpense.team_Id) {
       addExpense(newExpense).then(() => {
         navigate("/expenses")
       })
@@ -50,7 +50,7 @@ export const NewExpense = ({
         "please indicate whether this charge is personal or shared before clicking submit"
       )
     }
-    if (!newExpense.teamId) {
+    if (!newExpense._teamId) {
       window.alert("please select a team before clicking submit")
     }
   }

@@ -42,7 +42,7 @@ export const EditExpense = ({
 
   useEffect(() => {
     if (personalTeam) {
-      if (personalTeam.teamId === expense.teamId) {
+      if (personalTeam.teamId === expense.team_Id) {
         setIsShared(false)
       } else {
         setIsShared(true)
@@ -54,7 +54,7 @@ export const EditExpense = ({
     e.preventDefault()
 
     const updatedExpense = { ...expense }
-    if (updatedExpense.teamId) {
+    if (updatedExpense.team_Id) {
       updateExpense(updatedExpense).then(() => {
         navigate("/expenses")
       })

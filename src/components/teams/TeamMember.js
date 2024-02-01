@@ -23,7 +23,7 @@ export const TeamMember = ({
   useEffect(() => {
     const updatedUserTeam = {
       userId: userTeam.userId,
-      splitFraction: parseFloat(percentInput),
+      splitPercent: parseFloat(percentInput),
     }
 
     const foundIndex = tempUserTeams.findIndex(

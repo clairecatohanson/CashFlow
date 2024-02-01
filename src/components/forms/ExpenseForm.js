@@ -22,7 +22,7 @@ export const ExpenseForm = ({
 
   useEffect(() => {
     const expenseCopy = { ...expense }
-    expenseCopy.teamId = teamId
+    expenseCopy.team_Id = teamId
     setExpense(expenseCopy)
   }, [teamId, setExpense])
 

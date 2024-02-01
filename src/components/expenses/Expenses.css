@@ -3,3 +3,36 @@
   flex-wrap: wrap;
   justify-content: space-evenly;
 }
+
+.list-header,
+.expense-item {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  justify-content: space-evenly;
+  padding: 3px;
+}
+
+.list-header {
+  font-weight: bold;
+}
+
+.expense-date,
+.expense-amount,
+.expense-category,
+.expense-type {
+  flex-basis: 15%;
+  min-width: 120px;
+}
+
+.expense-description {
+  flex-basis: 40%;
+}
+
+.btn-link {
+  text-decoration: none;
+}
+
+.btn-link:visited {
+  color: inherit;
+}

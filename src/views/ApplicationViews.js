@@ -46,12 +46,32 @@ export const ApplicationViews = () => {
 
   useEffect(() => {
     getUserTeamsByUser(user).then((res) => {
-      const selfRemoved = res.filter((userTeam) => userTeam.splitFraction !== 1)
-      const self = res.find((userTeam) => userTeam.splitFraction === 1)
+      const selfRemoved = res.filter(
+        (userTeam) => userTeam.splitPercent !== 100
+      )
+      const self = res.find((userTeam) => userTeam.splitPercent === 100)
       setUserTeams(selfRemoved)
       setPersonalTeam(self)
     })
   }, [user])
+
+  useEffect(() => {
+    getAndSetUserExpenses()
+  }, [userTeams, personalTeam])
+
+  const getAndSetUserExpenses = () => {
+    const teamIds = [personalTeam?.teamId]
+    userTeams.map((ut) => {
+      teamIds.push(ut.teamId)
+    })
+
+    getExpenses().then((res) => {
+      const userExpenses = res.filter((expense) =>
+        teamIds.includes(expense.team_Id)
+      )
+      setExpenses(userExpenses)
+    })
+  }
 
   return (
     <Routes>
@@ -64,7 +84,23 @@ export const ApplicationViews = () => {
           </>
         }
       >
-        <Route path="expenses" element={<Expenses />} />
+        <Route
+          path="expenses"
+          element={
+            <Expenses
+              user={user}
+              expenses={expenses}
+              personalTeam={personalTeam}
+              userTeams={userTeams}
+              getAndSetUserExpenses={getAndSetUserExpenses}
+              userPayments={userPayments}
+              setUserPayments={setUserPayments}
+              payments={payments}
+              setPayments={setPayments}
+              setExpenses={setExpenses}
+            />
+          }
+        />
         <Route
           path="new-expense"
           element={
