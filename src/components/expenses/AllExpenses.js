@@ -3,7 +3,7 @@ import { useState } from "react"
 import { ExpenseList } from "./ExpenseList"
 import { ExpenseDetails } from "./ExpenseDetails"
 
-export const Expenses = ({
+export const AllExpenses = ({
   user,
   expenses,
   personalTeam,
@@ -18,26 +18,7 @@ export const Expenses = ({
 
   return (
     <div className="your-expenses">
-      <h2 className="page-header">Your Expenses</h2>
-      <div className="actions-container">
-        <div className="filter-bar">Filter Bar</div>
-        <div className="btns-container">
-          <button className="add-btn">
-            <Link to="/new-expense" className="btn-link">
-              Add New Expense
-            </Link>
-          </button>
-        </div>
-      </div>
       <div className="expenses-container">
-        <div className="expenses">
-          <ExpenseList
-            expenses={expenses}
-            personalTeam={personalTeam}
-            userTeams={userTeams}
-            setSelectedExpense={setSelectedExpense}
-          />
-        </div>
         <div className="expense-details">
           <ExpenseDetails
             user={user}
@@ -50,6 +31,16 @@ export const Expenses = ({
             setUserPayments={setUserPayments}
             payments={payments}
             setPayments={setPayments}
+          />
+        </div>
+        <div className="expenses">
+          <h3 className="section-heading">Your Expenses</h3>
+          <div className="filter-bar">Filter Bar</div>
+          <ExpenseList
+            expenses={expenses}
+            personalTeam={personalTeam}
+            userTeams={userTeams}
+            setSelectedExpense={setSelectedExpense}
           />
         </div>
       </div>

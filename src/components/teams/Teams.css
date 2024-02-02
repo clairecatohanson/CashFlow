@@ -9,7 +9,8 @@
 .search-btn,
 .add-btn,
 .delete-btn,
-.edit-btn {
+.edit-btn,
+.settle-btn {
   display: block;
   width: 150px;
   padding: 10px 20px;

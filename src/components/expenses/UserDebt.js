@@ -1,33 +1,46 @@
 import { useEffect, useState } from "react"
 import { getUserById } from "../../managers/userManager"
-import { calculateAmount, formatCurrency } from "../../utils/functions"
+import {
+  calculatePaid,
+  calculateShare,
+  formatCurrency,
+} from "../../utils/functions"
+import { useNavigate } from "react-router-dom"
 
-export const UserDebt = ({ participantUT, user, selectedExpense }) => {
+export const UserDebt = ({
+  borrowerUT,
+  user,
+  selectedExpense,
+  originalPayor,
+}) => {
+  const navigate = useNavigate()
+
   const [participant, setParticipant] = useState({})
   const [userShare, setUserShare] = useState(0.0)
   const [amountPaid, setAmountPaid] = useState(0.0)
   const [userOwed, setUserOwed] = useState(0.0)
 
   useEffect(() => {
-    getUserById(participantUT?.userId).then((res) => {
+    getUserById(borrowerUT?.userId).then((res) => {
       setParticipant(res)
     })
-  }, [participantUT])
+  }, [borrowerUT])
 
   useEffect(() => {
-    const outsideUserTeams = participant.userTeams
-    if (outsideUserTeams?.length) {
-      const outsideShare = calculateAmount(
+    const participantUserTeams = participant.userTeams
+    if (participantUserTeams?.length) {
+      const participantShare = calculateShare(
         selectedExpense,
         {},
-        outsideUserTeams
+        participantUserTeams
       )
-      setUserShare(outsideShare)
+      setUserShare(participantShare)
     }
-
     if (selectedExpense.payments?.length) {
       const paid = calculatePaid(selectedExpense, participant)
       setAmountPaid(paid)
+    } else {
+      setAmountPaid(0)
     }
   }, [participant, selectedExpense])
 
@@ -36,40 +49,46 @@ export const UserDebt = ({ participantUT, user, selectedExpense }) => {
     setUserOwed(owed)
   }, [userShare, amountPaid])
 
-  const calculatePaid = (selectedExpense, participant) => {
-    let amountPaid = 0
-    const outsideUserPayments = participant.userPayments
-
-    const expensePaymentIds = []
-    selectedExpense.payments.map((p) => expensePaymentIds.push(p.id))
-    if (outsideUserPayments?.length) {
-      const madeUserPayments = outsideUserPayments.filter((up) =>
-        expensePaymentIds.includes(up.paymentId)
-      )
-      const madePaymentIds = []
-      madeUserPayments.map((up) => madePaymentIds.push(up.paymentId))
-      const madePayments = selectedExpense.payments.filter((p) =>
-        madePaymentIds.includes(p.id)
-      )
-      madePayments.map((p) => (amountPaid += p.amount))
-
-      return amountPaid
-    } else {
-      return amountPaid
-    }
-  }
-
-  const renderDebt = () => {
-    if (participant.id !== user.id) {
-      return (
+  const renderParticipantDebt = () => {
+    return (
+      <div className="participant-debt">
         <div className="debt">
           {participant.firstName} has paid you{" "}
           {amountPaid.toLocaleString("en-us", formatCurrency)} and currently
           owes you {userOwed.toLocaleString("en-us", formatCurrency)}
         </div>
-      )
-    }
+      </div>
+    )
   }
 
-  return renderDebt()
+  const renderUserDebt = () => {
+    return (
+      <div className="user-debt">
+        <div className="debt">
+          You have paid {originalPayor?.firstName}{" "}
+          {amountPaid.toLocaleString("en-us", formatCurrency)} and you currently
+          owe
+          {userOwed.toLocaleString("en-us", formatCurrency)}
+        </div>
+        {userOwed ? (
+          <div className="btns">
+            <button
+              className="settle-btn"
+              onClick={() => {
+                navigate(`/settle-expense/${selectedExpense.id}`)
+              }}
+            >
+              Settle Expense
+            </button>
+          </div>
+        ) : (
+          <div className="nothing-owed">
+            Success! You have settled your portion of this expense.
+          </div>
+        )}
+      </div>
+    )
+  }
+
+  return participant.id !== user.id ? renderParticipantDebt() : renderUserDebt()
 }

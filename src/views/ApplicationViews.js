@@ -11,7 +11,7 @@ import { Categories } from "../components/categories/Categories"
 import { CreateTeam } from "../components/teams/CreateTeam"
 import { getPayments, getUserPayments } from "../managers/paymentManager"
 import { getExpenses } from "../managers/expenseManager"
-import { Expenses } from "../components/expenses/Expenses"
+import { AllExpenses } from "../components/expenses/AllExpenses"
 
 export const ApplicationViews = () => {
   const [user, setUser] = useState({})
@@ -61,7 +61,7 @@ export const ApplicationViews = () => {
 
   const getAndSetUserExpenses = () => {
     const teamIds = [personalTeam?.teamId]
-    userTeams.map((ut) => {
+    userTeams.forEach((ut) => {
       teamIds.push(ut.teamId)
     })
 
@@ -87,7 +87,7 @@ export const ApplicationViews = () => {
         <Route
           path="expenses"
           element={
-            <Expenses
+            <AllExpenses
               user={user}
               expenses={expenses}
               personalTeam={personalTeam}

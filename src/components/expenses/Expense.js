@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import {
-  calculateAmount,
+  calculateShare,
   formatCurrency,
   formatDate,
   formatDescription,
@@ -15,7 +15,7 @@ export const Expense = ({
   const [expenseAmount, setExpenseAmount] = useState(0.0)
 
   useEffect(() => {
-    const splitAmount = calculateAmount(expense, personalTeam, userTeams)
+    const splitAmount = calculateShare(expense, personalTeam, userTeams)
     setExpenseAmount(splitAmount)
   }, [personalTeam, userTeams, expense])
 

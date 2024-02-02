@@ -1,7 +1,17 @@
+.section-heading {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
 .new-expense-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
+}
+
+.expense-list {
+  width: 100%;
 }
 
 .list-header,
@@ -35,4 +45,49 @@
 
 .btn-link:visited {
   color: inherit;
+}
+
+.expenses-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.expense-details {
+  flex-basis: 400px;
+}
+
+.expenses {
+  flex-basis: calc(100% - 400px);
+  min-width: 700px;
+}
+
+.actions-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btns-container {
+  flex-basis: 400px;
+}
+
+.details-expense-type {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.team-info {
+  padding-left: 15px;
+  padding: 15px 0 15px 15px;
+}
+
+.details-data {
+  display: flex;
+  justify-content: space-around;
+}
+
+.details-description,
+.details-fractional-amount,
+.details-amount-owed {
+  text-align: center;
 }

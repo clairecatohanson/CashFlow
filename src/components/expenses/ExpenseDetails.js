@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import {
-  calculateAmount,
+  calculateShare,
   formatCurrency,
   formatDate,
   formatDescription,
 } from "../../utils/functions"
-import { useNavigate } from "react-router-dom"
-import { deleteExpense, getExpenses } from "../../managers/expenseManager"
-import { getUserById } from "../../managers/userManager"
+import { deleteExpense } from "../../managers/expenseManager"
 import { getUserTeamsByTeam } from "../../managers/teamManager"
 import { UserDebt } from "./UserDebt"
 import {
@@ -15,6 +14,7 @@ import {
   getPayments,
   getUserPayments,
 } from "../../managers/paymentManager"
+import { getUserById } from "../../managers/userManager"
 
 export const ExpenseDetails = ({
   user,
@@ -30,57 +30,55 @@ export const ExpenseDetails = ({
 }) => {
   const navigate = useNavigate()
 
+  const [originalPayor, setOriginalPayor] = useState({})
   const [isPersonal, setIsPersonal] = useState(false)
-  const [isPayor, setIsPayor] = useState(false)
-  const [selectedExpenseAmount, setSelectedExpenseAmount] = useState(0.0)
-  const [expenseUserTeam, setExpenseUserTeam] = useState({})
-  const [expenseParticipants, setExpenseParticipants] = useState([])
+  const [isPaidByUser, setIsPaidByUser] = useState(false)
+  const [borrowers, setBorrowers] = useState([])
 
   useEffect(() => {
+    if (selectedExpense.userId) {
+      getUserById(selectedExpense?.userId).then((res) => {
+        setOriginalPayor(res)
+      })
+    }
+
     if (selectedExpense?.team_Id === personalTeam?.teamId) {
       setIsPersonal(true)
-      setIsPayor(true)
     } else {
       setIsPersonal(false)
-      setIsPayor(false)
+      setIsPaidByUser(false)
 
       if (selectedExpense.userId === user.id) {
-        setIsPayor(true)
+        setIsPaidByUser(true)
       }
     }
   }, [selectedExpense, personalTeam, user])
 
-  useEffect(() => {
-    const amount = calculateAmount(selectedExpense, personalTeam, userTeams)
-    setSelectedExpenseAmount(amount)
-  }, [selectedExpense, personalTeam, userTeams])
+  const loggedInUserShare = calculateShare(
+    selectedExpense,
+    personalTeam,
+    userTeams
+  )
+
+  const foundUserTeam = userTeams.find(
+    (ut) => ut.teamId === selectedExpense.team_Id
+  )
 
   useEffect(() => {
-    const team = userTeams.find((ut) => ut.teamId === selectedExpense.team_Id)
-    setExpenseUserTeam(team)
-  }, [userTeams, selectedExpense])
-
-  useEffect(() => {
-    getUserTeamsByTeam(selectedExpense?.team_Id).then((UTs) =>
-      setExpenseParticipants(UTs)
-    )
-  }, [selectedExpense])
+    getUserTeamsByTeam(selectedExpense?.team_Id).then((UTs) => {
+      const selfRemoved = UTs.filter((ut) => ut.userId !== user.id)
+      setBorrowers(selfRemoved)
+    })
+  }, [selectedExpense, user])
 
   const expenseDate = new Date(selectedExpense?.date)
-
-  //   const handleDelete = (expense) => {
-  //     deleteExpense(expense.id).then(() => {
-  //       getAndSetUserExpenses()
-  //     })
-  //     setSelectedExpense({})
-  //   }
 
   const handleDelete = (expense) => {
     const associatedPayments = payments.filter(
       (p) => p.expenseId === expense.id
     )
     const paymentIds = []
-    associatedPayments.map((p) => {
+    associatedPayments.forEach((p) => {
       paymentIds.push(p.id)
     })
     const associatedUserPayments = userPayments.filter((up) =>
@@ -90,15 +88,18 @@ export const ExpenseDetails = ({
     const upPromises = associatedUserPayments.map((up) =>
       deleteUserPayment(up.id)
     )
+
     Promise.all(upPromises).then(() => {
       getUserPayments().then((upRes) => {
         setUserPayments(upRes)
-        deleteExpense(expense.id).then(() => {
-          getAndSetUserExpenses()
-          setSelectedExpense({})
-        })
       })
     })
+
+    deleteExpense(expense.id).then(() => {
+      getAndSetUserExpenses()
+      setSelectedExpense({})
+    })
+
     getPayments().then((pRes) => {
       setPayments(pRes)
     })
@@ -111,58 +112,45 @@ export const ExpenseDetails = ({
           <h3 className="details-expense-type">Personal Expense</h3>
           <div className="details-date">{formatDate.format(expenseDate)}</div>
           <div className="details-full-amount">
-            {selectedExpenseAmount.toLocaleString("en-us", formatCurrency)}
+            {loggedInUserShare.toLocaleString("en-us", formatCurrency)}
           </div>
           <div className="details-description">
             {formatDescription(selectedExpense.description)}
-          </div>
-          <div className="btns">
-            <button
-              className="edit-btn"
-              onClick={() => {
-                navigate(`/expenses/${selectedExpense.id}/edit`)
-              }}
-            >
-              Edit Expense
-            </button>
-            <button
-              className="delete-btn"
-              onClick={() => {
-                handleDelete(selectedExpense)
-              }}
-            >
-              Delete Expense
-            </button>
           </div>
         </div>
       )
-    } else if (isPayor) {
+    } else if (isPaidByUser) {
       return (
         <div className="shared-expense-details">
           <h3 className="details-expense-type">Shared Expense</h3>
-          <div className="details-team-name">
-            Team: {expenseUserTeam.team.name}
-          </div>
-          <div className="details-payor">Paid by: You</div>
-          <div className="details-date">{formatDate.format(expenseDate)}</div>
-          <div className="details-full-amount">
-            Total Cost:{" "}
-            {selectedExpense.amount.toLocaleString("en-us", formatCurrency)}
+          <div className="team-info">
+            <div className="details-team-name">
+              Team: {foundUserTeam?.team.name}
+            </div>
+            <div className="details-payor">Paid by: You</div>
           </div>
           <div className="details-description">
             {formatDescription(selectedExpense.description)}
           </div>
+          <div className="expense-info">
+            <div className="details-date">{formatDate.format(expenseDate)}</div>
+            <div className="details-full-amount">
+              Total Cost:{" "}
+              {selectedExpense.amount.toLocaleString("en-us", formatCurrency)}
+            </div>
+          </div>
           <div className="details-fractional-amount">
             Your Share:{" "}
-            {selectedExpenseAmount.toLocaleString("en-us", formatCurrency)}
+            {loggedInUserShare.toLocaleString("en-us", formatCurrency)}
           </div>
           <div className="details-amount-owed">
-            {expenseParticipants.map((participantUT) => (
+            {borrowers.map((borrowerUT) => (
               <UserDebt
-                key={`user-${participantUT.userId}`}
-                participantUT={participantUT}
+                key={`user-${borrowerUT.userId}`}
+                borrowerUT={borrowerUT}
                 user={user}
                 selectedExpense={selectedExpense}
+                originalPayor={originalPayor}
               />
             ))}
           </div>
@@ -187,7 +175,41 @@ export const ExpenseDetails = ({
         </div>
       )
     } else {
-      return <div>Shared Expense, someone else paid</div>
+      return (
+        <div className="shared-expense-details">
+          <h3 className="details-expense-type">Shared Expense</h3>
+          <div className="team-info">
+            <div className="details-team-name">
+              Team: {foundUserTeam?.team.name}
+            </div>
+            <div className="details-payor">
+              Paid by: {originalPayor.firstName}
+            </div>
+          </div>
+          <div className="details-description">
+            {formatDescription(selectedExpense.description)}
+          </div>
+          <div className="expense-info">
+            <div className="details-date">{formatDate.format(expenseDate)}</div>
+            <div className="details-full-amount">
+              Total Cost:{" "}
+              {selectedExpense.amount.toLocaleString("en-us", formatCurrency)}
+            </div>
+          </div>
+          <div className="details-fractional-amount">
+            Your Share:{" "}
+            {loggedInUserShare.toLocaleString("en-us", formatCurrency)}
+          </div>
+          <div className="details-amount-owed">
+            <UserDebt
+              key={`user-${user.userId}`}
+              borrowerUT={personalTeam}
+              user={user}
+              selectedExpense={selectedExpense}
+            />
+          </div>
+        </div>
+      )
     }
   }
 
