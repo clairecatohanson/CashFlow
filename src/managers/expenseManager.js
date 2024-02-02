@@ -31,7 +31,9 @@ export const deleteExpense = async (expenseId) => {
 }
 
 export const getExpenseById = async (expenseId) => {
-  const response = await fetch(`http://localhost:8088/expenses/${expenseId}`)
+  const response = await fetch(
+    `http://localhost:8088/expenses/${expenseId}?_expand=user&_embed=payments`
+  )
   return await response.json()
 }
 

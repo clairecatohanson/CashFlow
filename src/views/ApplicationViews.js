@@ -12,6 +12,7 @@ import { CreateTeam } from "../components/teams/CreateTeam"
 import { getPayments, getUserPayments } from "../managers/paymentManager"
 import { getExpenses } from "../managers/expenseManager"
 import { AllExpenses } from "../components/expenses/AllExpenses"
+import { SettlePayment } from "../components/payments/SettlePayment"
 
 export const ApplicationViews = () => {
   const [user, setUser] = useState({})
@@ -22,6 +23,7 @@ export const ApplicationViews = () => {
   const [userTeams, setUserTeams] = useState([])
   const [personalTeam, setPersonalTeam] = useState({})
   const [categories, setCategories] = useState([])
+  const [selectedExpense, setSelectedExpense] = useState({})
 
   useEffect(() => {
     const localNumbiesUser = JSON.parse(localStorage.getItem("numbies_user"))
@@ -98,6 +100,8 @@ export const ApplicationViews = () => {
               payments={payments}
               setPayments={setPayments}
               setExpenses={setExpenses}
+              selectedExpense={selectedExpense}
+              setSelectedExpense={setSelectedExpense}
             />
           }
         />
@@ -131,6 +135,19 @@ export const ApplicationViews = () => {
               personalTeam={personalTeam}
               categories={categories}
               setCategories={setCategories}
+            />
+          }
+        />
+        <Route
+          path="expenses/:expenseId/settle"
+          element={
+            <SettlePayment
+              user={user}
+              payments={payments}
+              setPayments={setPayments}
+              userPayments={userPayments}
+              setUserPayments={setUserPayments}
+              setSelectedExpense={setSelectedExpense}
             />
           }
         />

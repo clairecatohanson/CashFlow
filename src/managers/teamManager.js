@@ -7,7 +7,7 @@ export const getUserTeamsByUser = async (user) => {
 
 export const getUserTeamsByTeam = async (teamId) => {
   const response = await fetch(
-    `http://localhost:8088/userTeams?teamId=${teamId}`
+    `http://localhost:8088/userTeams?teamId=${teamId}?_expand=user`
   )
   return await response.json()
 }

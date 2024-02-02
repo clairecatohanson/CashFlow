@@ -24,7 +24,7 @@ export const UserDebt = ({
     getUserById(borrowerUT?.userId).then((res) => {
       setParticipant(res)
     })
-  }, [borrowerUT])
+  }, [borrowerUT, selectedExpense])
 
   useEffect(() => {
     const participantUserTeams = participant.userTeams
@@ -75,7 +75,7 @@ export const UserDebt = ({
             <button
               className="settle-btn"
               onClick={() => {
-                navigate(`/settle-expense/${selectedExpense.id}`)
+                navigate(`/expenses/${selectedExpense.id}/settle`)
               }}
             >
               Settle Expense
