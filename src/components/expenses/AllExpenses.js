@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom"
 import { useState } from "react"
 import { ExpenseList } from "./ExpenseList"
 import { ExpenseDetails } from "./ExpenseDetails"
@@ -13,8 +12,10 @@ export const AllExpenses = ({
   setUserPayments,
   payments,
   setPayments,
+  selectedExpense,
+  setSelectedExpense,
 }) => {
-  const [selectedExpense, setSelectedExpense] = useState({})
+  // const [selectedExpense, setSelectedExpense] = useState({})
 
   return (
     <div className="your-expenses">

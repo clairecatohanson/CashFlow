@@ -202,7 +202,7 @@ export const ExpenseDetails = ({
           </div>
           <div className="details-amount-owed">
             <UserDebt
-              key={`user-${user.userId}`}
+              key={`user-${user.id}`}
               borrowerUT={personalTeam}
               user={user}
               selectedExpense={selectedExpense}
