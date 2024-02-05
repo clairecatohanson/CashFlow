@@ -17,7 +17,7 @@ export const getUserByUsername = async (username) => {
 
 export const getUserById = async (userId) => {
   const response = await fetch(
-    `http://localhost:8088/users/${userId}?_embed=userPayments&_embed=userTeams`
+    `http://localhost:8088/users/${userId}?_embed=userTeams`
   )
   return await response.json()
 }

@@ -9,17 +9,17 @@ import { getUserTeamsByUser } from "../managers/teamManager"
 import { NavBar } from "../components/nav/NavBar"
 import { Categories } from "../components/categories/Categories"
 import { CreateTeam } from "../components/teams/CreateTeam"
-import { getPayments, getUserPayments } from "../managers/paymentManager"
-import { getExpenses } from "../managers/expenseManager"
+import { getPayments } from "../managers/paymentManager"
+import { getExpenses, getExpensesWithDetails } from "../managers/expenseManager"
 import { AllExpenses } from "../components/expenses/AllExpenses"
 import { SettlePayment } from "../components/payments/SettlePayment"
+import { getCategories } from "../managers/categoryManager"
 
 export const ApplicationViews = () => {
   const [user, setUser] = useState({})
   const [expense, setExpense] = useState({})
   const [expenses, setExpenses] = useState([])
   const [payments, setPayments] = useState([])
-  const [userPayments, setUserPayments] = useState([])
   const [userTeams, setUserTeams] = useState([])
   const [personalTeam, setPersonalTeam] = useState({})
   const [categories, setCategories] = useState([])
@@ -33,16 +33,12 @@ export const ApplicationViews = () => {
       })
     }
 
-    getExpenses().then((res) => {
-      setExpenses(res)
-    })
-
     getPayments().then((res) => {
       setPayments(res)
     })
 
-    getUserPayments().then((res) => {
-      setUserPayments(res)
+    getCategories().then((res) => {
+      setCategories(res)
     })
   }, [])
 
@@ -67,7 +63,7 @@ export const ApplicationViews = () => {
       teamIds.push(ut.teamId)
     })
 
-    getExpenses().then((res) => {
+    getExpensesWithDetails().then((res) => {
       const userExpenses = res.filter((expense) =>
         teamIds.includes(expense.team_Id)
       )
@@ -95,13 +91,12 @@ export const ApplicationViews = () => {
               personalTeam={personalTeam}
               userTeams={userTeams}
               getAndSetUserExpenses={getAndSetUserExpenses}
-              userPayments={userPayments}
-              setUserPayments={setUserPayments}
               payments={payments}
               setPayments={setPayments}
               setExpenses={setExpenses}
               selectedExpense={selectedExpense}
               setSelectedExpense={setSelectedExpense}
+              categories={categories}
             />
           }
         />
@@ -110,12 +105,13 @@ export const ApplicationViews = () => {
           element={
             <NewExpense
               user={user}
-              expense={expense}
-              setExpense={setExpense}
+              selectedExpense={selectedExpense}
+              setSelectedExpense={setSelectedExpense}
               userTeams={userTeams}
               personalTeam={personalTeam}
               categories={categories}
               setCategories={setCategories}
+              setExpenses={setExpenses}
             />
           }
         />
@@ -124,13 +120,11 @@ export const ApplicationViews = () => {
           element={
             <EditExpense
               user={user}
-              expense={expense}
-              setExpense={setExpense}
+              selectedExpense={selectedExpense}
+              setSelectedExpense={setSelectedExpense}
               setExpenses={setExpenses}
               payments={payments}
               setPayments={setPayments}
-              userPayments={userPayments}
-              setUserPayments={setUserPayments}
               userTeams={userTeams}
               personalTeam={personalTeam}
               categories={categories}
@@ -145,9 +139,9 @@ export const ApplicationViews = () => {
               user={user}
               payments={payments}
               setPayments={setPayments}
-              userPayments={userPayments}
-              setUserPayments={setUserPayments}
+              selectedExpense={selectedExpense}
               setSelectedExpense={setSelectedExpense}
+              setExpenses={setExpenses}
             />
           }
         />

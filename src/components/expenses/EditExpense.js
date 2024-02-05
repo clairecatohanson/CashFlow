@@ -5,23 +5,18 @@ import {
   deleteExpense,
   getExpenseById,
   getExpenses,
+  getExpensesWithDetails,
   updateExpense,
 } from "../../managers/expenseManager"
-import {
-  deleteUserPayment,
-  getPayments,
-  getUserPayments,
-} from "../../managers/paymentManager"
+import { getPayments } from "../../managers/paymentManager"
 
 export const EditExpense = ({
   user,
-  expense,
-  setExpense,
+  selectedExpense,
+  setSelectedExpense,
   setExpenses,
   payments,
   setPayments,
-  userPayments,
-  setUserPayments,
   userTeams,
   personalTeam,
   categories,
@@ -36,27 +31,40 @@ export const EditExpense = ({
 
   useEffect(() => {
     getExpenseById(expenseId).then((res) => {
-      setExpense(res)
+      setSelectedExpense(res)
     })
-  }, [expenseId, setExpense])
+  }, [expenseId])
 
   useEffect(() => {
     if (personalTeam) {
-      if (personalTeam.teamId === expense.team_Id) {
+      if (personalTeam.teamId === selectedExpense.team_Id) {
         setIsShared(false)
       } else {
         setIsShared(true)
       }
     }
-  }, [personalTeam, expense])
+  }, [personalTeam, selectedExpense])
 
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    const updatedExpense = { ...expense }
+    const updatedExpenseWithDetails = { ...selectedExpense }
+    const updatedExpense = {
+      id: selectedExpense.id,
+      date: selectedExpense.date,
+      description: selectedExpense.description,
+      amount: selectedExpense.amount,
+      categoryId: selectedExpense.categoryId,
+      userId: selectedExpense.userId,
+      team_Id: selectedExpense.team_Id,
+    }
     if (updatedExpense.team_Id) {
       updateExpense(updatedExpense).then(() => {
-        navigate("/expenses")
+        getExpensesWithDetails().then((eRes) => {
+          setExpenses(eRes)
+          setSelectedExpense(updatedExpenseWithDetails)
+          navigate("/expenses")
+        })
       })
     } else {
       window.alert("Please select a team before submitting")
@@ -64,31 +72,13 @@ export const EditExpense = ({
   }
 
   const handleDelete = () => {
-    const associatedPayments = payments.filter(
-      (p) => p.expenseId === expense.id
-    )
-    const paymentIds = []
-    associatedPayments.map((p) => {
-      paymentIds.push(p.id)
-    })
-    const associatedUserPayments = userPayments.filter((up) =>
-      paymentIds.includes(up.paymentId)
-    )
-
-    const upPromises = associatedUserPayments.map((up) =>
-      deleteUserPayment(up.id)
-    )
-    Promise.all(upPromises).then(() => {
-      getUserPayments().then((upRes) => {
-        setUserPayments(upRes)
-        deleteExpense(expense.id).then(() => {
-          getExpenses().then((eRes) => {
-            setExpenses(eRes)
-            getPayments().then((pRes) => {
-              setPayments(pRes)
-              navigate("/expenses")
-            })
-          })
+    deleteExpense(selectedExpense.id).then(() => {
+      getExpensesWithDetails().then((eRes) => {
+        setExpenses(eRes)
+        setSelectedExpense({})
+        getPayments().then((pRes) => {
+          setPayments(pRes)
+          navigate("/expenses")
         })
       })
     })
@@ -100,8 +90,8 @@ export const EditExpense = ({
         handleSubmit={handleSubmit}
         formHeading={formHeading}
         user={user}
-        expense={expense}
-        setExpense={setExpense}
+        selectedExpense={selectedExpense}
+        setSelectedExpense={setSelectedExpense}
         userTeams={userTeams}
         personalTeam={personalTeam}
         isShared={isShared}

@@ -21,27 +21,24 @@ export const UserDebt = ({
   const [userOwed, setUserOwed] = useState(0.0)
 
   useEffect(() => {
-    getUserById(borrowerUT?.userId).then((res) => {
-      setParticipant(res)
-    })
+    if (borrowerUT.id) {
+      getUserById(borrowerUT?.userId).then((res) => {
+        setParticipant(res)
+      })
+    }
   }, [borrowerUT, selectedExpense])
 
   useEffect(() => {
-    const participantUserTeams = participant.userTeams
-    if (participantUserTeams?.length) {
-      const participantShare = calculateShare(
-        selectedExpense,
-        {},
-        participantUserTeams
-      )
+    if (selectedExpense.id && !!participant.userTeams?.length) {
+      const participantShare = calculateShare(selectedExpense, participant)
       setUserShare(participantShare)
     }
-    if (selectedExpense.payments?.length) {
-      const paid = calculatePaid(selectedExpense, participant)
-      setAmountPaid(paid)
-    } else {
-      setAmountPaid(0)
+
+    let paid = 0
+    if (selectedExpense.payments && participant.id) {
+      paid = calculatePaid(selectedExpense, participant)
     }
+    setAmountPaid(paid)
   }, [participant, selectedExpense])
 
   useEffect(() => {

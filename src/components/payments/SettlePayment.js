@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import "./Payments.css"
-import { getExpenseById } from "../../managers/expenseManager"
+import {
+  getExpenseById,
+  getExpensesWithDetails,
+} from "../../managers/expenseManager"
 import {
   calculatePaid,
   calculateShare,
@@ -10,23 +13,18 @@ import {
   formatDescription,
 } from "../../utils/functions"
 import { getUserTeamsByUser } from "../../managers/teamManager"
-import {
-  createPayment,
-  createUserPayment,
-  getPayments,
-  getUserPayments,
-} from "../../managers/paymentManager"
+import { createPayment, getPayments } from "../../managers/paymentManager"
 
 export const SettlePayment = ({
   user,
   setPayments,
-  setUserPayments,
+  selectedExpense,
   setSelectedExpense,
+  setExpenses,
 }) => {
   const { expenseId } = useParams()
   const navigate = useNavigate()
 
-  const [activeExpense, setActiveExpense] = useState({})
   const [payorShare, setPayorShare] = useState(0.0)
   const [payorPaid, setPayorPaid] = useState(0.0)
   const [payorOwes, setPayorOwes] = useState(0.0)
@@ -36,27 +34,27 @@ export const SettlePayment = ({
 
   useEffect(() => {
     getExpenseById(expenseId).then((res) => {
-      setActiveExpense(res)
+      setSelectedExpense(res)
     })
   }, [expenseId])
 
   useEffect(() => {
     getUserTeamsByUser(user).then((UTs) => {
       if (UTs.length) {
-        const fractionalShare = calculateShare(activeExpense, {}, UTs)
+        const fractionalShare = calculateShare(selectedExpense, user)
         setPayorShare(fractionalShare)
       }
-      const payorUT = UTs.find((ut) => ut.teamId === activeExpense.team_Id)
+      const payorUT = UTs.find((ut) => ut.teamId === selectedExpense.team_Id)
       setPayorUserTeam(payorUT)
     })
 
-    if (activeExpense.payments?.length) {
-      const paid = calculatePaid(activeExpense, user)
+    if (selectedExpense.payments?.length) {
+      const paid = calculatePaid(selectedExpense, user)
       setPayorPaid(paid)
     } else {
       setPayorPaid(0)
     }
-  }, [user, activeExpense])
+  }, [user, selectedExpense])
 
   useEffect(() => {
     const owes = payorShare - payorPaid
@@ -74,20 +72,22 @@ export const SettlePayment = ({
     const datetime = new Date().toISOString()
 
     const newPayment = {
-      expenseId: activeExpense.id,
+      expenseId: selectedExpense.id,
       amount: payAmount,
       datePaid: datetime,
+      userId: user.id,
     }
 
-    createPayment(newPayment).then((paymentRes) => {
-      const newUserPayment = {
-        userId: user.id,
-        paymentId: paymentRes.id,
-        payeeId: activeExpense.userId,
-      }
-      createUserPayment(newUserPayment).then((upRes) => {
-        setSelectedExpense({})
-        navigate("/expenses")
+    createPayment(newPayment).then(() => {
+      getPayments().then((pRes) => {
+        setPayments(pRes)
+        getExpensesWithDetails().then((eRes) => {
+          setExpenses(eRes)
+          getExpenseById(selectedExpense.id).then((seRes) => {
+            setSelectedExpense(seRes)
+            navigate("/expenses")
+          })
+        })
       })
     })
   }
@@ -95,18 +95,18 @@ export const SettlePayment = ({
   return (
     <div className="settle-expense-container">
       <h2 className="page-heading">Settle Expense</h2>
-      {activeExpense.id && (
+      {selectedExpense.id && (
         <>
           <div className="expense-info">
             <div className="expense-total-cost">
               Total Cost:{" "}
-              {activeExpense.amount.toLocaleString("en-us", formatCurrency)}
+              {selectedExpense.amount.toLocaleString("en-us", formatCurrency)}
             </div>
             <div className="expense-description">
-              {formatDescription(activeExpense.description)}
+              {formatDescription(selectedExpense.description)}
             </div>
             <div className="expense-date">
-              {formatDate.format(new Date(activeExpense.date))}
+              {formatDate(selectedExpense.date)}
             </div>
           </div>
           <div className="participant-info">
@@ -116,11 +116,11 @@ export const SettlePayment = ({
             </div>
             <div className="user-share">
               you are responsible for{" "}
-              {payorShare?.toLocaleString("en-us", formatCurrency)} for this
+              {payorShare.toLocaleString("en-us", formatCurrency)} for this
               expense.
             </div>
             <div className="user-paid">
-              You have paid {payorPaid?.toLocaleString("en-us", formatCurrency)}{" "}
+              You have paid {payorPaid.toLocaleString("en-us", formatCurrency)}{" "}
               towards this expense.
             </div>
           </div>
@@ -131,11 +131,11 @@ export const SettlePayment = ({
           <div className="amount-details">
             <div className="amount-title">owe</div>
             <div className="amount-amount">
-              {payorOwes?.toLocaleString("en-us", formatCurrency)}
+              {payorOwes.toLocaleString("en-us", formatCurrency)}
             </div>
           </div>
           <div className="payee-details">
-            <div className="payee-title">{activeExpense.user.firstName}</div>
+            <div className="payee-title">{selectedExpense.user.firstName}</div>
             <div className="payee-avatar">Avatar</div>
           </div>
           <div className="payment-radios">
