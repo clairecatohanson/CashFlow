@@ -32,14 +32,19 @@ export const deleteExpense = async (expenseId) => {
 
 export const getExpenseById = async (expenseId) => {
   const response = await fetch(
-    `http://localhost:8088/expenses/${expenseId}?_expand=user&_embed=payments`
+    `http://localhost:8088/expenses/${expenseId}?_expand=category&_expand=user&_embed=payments`
+  )
+  return await response.json()
+}
+
+export const getExpensesWithDetails = async () => {
+  const response = await fetch(
+    "http://localhost:8088/expenses?_expand=category&_expand=user&_embed=payments"
   )
   return await response.json()
 }
 
 export const getExpenses = async () => {
-  const response = await fetch(
-    "http://localhost:8088/expenses?_expand=category&_expand=user&_embed=payments"
-  )
+  const response = await fetch("http://localhost:8088/expenses")
   return await response.json()
 }

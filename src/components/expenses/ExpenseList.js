@@ -1,10 +1,12 @@
 import { Expense } from "./Expense"
 
 export const ExpenseList = ({
+  user,
   expenses,
   personalTeam,
   userTeams,
   setSelectedExpense,
+  categories,
 }) => {
   return (
     <ul className="expense-list">
@@ -15,16 +17,17 @@ export const ExpenseList = ({
         <div className="expense-category">Category</div>
         <div className="expense-type">Expense Type</div>
       </li>
-      {personalTeam?.teamId &&
-        expenses.map((expense) => (
-          <Expense
-            key={`expense=${expense.id}`}
-            expense={expense}
-            personalTeam={personalTeam}
-            userTeams={userTeams}
-            setSelectedExpense={setSelectedExpense}
-          />
-        ))}
+      {expenses.map((expense) => (
+        <Expense
+          key={`expense=${expense.id}`}
+          user={user}
+          expense={expense}
+          personalTeam={personalTeam}
+          userTeams={userTeams}
+          setSelectedExpense={setSelectedExpense}
+          categories={categories}
+        />
+      ))}
     </ul>
   )
 }

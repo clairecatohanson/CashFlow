@@ -5,8 +5,8 @@ export const ExpenseForm = ({
   handleSubmit,
   formHeading,
   user,
-  expense,
-  setExpense,
+  selectedExpense,
+  setSelectedExpense,
   userTeams,
   personalTeam,
   isShared,
@@ -21,23 +21,23 @@ export const ExpenseForm = ({
   }, [user, setCategories])
 
   useEffect(() => {
-    const expenseCopy = { ...expense }
+    const expenseCopy = { ...selectedExpense }
     expenseCopy.team_Id = teamId
-    setExpense(expenseCopy)
-  }, [teamId, setExpense])
+    setSelectedExpense(expenseCopy)
+  }, [teamId])
 
   useEffect(() => {
-    const expenseCopy = { ...expense }
+    const expenseCopy = { ...selectedExpense }
     if (isShared === true) {
       setTeamId("")
     } else {
       setTeamId(personalTeam?.teamId)
     }
-    setExpense(expenseCopy)
+    setSelectedExpense(expenseCopy)
   }, [isShared, personalTeam])
 
   const handleInput = (e) => {
-    const expenseCopy = { ...expense }
+    const expenseCopy = { ...selectedExpense }
     if (e.target.id === "amount") {
       expenseCopy[e.target.id] = parseFloat(e.target.value)
     } else if (e.target.id === "categoryId") {
@@ -45,7 +45,7 @@ export const ExpenseForm = ({
     } else {
       expenseCopy[e.target.id] = e.target.value
     }
-    setExpense(expenseCopy)
+    setSelectedExpense(expenseCopy)
   }
 
   return (
@@ -61,7 +61,7 @@ export const ExpenseForm = ({
             type="date"
             id="date"
             required
-            value={expense.date ? expense.date : ""}
+            value={selectedExpense.date ? selectedExpense.date : ""}
             onChange={handleInput}
           />
         </fieldset>
@@ -74,7 +74,9 @@ export const ExpenseForm = ({
             type="text"
             id="description"
             required
-            value={expense.description ? expense.description : ""}
+            value={
+              selectedExpense.description ? selectedExpense.description : ""
+            }
             onChange={handleInput}
           />
         </fieldset>
@@ -89,7 +91,7 @@ export const ExpenseForm = ({
             step="0.01"
             required
             id="amount"
-            value={expense.amount ? expense.amount : ""}
+            value={selectedExpense.amount ? selectedExpense.amount : ""}
             onChange={handleInput}
           />
         </fieldset>
@@ -101,7 +103,7 @@ export const ExpenseForm = ({
             id="categoryId"
             className="form-input"
             required
-            value={expense.categoryId ? expense.categoryId : ""}
+            value={selectedExpense.categoryId ? selectedExpense.categoryId : ""}
             onChange={handleInput}
           >
             <option id="0" value="" disabled>

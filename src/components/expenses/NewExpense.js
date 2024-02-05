@@ -1,18 +1,22 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { addExpense } from "../../managers/expenseManager"
+import {
+  addExpense,
+  getExpensesWithDetails,
+} from "../../managers/expenseManager"
 import { ExpenseForm } from "../forms/ExpenseForm"
 import { CategoryForm } from "../categories/CategoryForm"
 import "./Expenses.css"
 
 export const NewExpense = ({
   user,
-  expense,
-  setExpense,
+  selectedExpense,
+  setSelectedExpense,
   userTeams,
   personalTeam,
   categories,
   setCategories,
+  setExpenses,
 }) => {
   const navigate = useNavigate()
 
@@ -30,16 +34,20 @@ export const NewExpense = ({
       userId: user.id,
       team_Id: personalTeam ? personalTeam.teamId : "",
     }
-    setExpense(blankExpense)
-  }, [user, setExpense, personalTeam])
+    setSelectedExpense(blankExpense)
+  }, [user, personalTeam])
 
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    const newExpense = { ...expense }
+    const newExpense = { ...selectedExpense }
     if (newExpense.categoryId && isShared !== "" && newExpense.team_Id) {
       addExpense(newExpense).then(() => {
-        navigate("/expenses")
+        getExpensesWithDetails().then((eRes) => {
+          setExpenses(eRes)
+          setSelectedExpense({})
+          navigate("/expenses")
+        })
       })
     }
     if (!newExpense.categoryId) {
@@ -50,7 +58,7 @@ export const NewExpense = ({
         "please indicate whether this charge is personal or shared before clicking submit"
       )
     }
-    if (!newExpense._teamId) {
+    if (!newExpense.team_Id) {
       window.alert("please select a team before clicking submit")
     }
   }
@@ -61,8 +69,8 @@ export const NewExpense = ({
         handleSubmit={handleSubmit}
         formHeading={formHeading}
         user={user}
-        expense={expense}
-        setExpense={setExpense}
+        selectedExpense={selectedExpense}
+        setSelectedExpense={setSelectedExpense}
         userTeams={userTeams}
         personalTeam={personalTeam}
         isShared={isShared}
