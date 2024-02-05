@@ -10,7 +10,8 @@
 .add-btn,
 .delete-btn,
 .edit-btn,
-.settle-btn {
+.settle-btn,
+.create-btn {
   display: block;
   width: 150px;
   padding: 10px 20px;
@@ -61,4 +62,27 @@
 .percent-input {
   width: 50%;
   line-height: 1.5rem;
+}
+
+.team-list-item {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 20px;
+  border: 1px red solid;
+  margin: 20px;
+}
+
+.team-name,
+.team-member-count,
+.team-expense-count {
+  flex-basis: 33%;
+  min-width: 100px;
+  text-align: center;
+}
+
+.team-details-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }

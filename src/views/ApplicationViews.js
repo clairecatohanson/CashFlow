@@ -14,6 +14,8 @@ import { getExpenses, getExpensesWithDetails } from "../managers/expenseManager"
 import { AllExpenses } from "../components/expenses/AllExpenses"
 import { SettlePayment } from "../components/payments/SettlePayment"
 import { getCategories } from "../managers/categoryManager"
+import { AllTeams } from "../components/teams/AllTeams"
+import { TeamDetails } from "../components/teams/TeamDetails"
 
 export const ApplicationViews = () => {
   const [user, setUser] = useState({})
@@ -145,6 +147,11 @@ export const ApplicationViews = () => {
             />
           }
         />
+        <Route
+          path="teams"
+          element={<AllTeams user={user} userTeams={userTeams} />}
+        />
+        <Route path="teams/:teamId" element={<TeamDetails />} />
         <Route
           path="categories"
           element={

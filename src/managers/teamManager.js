@@ -40,3 +40,13 @@ export const deleteTeam = async (teamId) => {
   }
   return await fetch(`http://localhost:8088/teams/${teamId}`, deleteOptions)
 }
+
+export const getTeams = async () => {
+  const response = await fetch("http://localhost:8088/teams")
+  return await response.json()
+}
+
+export const getTeamById = async (teamId) => {
+  const response = await fetch(`http://localhost:8088/teams/${teamId}`)
+  return await response.json()
+}

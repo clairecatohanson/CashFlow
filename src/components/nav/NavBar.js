@@ -15,7 +15,11 @@ export const NavBar = () => {
               Your Expenses
             </Link>
           </li>
-          <li className="nav-item">Your Teams</li>
+          <li className="nav-item">
+            <Link to="/teams" className="nav-link">
+              Your Teams
+            </Link>
+          </li>
         </div>
         <li className="nav-logout">
           <Link
