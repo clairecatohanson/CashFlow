@@ -10,7 +10,7 @@ import { NavBar } from "../components/nav/NavBar"
 import { Categories } from "../components/categories/Categories"
 import { CreateTeam } from "../components/teams/CreateTeam"
 import { getPayments } from "../managers/paymentManager"
-import { getExpenses, getExpensesWithDetails } from "../managers/expenseManager"
+import { getExpensesWithDetails } from "../managers/expenseManager"
 import { AllExpenses } from "../components/expenses/AllExpenses"
 import { SettlePayment } from "../components/payments/SettlePayment"
 import { getCategories } from "../managers/categoryManager"
@@ -19,7 +19,6 @@ import { TeamDetails } from "../components/teams/TeamDetails"
 
 export const ApplicationViews = () => {
   const [user, setUser] = useState({})
-  const [expense, setExpense] = useState({})
   const [expenses, setExpenses] = useState([])
   const [payments, setPayments] = useState([])
   const [userTeams, setUserTeams] = useState([])

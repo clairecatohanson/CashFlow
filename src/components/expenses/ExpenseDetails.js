@@ -63,7 +63,7 @@ export const ExpenseDetails = ({
         setBorrowers(selfRemoved)
       })
     }
-  }, [selectedExpense, user])
+  }, [selectedExpense, user, userTeams])
 
   const handleDelete = (expense) => {
     deleteExpense(expense.id).then(() => {
