@@ -64,10 +64,9 @@ export const UserDebt = ({
         <div className="debt">
           You have paid {originalPayor?.firstName}{" "}
           {amountPaid.toLocaleString("en-us", formatCurrency)} and you currently
-          owe
-          {userOwed.toLocaleString("en-us", formatCurrency)}
+          owe {userOwed.toLocaleString("en-us", formatCurrency)}
         </div>
-        {userOwed ? (
+        {userOwed > 0.0044 ? (
           <div className="btns">
             <button
               className="settle-btn"

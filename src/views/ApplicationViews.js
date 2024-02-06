@@ -151,7 +151,10 @@ export const ApplicationViews = () => {
           path="teams"
           element={<AllTeams user={user} userTeams={userTeams} />}
         />
-        <Route path="teams/:teamId" element={<TeamDetails />} />
+        <Route
+          path="teams/:teamId"
+          element={<TeamDetails user={user} categories={categories} />}
+        />
         <Route
           path="categories"
           element={

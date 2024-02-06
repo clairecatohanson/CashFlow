@@ -51,7 +51,7 @@ export const getExpenses = async () => {
 
 export const getExpensesByTeam = async (teamId) => {
   const response = await fetch(
-    `http://localhost:8088/expenses?team_Id=${teamId}`
+    `http://localhost:8088/expenses?team_Id=${teamId}&_expand=category&_embed=payments`
   )
   return await response.json()
 }

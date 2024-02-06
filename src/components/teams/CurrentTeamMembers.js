@@ -4,7 +4,7 @@ export const CurrentTeamMembers = ({ currentUserTeams }) => {
   return (
     <div className="current-team-members">
       {currentUserTeams.map((ut) => (
-        <TeamMemberCard ut={ut} />
+        <TeamMemberCard key={`userteam-${ut.id}`} ut={ut} />
       ))}
     </div>
   )
