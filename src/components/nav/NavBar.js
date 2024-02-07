@@ -1,16 +1,29 @@
 import { Link, useNavigate } from "react-router-dom"
 import "./NavBar.css"
 
-export const NavBar = () => {
+export const NavBar = ({ setSelectedExpense }) => {
   const navigate = useNavigate()
 
   return (
     <nav className="nav-container">
       <ul className="nav">
-        <li>logo</li>
+        <li>
+          <Link to="/" className="nav-link">
+            logo
+          </Link>
+        </li>
         <div className="nav-items">
-          <li className="nav-item">Home</li>
           <li className="nav-item">
+            <Link to="/" className="nav-link">
+              Home
+            </Link>
+          </li>
+          <li
+            className="nav-item"
+            onClick={() => {
+              setSelectedExpense({})
+            }}
+          >
             <Link to="/expenses" className="nav-link">
               Your Expenses
             </Link>

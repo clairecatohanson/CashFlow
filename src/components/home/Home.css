@@ -1,0 +1,39 @@
+.home-greeting {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.home-cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 95%;
+  margin: 0 auto;
+}
+
+.quick-actions-card,
+.personal-snapshot-card,
+.shared-expenses-card {
+  flex-basis: 32%;
+  border: solid black 1px;
+}
+
+.links-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.home-btn-link {
+  flex-basis: 40%;
+  min-width: 120px;
+  text-align: center;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  border: solid black 1px;
+  margin: 5px;
+  text-decoration: none;
+  color: inherit;
+}

@@ -17,6 +17,7 @@ import { getCategories } from "../managers/categoryManager"
 import { AllTeams } from "../components/teams/AllTeams"
 import { TeamDetails } from "../components/teams/TeamDetails"
 import { EditTeam } from "../components/teams/EditTeam"
+import { Home } from "../components/home/Home"
 
 export const ApplicationViews = () => {
   const [user, setUser] = useState({})
@@ -83,11 +84,22 @@ export const ApplicationViews = () => {
         path="/"
         element={
           <>
-            <NavBar />
+            <NavBar setSelectedExpense={setSelectedExpense} />
             <Outlet />
           </>
         }
       >
+        <Route
+          index
+          element={
+            <Home
+              user={user}
+              expenses={expenses}
+              userTeams={userTeams}
+              setSelectedExpense={setSelectedExpense}
+            />
+          }
+        />
         <Route
           path="expenses"
           element={

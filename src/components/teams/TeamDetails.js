@@ -6,7 +6,7 @@ import { TopCategories } from "./TopCategories"
 import { NetTeamDebts } from "./NetTeamDebts"
 import { getExpensesByTeam } from "../../managers/expenseManager"
 
-export const TeamDetails = ({ user, categories }) => {
+export const TeamDetails = ({ user }) => {
   const { teamId } = useParams()
   const navigate = useNavigate()
 
@@ -34,7 +34,7 @@ export const TeamDetails = ({ user, categories }) => {
         </section>
         <section className="team-spending-card">
           <h3 className="card-heading">Top Spending Categories</h3>
-          <TopCategories teamExpenses={teamExpenses} />
+          <TopCategories user={user} teamExpenses={teamExpenses} />
         </section>
         <section className="team-net-debts-card">
           <h3 className="card-heading">Net Unsettled Debts</h3>
