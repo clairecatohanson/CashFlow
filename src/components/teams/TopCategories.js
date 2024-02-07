@@ -51,7 +51,7 @@ export const TopCategories = ({ user, teamExpenses }) => {
       analyzedData.sort((a, b) => b.amount - a.amount)
       setSortedExpenseData(analyzedData)
     }
-  }, [user, teamExpenses])
+  }, [user, teamExpenses, teamId])
 
   return (
     <div className="top-categories">
