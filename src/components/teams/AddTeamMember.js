@@ -2,8 +2,8 @@ import { useState } from "react"
 import { getUserByUsername } from "../../managers/userManager"
 
 export const AddTeamMember = ({
-  userTeams,
-  setUserTeams,
+  teamUserTeams,
+  setTeamUserTeams,
   tempUserTeams,
   setTempUserTeams,
 }) => {
@@ -36,16 +36,16 @@ export const AddTeamMember = ({
       userId: foundUser.id,
       splitPercent: "",
     }
-    const utArrayCopy = structuredClone(userTeams)
+    const utArrayCopy = structuredClone(teamUserTeams)
     const utArrayUserIds = []
-    utArrayCopy.map((ut) => {
+    utArrayCopy.forEach((ut) => {
       utArrayUserIds.push(ut.userId)
     })
     if (!utArrayUserIds.includes(newUserTeam.userId)) {
       utArrayCopy.push(newUserTeam)
       const tempUtsCopy = structuredClone(tempUserTeams)
       tempUtsCopy.push(newUserTeam)
-      setUserTeams(utArrayCopy)
+      setTeamUserTeams(utArrayCopy)
       setTempUserTeams(tempUtsCopy)
     } else {
       window.alert("Cannot add the same user twice")

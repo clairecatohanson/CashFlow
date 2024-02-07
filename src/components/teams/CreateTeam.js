@@ -11,7 +11,7 @@ export const CreateTeam = ({ user }) => {
 
   const [teamInput, setTeamInput] = useState("")
   const [newTeam, setNewTeam] = useState({})
-  const [userTeams, setUserTeams] = useState([])
+  const [teamUserTeams, setTeamUserTeams] = useState([])
   const [tempUserTeams, setTempUserTeams] = useState([])
 
   useEffect(() => {
@@ -21,7 +21,7 @@ export const CreateTeam = ({ user }) => {
         splitPercent: "",
       }
       const utArray = [firstUserTeam]
-      setUserTeams(utArray)
+      setTeamUserTeams(utArray)
       setTempUserTeams(utArray)
     }
   }, [newTeam, user])
@@ -32,12 +32,12 @@ export const CreateTeam = ({ user }) => {
     const tempUtsCopy = structuredClone(tempUserTeams)
 
     let totalPercent = 0
-    tempUtsCopy.map((tm) => {
+    tempUtsCopy.forEach((tm) => {
       totalPercent += tm.splitPercent
     })
 
     if (tempUtsCopy.length === 1 && tempUtsCopy[0].userId === user.id) {
-      window.alert("Error: new teams must contain at least two members.")
+      window.alert("Error: teams must contain at least two members.")
     } else if (tempUtsCopy.find((ut) => ut.splitPercent <= 0)) {
       window.alert(
         "Error: team members must be assigned a percent that is greater than 0."
@@ -50,7 +50,7 @@ export const CreateTeam = ({ user }) => {
             createUserTeam(tm)
           })
           Promise.all(promises).then(() => {
-            navigate(`/team/${res.id}`)
+            navigate(`/teams/${res.id}`)
           })
         })
       } else {
@@ -67,30 +67,32 @@ export const CreateTeam = ({ user }) => {
         setNewTeam={setNewTeam}
       />
       {newTeam.name && (
-        <div className="build-team-section">
-          <div className="team-builder">
-            <AddTeamMember
-              userTeams={userTeams}
-              setUserTeams={setUserTeams}
-              tempUserTeams={tempUserTeams}
-              setTempUserTeams={setTempUserTeams}
-            />
-          </div>
-          <div className="team-member-list">
-            <TeamMembers
-              user={user}
-              userTeams={userTeams}
-              setUserTeams={setUserTeams}
-              tempUserTeams={tempUserTeams}
-              setTempUserTeams={setTempUserTeams}
-            />
+        <>
+          <div className="build-team-section">
+            <div className="team-builder">
+              <AddTeamMember
+                teamUserTeams={teamUserTeams}
+                setTeamUserTeams={setTeamUserTeams}
+                tempUserTeams={tempUserTeams}
+                setTempUserTeams={setTempUserTeams}
+              />
+            </div>
+            <div className="team-member-list">
+              <TeamMembers
+                user={user}
+                teamUserTeams={teamUserTeams}
+                setTeamUserTeams={setTeamUserTeams}
+                tempUserTeams={tempUserTeams}
+                setTempUserTeams={setTempUserTeams}
+              />
+            </div>
           </div>
           <div className="btn-container">
             <button className="submit-btn" onClick={handleSubmit}>
               Create Team
             </button>
           </div>
-        </div>
+        </>
       )}
     </>
   )

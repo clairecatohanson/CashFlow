@@ -16,6 +16,7 @@ import { SettlePayment } from "../components/payments/SettlePayment"
 import { getCategories } from "../managers/categoryManager"
 import { AllTeams } from "../components/teams/AllTeams"
 import { TeamDetails } from "../components/teams/TeamDetails"
+import { EditTeam } from "../components/teams/EditTeam"
 
 export const ApplicationViews = () => {
   const [user, setUser] = useState({})
@@ -43,7 +44,7 @@ export const ApplicationViews = () => {
     })
   }, [])
 
-  useEffect(() => {
+  const getAndSetUserTeams = (user) => {
     getUserTeamsByUser(user).then((res) => {
       const selfRemoved = res.filter(
         (userTeam) => userTeam.splitPercent !== 100
@@ -52,10 +53,22 @@ export const ApplicationViews = () => {
       setUserTeams(selfRemoved)
       setPersonalTeam(self)
     })
+  }
+  useEffect(() => {
+    // getUserTeamsByUser(user).then((res) => {
+    //   const selfRemoved = res.filter(
+    //     (userTeam) => userTeam.splitPercent !== 100
+    //   )
+    //   const self = res.find((userTeam) => userTeam.splitPercent === 100)
+    //   setUserTeams(selfRemoved)
+    //   setPersonalTeam(self)
+    // })
+    getAndSetUserTeams(user)
   }, [user])
 
   useEffect(() => {
     getAndSetUserExpenses()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userTeams, personalTeam])
 
   const getAndSetUserExpenses = () => {
@@ -143,6 +156,7 @@ export const ApplicationViews = () => {
               selectedExpense={selectedExpense}
               setSelectedExpense={setSelectedExpense}
               setExpenses={setExpenses}
+              getAndSetUserExpenses={getAndSetUserExpenses}
             />
           }
         />
@@ -153,6 +167,12 @@ export const ApplicationViews = () => {
         <Route
           path="teams/:teamId"
           element={<TeamDetails user={user} categories={categories} />}
+        />
+        <Route
+          path="teams/:teamId/edit"
+          element={
+            <EditTeam user={user} getAndSetUserTeams={getAndSetUserTeams} />
+          }
         />
         <Route
           path="categories"

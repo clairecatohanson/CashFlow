@@ -11,7 +11,8 @@
 .delete-btn,
 .edit-btn,
 .settle-btn,
-.create-btn {
+.create-btn,
+.save-btn {
   display: block;
   width: 150px;
   padding: 10px 20px;
@@ -32,14 +33,17 @@
   padding: 10px;
 }
 
-.build-team-section {
+.build-team-section,
+.edit-team-members {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
 }
 
 .team-builder,
-.team-member-list {
+.team-member-list,
+.edit-add-members,
+.edit-update-members {
   flex-basis: 45%;
 }
 
@@ -167,4 +171,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.edit-team-name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.edit-team-name-input {
+  display: block;
+  width: 30%;
+  margin: 0 auto;
 }

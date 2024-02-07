@@ -2,20 +2,20 @@ import { TeamMember } from "./TeamMember"
 
 export const TeamMembers = ({
   user,
-  userTeams,
-  setUserTeams,
+  teamUserTeams,
+  setTeamUserTeams,
   tempUserTeams,
   setTempUserTeams,
 }) => {
   return (
     <ul className="team-members">
-      {userTeams.map((userTeam) => (
+      {teamUserTeams.map((userTeam) => (
         <TeamMember
           key={`userTeam-${userTeam.userId}`}
           user={user}
           userTeam={userTeam}
-          userTeams={userTeams}
-          setUserTeams={setUserTeams}
+          teamUserTeams={teamUserTeams}
+          setTeamUserTeams={setTeamUserTeams}
           tempUserTeams={tempUserTeams}
           setTempUserTeams={setTempUserTeams}
         />

@@ -105,9 +105,10 @@ export const NetTeamDebts = ({ user, currentUserTeams, teamExpenses }) => {
     } else {
       return (
         <>
-          <div className="no-debt">Settled!</div>
-          <div className="no-debt">No debts with</div>
-          <div className="no-debt">@{debtObj.otherUser.user.username}</div>
+          <div className="no-debt">
+            Settled!<br></br>No debts with<br></br>@
+            {debtObj.otherUser.user.username}
+          </div>
         </>
       )
     }

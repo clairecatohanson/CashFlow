@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import "./Payments.css"
-import {
-  getExpenseById,
-  getExpensesWithDetails,
-} from "../../managers/expenseManager"
+import { getExpenseById } from "../../managers/expenseManager"
 import {
   calculatePaid,
   calculateShare,
@@ -20,7 +17,7 @@ export const SettlePayment = ({
   setPayments,
   selectedExpense,
   setSelectedExpense,
-  setExpenses,
+  getAndSetUserExpenses,
 }) => {
   const { expenseId } = useParams()
   const navigate = useNavigate()
@@ -81,12 +78,10 @@ export const SettlePayment = ({
     createPayment(newPayment).then(() => {
       getPayments().then((pRes) => {
         setPayments(pRes)
-        getExpensesWithDetails().then((eRes) => {
-          setExpenses(eRes)
-          getExpenseById(selectedExpense.id).then((seRes) => {
-            setSelectedExpense(seRes)
-            navigate("/expenses")
-          })
+        getExpenseById(selectedExpense.id).then((seRes) => {
+          setSelectedExpense(seRes)
+          getAndSetUserExpenses()
+          navigate("/expenses")
         })
       })
     })

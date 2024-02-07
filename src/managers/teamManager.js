@@ -41,6 +41,15 @@ export const deleteTeam = async (teamId) => {
   return await fetch(`http://localhost:8088/teams/${teamId}`, deleteOptions)
 }
 
+export const editTeam = async (team) => {
+  const putOptions = {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(team),
+  }
+  return await fetch(`http://localhost:8088/teams/${team.id}`, putOptions)
+}
+
 export const getTeams = async () => {
   const response = await fetch("http://localhost:8088/teams")
   return await response.json()
@@ -49,4 +58,12 @@ export const getTeams = async () => {
 export const getTeamById = async (teamId) => {
   const response = await fetch(`http://localhost:8088/teams/${teamId}`)
   return await response.json()
+}
+
+export const deleteUserTeam = async (userTeamId) => {
+  const deleteOptions = { method: "DELETE" }
+  return await fetch(
+    `http://localhost:8088/userTeams/${userTeamId}`,
+    deleteOptions
+  )
 }

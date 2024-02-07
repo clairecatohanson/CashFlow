@@ -48,7 +48,7 @@ export const TeamDetails = ({ user, categories }) => {
       <button
         className="edit-btn"
         onClick={() => {
-          navigate(`/edit-team/${teamId}`)
+          navigate(`/teams/${teamId}/edit`)
         }}
       >
         Edit Team
