@@ -55,14 +55,6 @@ export const ApplicationViews = () => {
     })
   }
   useEffect(() => {
-    // getUserTeamsByUser(user).then((res) => {
-    //   const selfRemoved = res.filter(
-    //     (userTeam) => userTeam.splitPercent !== 100
-    //   )
-    //   const self = res.find((userTeam) => userTeam.splitPercent === 100)
-    //   setUserTeams(selfRemoved)
-    //   setPersonalTeam(self)
-    // })
     getAndSetUserTeams(user)
   }, [user])
 
@@ -185,7 +177,10 @@ export const ApplicationViews = () => {
           }
         />
         <Route path="new-team" element={<CreateTeam user={user} />} />
-        <Route path="profile/:userId" element={<UserProfile user={user} />} />
+        <Route
+          path="profile/:userId"
+          element={<UserProfile user={user} userTeams={userTeams} />}
+        />
         <Route
           path="profile/edit"
           element={<EditProfile user={user} setUser={setUser} />}

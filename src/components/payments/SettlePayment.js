@@ -101,7 +101,7 @@ export const SettlePayment = ({
               {formatDescription(selectedExpense.description)}
             </div>
             <div className="expense-date">
-              {formatDate(selectedExpense.date)}
+              {formatDate(selectedExpense.date).withYear}
             </div>
           </div>
           <div className="participant-info">

@@ -40,7 +40,7 @@ export const Expense = ({
         setSelectedExpense(expense)
       }}
     >
-      <div className="expense-date">{formatDate(expense.date)}</div>
+      <div className="expense-date">{formatDate(expense.date).withYear}</div>
       <div className="expense-amount">
         {expenseAmount.toLocaleString("en-us", formatCurrency)}
       </div>

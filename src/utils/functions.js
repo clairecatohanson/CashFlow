@@ -6,11 +6,18 @@ export const formatDate = (ISOdateString) => {
 
   const dateObj = new Date(year, month, day)
 
-  const formattedDate = new Intl.DateTimeFormat("en-us", {
+  const withYear = new Intl.DateTimeFormat("en-us", {
     year: "numeric",
     month: "short",
     day: "2-digit",
   }).format(dateObj)
+
+  const withoutYear = new Intl.DateTimeFormat("en-us", {
+    month: "short",
+    day: "2-digit",
+  }).format(dateObj)
+
+  const formattedDate = { withYear: withYear, withoutYear: withoutYear }
 
   return formattedDate
 }

@@ -15,12 +15,13 @@
 }
 
 .list-header,
-.expense-item {
+.expense-item,
+.shared-expense-item {
   display: flex;
   flex-wrap: nowrap;
   width: 100%;
   justify-content: space-evenly;
-  padding: 3px;
+  padding: 5px;
 }
 
 .list-header {
@@ -35,8 +36,20 @@
   min-width: 120px;
 }
 
+.shared-expense-date,
+.shared-expense-amount {
+  flex-basis: 20%;
+  text-align: left;
+}
+
 .expense-description {
   flex-basis: 40%;
+}
+
+.shared-expense-description {
+  flex-basis: 60%;
+  text-align: left;
+  margin-left: 20px;
 }
 
 .btn-link {

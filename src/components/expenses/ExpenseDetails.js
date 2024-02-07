@@ -81,7 +81,9 @@ export const ExpenseDetails = ({
       return (
         <div className="personal-expense-details">
           <h3 className="details-expense-type">Personal Expense</h3>
-          <div className="details-date">{formatDate(selectedExpense.date)}</div>
+          <div className="details-date">
+            {formatDate(selectedExpense.date).withYear}
+          </div>
           <div className="details-full-amount">
             {currentUserShare.toLocaleString("en-us", formatCurrency)}
           </div>
@@ -123,7 +125,7 @@ export const ExpenseDetails = ({
           </div>
           <div className="expense-info">
             <div className="details-date">
-              {formatDate(selectedExpense.date)}
+              {formatDate(selectedExpense.date).withYear}
             </div>
             <div className="details-full-amount">
               Total Cost:{" "}
@@ -182,7 +184,7 @@ export const ExpenseDetails = ({
           </div>
           <div className="expense-info">
             <div className="details-date">
-              {formatDate(selectedExpense.date)}
+              {formatDate(selectedExpense.date).withYear}
             </div>
             <div className="details-full-amount">
               Total Cost:{" "}

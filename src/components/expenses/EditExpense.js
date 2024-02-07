@@ -4,7 +4,6 @@ import { ExpenseForm } from "../forms/ExpenseForm"
 import {
   deleteExpense,
   getExpenseById,
-  getExpenses,
   getExpensesWithDetails,
   updateExpense,
 } from "../../managers/expenseManager"
@@ -15,7 +14,6 @@ export const EditExpense = ({
   selectedExpense,
   setSelectedExpense,
   setExpenses,
-  payments,
   setPayments,
   userTeams,
   personalTeam,
