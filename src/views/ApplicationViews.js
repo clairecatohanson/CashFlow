@@ -74,6 +74,7 @@ export const ApplicationViews = () => {
       const userExpenses = res.filter((expense) =>
         teamIds.includes(expense.team_Id)
       )
+      userExpenses.sort((a, b) => new Date(a.date) - new Date(b.date))
       setExpenses(userExpenses)
     })
   }
@@ -111,7 +112,6 @@ export const ApplicationViews = () => {
               getAndSetUserExpenses={getAndSetUserExpenses}
               payments={payments}
               setPayments={setPayments}
-              setExpenses={setExpenses}
               selectedExpense={selectedExpense}
               setSelectedExpense={setSelectedExpense}
               categories={categories}
@@ -129,7 +129,7 @@ export const ApplicationViews = () => {
               personalTeam={personalTeam}
               categories={categories}
               setCategories={setCategories}
-              setExpenses={setExpenses}
+              getAndSetUserExpenses={getAndSetUserExpenses}
             />
           }
         />
@@ -140,13 +140,13 @@ export const ApplicationViews = () => {
               user={user}
               selectedExpense={selectedExpense}
               setSelectedExpense={setSelectedExpense}
-              setExpenses={setExpenses}
               payments={payments}
               setPayments={setPayments}
               userTeams={userTeams}
               personalTeam={personalTeam}
               categories={categories}
               setCategories={setCategories}
+              getAndSetUserExpenses={getAndSetUserExpenses}
             />
           }
         />
@@ -159,7 +159,6 @@ export const ApplicationViews = () => {
               setPayments={setPayments}
               selectedExpense={selectedExpense}
               setSelectedExpense={setSelectedExpense}
-              setExpenses={setExpenses}
               getAndSetUserExpenses={getAndSetUserExpenses}
             />
           }

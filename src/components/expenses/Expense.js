@@ -48,9 +48,6 @@ export const Expense = ({
         {formatDescription(expense.description)}
       </div>
       <div className="expense-category">{categoryName}</div>
-      <div className="expense-type">
-        {expense.team_Id === personalTeam.teamId ? "Personal" : "Shared"}
-      </div>
     </li>
   )
 }
