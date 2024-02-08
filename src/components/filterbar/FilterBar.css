@@ -1,0 +1,19 @@
+.filter-bar {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 20px;
+}
+
+.description-filter,
+.category-filter,
+.team-filter {
+  flex-basis: 30%;
+}
+
+.search-input,
+.category-dropdown,
+.team-dropdown {
+  box-sizing: border-box;
+  width: 80%;
+  height: 2rem;
+}

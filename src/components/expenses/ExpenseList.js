@@ -7,6 +7,7 @@ export const ExpenseList = ({
   userTeams,
   setSelectedExpense,
   categories,
+  filteredExpenses,
 }) => {
   return (
     <ul className="expense-list">
@@ -15,9 +16,8 @@ export const ExpenseList = ({
         <div className="expense-amount">Amount</div>
         <div className="expense-description">Description</div>
         <div className="expense-category">Category</div>
-        <div className="expense-type">Expense Type</div>
       </li>
-      {expenses.map((expense) => (
+      {filteredExpenses.map((expense) => (
         <Expense
           key={`expense=${expense.id}`}
           user={user}

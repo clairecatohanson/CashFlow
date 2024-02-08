@@ -16,6 +16,7 @@ export const SharedExpenses = ({ user, userTeams, commonUserTeams }) => {
       const expensePromises = teamIds.map((teamId) => getExpensesByTeam(teamId))
       Promise.all(expensePromises).then((expenseRes) => {
         const sharedTeamExpenses = expenseRes.flat()
+        sharedTeamExpenses.sort((a, b) => new Date(a.date) - new Date(b.date))
         setSharedExpenses(sharedTeamExpenses)
       })
     }
@@ -24,21 +25,27 @@ export const SharedExpenses = ({ user, userTeams, commonUserTeams }) => {
   const renderSharedExpenses = () => {
     return (
       <div className="shared-expenses">
-        <div className="filter-bar">Filter Bar</div>
         <ul className="shared-expense-list">
-          {sharedExpenses.map((expense) => (
-            <li key={`expense-${expense.id}`} className="shared-expense-item">
-              <div className="shared-expense-date">
-                {formatDate(expense.date).withoutYear}
-              </div>
-              <div className="shared-expense-amount">
-                {expense.amount.toLocaleString("en-us", formatCurrency)}
-              </div>
-              <div className="shared-expense-description">
-                {formatDescription(expense.description)}
-              </div>
-            </li>
-          ))}
+          {sharedExpenses.map((expense, i) => {
+            if (i < 10) {
+              return (
+                <li
+                  key={`expense-${expense.id}`}
+                  className="shared-expense-item"
+                >
+                  <div className="shared-expense-date">
+                    {formatDate(expense.date).withoutYear}
+                  </div>
+                  <div className="shared-expense-amount">
+                    {expense.amount.toLocaleString("en-us", formatCurrency)}
+                  </div>
+                  <div className="shared-expense-description">
+                    {formatDescription(expense.description)}
+                  </div>
+                </li>
+              )
+            }
+          })}
         </ul>
       </div>
     )

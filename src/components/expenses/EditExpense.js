@@ -4,7 +4,6 @@ import { ExpenseForm } from "../forms/ExpenseForm"
 import {
   deleteExpense,
   getExpenseById,
-  getExpensesWithDetails,
   updateExpense,
 } from "../../managers/expenseManager"
 import { getPayments } from "../../managers/paymentManager"
@@ -13,12 +12,12 @@ export const EditExpense = ({
   user,
   selectedExpense,
   setSelectedExpense,
-  setExpenses,
   setPayments,
   userTeams,
   personalTeam,
   categories,
   setCategories,
+  getAndSetUserExpenses,
 }) => {
   const navigate = useNavigate()
   const { expenseId } = useParams()
@@ -58,11 +57,9 @@ export const EditExpense = ({
     }
     if (updatedExpense.team_Id) {
       updateExpense(updatedExpense).then(() => {
-        getExpensesWithDetails().then((eRes) => {
-          setExpenses(eRes)
-          setSelectedExpense(updatedExpenseWithDetails)
-          navigate("/expenses")
-        })
+        getAndSetUserExpenses()
+        setSelectedExpense(updatedExpenseWithDetails)
+        navigate("/expenses")
       })
     } else {
       window.alert("Please select a team before submitting")
@@ -71,13 +68,11 @@ export const EditExpense = ({
 
   const handleDelete = () => {
     deleteExpense(selectedExpense.id).then(() => {
-      getExpensesWithDetails().then((eRes) => {
-        setExpenses(eRes)
-        setSelectedExpense({})
-        getPayments().then((pRes) => {
-          setPayments(pRes)
-          navigate("/expenses")
-        })
+      getAndSetUserExpenses()
+      setSelectedExpense({})
+      getPayments().then((pRes) => {
+        setPayments(pRes)
+        navigate("/expenses")
       })
     })
   }

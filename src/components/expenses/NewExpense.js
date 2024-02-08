@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import {
-  addExpense,
-  getExpensesWithDetails,
-} from "../../managers/expenseManager"
+import { addExpense } from "../../managers/expenseManager"
 import { ExpenseForm } from "../forms/ExpenseForm"
 import { CategoryForm } from "../categories/CategoryForm"
 import "./Expenses.css"
@@ -16,7 +13,7 @@ export const NewExpense = ({
   personalTeam,
   categories,
   setCategories,
-  setExpenses,
+  getAndSetUserExpenses,
 }) => {
   const navigate = useNavigate()
 
@@ -43,13 +40,12 @@ export const NewExpense = ({
     const newExpense = { ...selectedExpense }
     if (newExpense.categoryId && isShared !== "" && newExpense.team_Id) {
       addExpense(newExpense).then(() => {
-        getExpensesWithDetails().then((eRes) => {
-          setExpenses(eRes)
-          setSelectedExpense({})
-          navigate("/expenses")
-        })
+        getAndSetUserExpenses()
+        setSelectedExpense({})
+        navigate("/expenses")
       })
     }
+
     if (!newExpense.categoryId) {
       window.alert("please select a category before clicking submit.")
     }
