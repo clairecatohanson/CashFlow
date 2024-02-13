@@ -48,11 +48,17 @@ export const UserDebt = ({
 
   const renderParticipantDebt = () => {
     return (
-      <div className="participant-debt">
-        <div className="debt">
+      <div className="flex flex-col items-center mb-4">
+        <div>
           {participant.firstName} has paid you{" "}
-          {amountPaid.toLocaleString("en-us", formatCurrency)} and currently
-          owes you {userOwed.toLocaleString("en-us", formatCurrency)}
+          <span className="font-semibold">
+            {amountPaid.toLocaleString("en-us", formatCurrency)}
+          </span>{" "}
+          and
+          <br></br>currently owes you{" "}
+          <span className="font-semibold">
+            {userOwed.toLocaleString("en-us", formatCurrency)}
+          </span>
         </div>
       </div>
     )
@@ -60,16 +66,21 @@ export const UserDebt = ({
 
   const renderUserDebt = () => {
     return (
-      <div className="user-debt">
-        <div className="debt">
-          You have paid {originalPayor?.firstName}{" "}
-          {amountPaid.toLocaleString("en-us", formatCurrency)} and you currently
-          owe {userOwed.toLocaleString("en-us", formatCurrency)}
+      <div className="flex flex-col items-center">
+        <div className="mb-4">
+          You have paid {originalPayor.firstName}{" "}
+          <span className="font-semibold">
+            {amountPaid.toLocaleString("en-us", formatCurrency)}
+          </span>{" "}
+          <br></br>and you currently owe{" "}
+          <span className="font-semibold">
+            {userOwed.toLocaleString("en-us", formatCurrency)}
+          </span>
         </div>
         {userOwed > 0.0044 ? (
-          <div className="btns">
+          <div className="flex justify-center space-x-10">
             <button
-              className="settle-btn"
+              className="bg-teal-800 text-gray-100 rounded-lg py-4 px-8 hover:-translate-y-0.5 hover:duration-150 hover:shadow-md hover:shadow-gray-400"
               onClick={() => {
                 navigate(`/expenses/${selectedExpense.id}/settle`)
               }}
@@ -78,7 +89,7 @@ export const UserDebt = ({
             </button>
           </div>
         ) : (
-          <div className="nothing-owed">
+          <div className="mt-6 text-center">
             Success! You have settled your portion of this expense.
           </div>
         )}

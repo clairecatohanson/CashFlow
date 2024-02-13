@@ -33,14 +33,14 @@ export const Team = ({ ut, teams }) => {
 
   return (
     <li
-      className="team-list-item"
+      className="flex flex-col items-center lg:flex-row lg:text-lg lg:justify-between text-center border-2 rounded-lg p-6 hover:border-teal-600"
       onClick={() => {
         navigate(`/teams/${teamMatch.id}`)
       }}
     >
-      <div className="team-name">{teamMatch.name}</div>
-      <div className="team-member-count">{userCount} team members</div>
-      <div className="team-expense-count">
+      <div className="lg:w-1/3">{teamMatch.name}</div>
+      <div className="lg:w-1/3">{userCount} team members</div>
+      <div className="lg:w-1/3">
         {expenseCount}{" "}
         {expenseCount === 1 ? "shared expense" : "shared expenses"}
       </div>

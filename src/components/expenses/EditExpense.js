@@ -42,6 +42,26 @@ export const EditExpense = ({
     }
   }, [personalTeam, selectedExpense])
 
+  const renderButtons = () => {
+    return (
+      <div className="flex flex-col">
+        <button
+          className="mt-6 py-4 px-8 bg-teal-500 text-white rounded-lg text-lg shadow-gray-500 shadow-md hover:-translate-y-0.5 duration-150"
+          onClick={handleSubmit}
+        >
+          Submit Expense
+        </button>
+        <p className="text-center mt-8">or</p>
+        <button
+          className="mt-4 py-4 px-8 bg-orange-600 text-orange-100 rounded-lg text-lg shadow-gray-500 shadow-md hover:-translate-y-0.5 duration-150"
+          onClick={handleDelete}
+        >
+          Delete Expense
+        </button>
+      </div>
+    )
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
 
@@ -72,29 +92,29 @@ export const EditExpense = ({
       setSelectedExpense({})
       getPayments().then((pRes) => {
         setPayments(pRes)
-        navigate("/expenses")
       })
     })
+    navigate("/expenses")
   }
 
   return (
-    <>
-      <ExpenseForm
-        handleSubmit={handleSubmit}
-        formHeading={formHeading}
-        user={user}
-        selectedExpense={selectedExpense}
-        setSelectedExpense={setSelectedExpense}
-        userTeams={userTeams}
-        personalTeam={personalTeam}
-        isShared={isShared}
-        setIsShared={setIsShared}
-        categories={categories}
-        setCategories={setCategories}
-      />
-      <button className="delete-btn" onClick={handleDelete}>
-        Delete Expense
-      </button>
-    </>
+    <div className="bg-gray-300 min-h-screen flex justify-center">
+      <div className="w-11/12 lg:w-1/2 lg:min-w-[600px] mt-16">
+        <ExpenseForm
+          handleSubmit={handleSubmit}
+          formHeading={formHeading}
+          user={user}
+          selectedExpense={selectedExpense}
+          setSelectedExpense={setSelectedExpense}
+          userTeams={userTeams}
+          personalTeam={personalTeam}
+          isShared={isShared}
+          setIsShared={setIsShared}
+          categories={categories}
+          setCategories={setCategories}
+          renderButtons={renderButtons}
+        />
+      </div>
+    </div>
   )
 }

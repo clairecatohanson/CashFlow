@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { updateUser } from "../../managers/userManager"
-import "../forms/Forms.css"
+// import "../forms/Forms.css"
 
 export const EditProfile = ({ user, setUser }) => {
   const navigate = useNavigate()

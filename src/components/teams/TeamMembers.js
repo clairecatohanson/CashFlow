@@ -8,7 +8,7 @@ export const TeamMembers = ({
   setTempUserTeams,
 }) => {
   return (
-    <ul className="team-members">
+    <ul className="flex flex-col space-y-6 items-start">
       {teamUserTeams.map((userTeam) => (
         <TeamMember
           key={`userTeam-${userTeam.userId}`}

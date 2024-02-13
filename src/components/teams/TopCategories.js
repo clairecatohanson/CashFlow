@@ -54,16 +54,13 @@ export const TopCategories = ({ user, teamExpenses }) => {
   }, [user, teamExpenses, teamId])
 
   return (
-    <div className="top-categories">
+    <div className="text-center">
       {sortedExpenseData.map((dataObj, i) => {
         if (i < 3) {
           return (
-            <div
-              key={`category-${dataObj.categoryId}`}
-              className="top-category"
-            >
-              <div className="top-category-name">{dataObj.category.name}</div>
-              <div className="top-category-amount">
+            <div key={`category-${dataObj.categoryId}`} className="mb-4">
+              <div className="">{dataObj.category.name}</div>
+              <div className="">
                 {dataObj.amount.toLocaleString("en-us", formatCurrency)}
               </div>
             </div>

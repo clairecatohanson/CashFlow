@@ -13,6 +13,7 @@ export const ExpenseForm = ({
   setIsShared,
   categories,
   setCategories,
+  renderButtons,
 }) => {
   const [teamId, setTeamId] = useState(0)
 
@@ -49,136 +50,129 @@ export const ExpenseForm = ({
   }
 
   return (
-    <div className="expense-form">
-      <form className="form">
-        <h2 className="form-heading">{formHeading}</h2>
-        <fieldset className="form-group">
-          <label className="form-label" htmlFor="date">
-            <div className="label-text">Date:</div>
-          </label>
-          <input
-            className="form-input"
-            type="date"
-            id="date"
-            required
-            value={selectedExpense.date ? selectedExpense.date : ""}
-            onChange={handleInput}
-          />
-        </fieldset>
-        <fieldset className="form-group">
-          <label className="form-label" htmlFor="description">
-            <div className="label-text">Description:</div>
-          </label>
-          <input
-            className="form-input"
-            type="text"
-            id="description"
-            required
-            value={
-              selectedExpense.description ? selectedExpense.description : ""
+    <form className="bg-gray-100 p-6 h-auto rounded-xl shadow-lg text-orange-800 shadow-gray-400">
+      <h2 className="text-center text-3xl mb-2 mt-12">{formHeading}</h2>
+      <fieldset className="flex flex-col space-y-1 items-center mt-12 mb-8">
+        <label className="form-label" htmlFor="date">
+          Date:
+        </label>
+        <input
+          className="h-10 w-44 text-center"
+          type="date"
+          id="date"
+          required
+          value={selectedExpense.date ? selectedExpense.date : ""}
+          onChange={handleInput}
+        />
+      </fieldset>
+      <fieldset className="flex flex-col space-y-1 items-center mb-8">
+        <label className="form-label" htmlFor="description">
+          Description:
+        </label>
+        <input
+          className="h-10 w-4/5 text-center"
+          type="text"
+          id="description"
+          required
+          value={selectedExpense.description ? selectedExpense.description : ""}
+          onChange={handleInput}
+        />
+      </fieldset>
+      <fieldset className="flex flex-col space-y-1 items-center mb-8">
+        <label className="form-label" htmlFor="amount">
+          Amount:
+        </label>
+        <input
+          className="h-10 w-44 text-center"
+          type="number"
+          min="0"
+          step="0.01"
+          required
+          id="amount"
+          value={selectedExpense.amount ? selectedExpense.amount : ""}
+          onChange={handleInput}
+        />
+      </fieldset>
+      <fieldset className="flex flex-col space-y-1 items-center mb-8">
+        <label className="form-label" htmlFor="categoryId">
+          Category:
+        </label>
+        <select
+          id="categoryId"
+          className="h-10 w-44 text-center"
+          required
+          value={selectedExpense.categoryId ? selectedExpense.categoryId : ""}
+          onChange={handleInput}
+        >
+          <option id="0" value="" disabled>
+            Select a category
+          </option>
+          {categories.map((c) => (
+            <option id={c.id} key={`category-${c.id}`} value={c.id}>
+              {c.name ? c.name : ""}
+            </option>
+          ))}
+        </select>
+      </fieldset>
+      <fieldset className="flex flex-col space-y-1 items-center mb-8">
+        <label className="form-label" htmlFor="isShared">
+          Is this charged shared with a team?
+        </label>
+        <select
+          id="isShared"
+          className="h-10 w-44 text-center"
+          required
+          value={isShared !== "" ? isShared : ""}
+          onChange={(e) => {
+            setIsShared(JSON.parse(e.target.value))
+            if (isShared === false) {
+              setTeamId(personalTeam.teamId)
             }
-            onChange={handleInput}
-          />
-        </fieldset>
-        <fieldset className="form-group">
-          <label className="form-label" htmlFor="amount">
-            <div className="label-text">Amount:</div>
-          </label>
-          <input
-            className="form-input"
-            type="number"
-            min="0"
-            step="0.01"
-            required
-            id="amount"
-            value={selectedExpense.amount ? selectedExpense.amount : ""}
-            onChange={handleInput}
-          />
-        </fieldset>
-        <fieldset className="form-group">
-          <label className="form-label" htmlFor="categoryId">
-            <div className="label-text">Category:</div>
+          }}
+        >
+          <option id="0" value="" disabled>
+            Select a response
+          </option>
+          <option id="yes" value={true}>
+            Yes
+          </option>
+          <option id="no" value={false}>
+            No
+          </option>
+        </select>
+      </fieldset>
+      {isShared && (
+        <fieldset className="flex flex-col space-y-1 items-center mb-8">
+          <label className="form-label" htmlFor="teamId">
+            Team:
           </label>
           <select
-            id="categoryId"
-            className="form-input"
+            className="h-10 w-44 text-center"
+            id="teamId"
             required
-            value={selectedExpense.categoryId ? selectedExpense.categoryId : ""}
-            onChange={handleInput}
+            value={isShared === true ? teamId : personalTeam.teamId}
+            onChange={(e) => {
+              setTeamId(parseInt(e.target.value))
+            }}
           >
             <option id="0" value="" disabled>
-              Select a category
+              Select a team
             </option>
-            {categories.map((c) => (
-              <option id={c.id} key={`category-${c.id}`} value={c.id}>
-                {c.name ? c.name : ""}
+            {userTeams.map((userTeam) => (
+              <option
+                id={userTeam.teamId}
+                key={`userTeam-${userTeam.id}`}
+                value={userTeam.teamId}
+              >
+                {userTeam.team.name}
               </option>
             ))}
           </select>
         </fieldset>
-        <fieldset className="form-group">
-          <label className="form-label" htmlFor="isShared">
-            <div className="label-text">
-              Is this charged shared with a team?
-            </div>
-          </label>
-          <select
-            id="isShared"
-            className="form-input"
-            required
-            value={isShared !== "" ? isShared : ""}
-            onChange={(e) => {
-              setIsShared(JSON.parse(e.target.value))
-              if (isShared === false) {
-                setTeamId(personalTeam.teamId)
-              }
-            }}
-          >
-            <option id="0" value="" disabled>
-              Select a response
-            </option>
-            <option id="yes" value={true}>
-              Yes
-            </option>
-            <option id="no" value={false}>
-              No
-            </option>
-          </select>
-        </fieldset>
-        {isShared && (
-          <fieldset className="form-group">
-            <label className="form-label" htmlFor="teamId">
-              <div className="label-text">Team:</div>
-            </label>
-            <select
-              className="form-input"
-              id="teamId"
-              required
-              value={isShared === true ? teamId : personalTeam.teamId}
-              onChange={(e) => {
-                setTeamId(parseInt(e.target.value))
-              }}
-            >
-              <option id="0" value="" disabled>
-                Select a team
-              </option>
-              {userTeams.map((userTeam) => (
-                <option
-                  id={userTeam.teamId}
-                  key={`userTeam-${userTeam.id}`}
-                  value={userTeam.teamId}
-                >
-                  {userTeam.team.name}
-                </option>
-              ))}
-            </select>
-          </fieldset>
-        )}
-
-        <button className="submit-btn" onClick={handleSubmit}>
-          Submit Expense
-        </button>
-      </form>
-    </div>
+      )}
+      <fieldset className="flex justify-center mb-12">
+        {renderButtons()}
+      </fieldset>
+    </form>
   )
 }

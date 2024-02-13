@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import "./UserProfile.css"
+// import "./UserProfile.css"
 import { getUserById } from "../../managers/userManager"
 import { SharedExpenses } from "../expenses/SharedExpenses"
 import { getUserTeamsByTeam } from "../../managers/teamManager"

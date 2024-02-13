@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 import { formatCurrency } from "../../utils/functions"
 
 export const NetTeamDebts = ({ user, currentUserTeams, teamExpenses }) => {
@@ -83,10 +84,11 @@ export const NetTeamDebts = ({ user, currentUserTeams, teamExpenses }) => {
     if (debtObj.lender === debtObj.otherUser) {
       return (
         <>
-          <div className="debt-participants">
-            You owe @{debtObj.lender.user.username}{" "}
+          <div>
+            <i className="fa-solid fa-left-long"></i>
           </div>
-          <div className="debt-dollar-amount">
+          <div>You owe</div>
+          <div>
             {debtObj.debtAmount.toLocaleString("en-us", formatCurrency)}
           </div>
         </>
@@ -94,10 +96,11 @@ export const NetTeamDebts = ({ user, currentUserTeams, teamExpenses }) => {
     } else if (debtObj.debtor === debtObj.otherUser) {
       return (
         <>
-          <div className="debt-participants">
-            @{debtObj.debtor.user.username} owes you{" "}
+          <div>
+            <i className="fa-solid fa-right-long"></i>
           </div>
-          <div className="debt-dollar-amount">
+          <div>owes you </div>
+          <div>
             {debtObj.debtAmount.toLocaleString("en-us", formatCurrency)}
           </div>
         </>
@@ -105,35 +108,64 @@ export const NetTeamDebts = ({ user, currentUserTeams, teamExpenses }) => {
     } else {
       return (
         <>
-          <div className="no-debt">
-            Settled!<br></br>No debts with<br></br>@
-            {debtObj.otherUser.user.username}
+          <div>
+            <i className="fa-regular fa-circle-check"></i>
+          </div>
+          <div>
+            Settled!<br></br>No debts.
           </div>
         </>
       )
     }
   }
   return (
-    <div className="net-debts">
-      <div className="debt-details">
+    // Net Debts Container
+    <div className="text-md flex justify-between items-center p-6">
+      {/* Team User List */}
+      <ul className="flex flex-col items-start w-2/3 space-y-6">
         {teamDebts.map((debtObj, i) => {
           return (
-            <div className="team-debt" key={`debt-${i}`}>
-              <div className="other-user-details">
-                <i className="fa-solid fa-user other-user-avatar"></i>
-                <div className="other-user-username">
-                  @{debtObj.otherUser.user.username}
+            // Team User Details and Debt Container
+            <li
+              key={`debt-${i}`}
+              className="flex justify-between items-center w-full"
+            >
+              {/* Team User Details */}
+              <Link
+                to={`/profile/${debtObj.otherUser.userId}`}
+                className="w-1/2"
+              >
+                <div className="flex flex-col space-y-2 items-center">
+                  {/* Avatar */}
+                  <div className="text-xl">
+                    <i className="fa-solid fa-user"></i>
+                  </div>
+                  {/* Username */}
+                  <div className="text-sm md:text-md">
+                    @{debtObj.otherUser.user.username}
+                  </div>
                 </div>
+              </Link>
+              {/* Debt Amount */}
+              <div className="w-1/2 flex flex-col items-center text-center">
+                {renderNetDebt(debtObj)}
               </div>
-              <div className="net-debt-amount">{renderNetDebt(debtObj)}</div>
-            </div>
+            </li>
           )
         })}
-      </div>
-      <div className="logged-in-user-details">
-        <i className="fa-solid fa-user logged-in-user-avatar"></i>
-        <div className="your-username">You</div>
-      </div>
+      </ul>
+      {/* Logged In User Details */}
+      <Link
+        to={`/profile/${user.id}`}
+        className="flex flex-col space-y-2 items-center w-1/3"
+      >
+        {/* Avatar */}
+        <div className="text-4xl">
+          <i className="fa-solid fa-user"></i>
+        </div>
+        {/* Username */}
+        <div className="text-lg">You</div>
+      </Link>
     </div>
   )
 }

@@ -6,13 +6,7 @@ import {
   formatDescription,
 } from "../../utils/functions"
 
-export const Expense = ({
-  user,
-  expense,
-  personalTeam,
-  setSelectedExpense,
-  categories,
-}) => {
+export const Expense = ({ user, expense, setSelectedExpense, categories }) => {
   const [expenseAmount, setExpenseAmount] = useState(0.0)
   const [categoryName, setCategoryName] = useState("")
 
@@ -34,20 +28,20 @@ export const Expense = ({
 
   return (
     <li
-      className="expense-item"
+      className="flex items-center flex-nowrap space-x-2 p-2 rounded-md even:bg-gray-200 hover:bg-opacity-50 hover:outline hover:outline-2 hover:outline-teal-500/50"
       key={`expense=${expense.id}`}
       onClick={() => {
         setSelectedExpense(expense)
       }}
     >
-      <div className="expense-date">{formatDate(expense.date).withYear}</div>
-      <div className="expense-amount">
+      <div className="w-1/6 min-w-[100px]">
+        {formatDate(expense.date).withYear}
+      </div>
+      <div className="w-1/6 min-w-[40px]">
         {expenseAmount.toLocaleString("en-us", formatCurrency)}
       </div>
-      <div className="expense-description">
-        {formatDescription(expense.description)}
-      </div>
-      <div className="expense-category">{categoryName}</div>
+      <div className="w-1/2">{formatDescription(expense.description)}</div>
+      <div className="w-1/6 min-w-[110px]">{categoryName}</div>
     </li>
   )
 }

@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { getUserByUsername } from "../../managers/userManager"
 
 export const AddTeamMember = ({
@@ -10,6 +10,16 @@ export const AddTeamMember = ({
   const [searchInput, setSearchInput] = useState("")
   const [foundUser, setFoundUser] = useState({})
   const [searchStatus, setSearchStatus] = useState(false)
+
+  const inputRef = useRef(null)
+  const buttonRef = useRef(null)
+
+  const handleEnter = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault()
+      buttonRef.current.click()
+    }
+  }
 
   const handleInput = (e) => {
     setSearchInput(e.target.value)
@@ -58,15 +68,18 @@ export const AddTeamMember = ({
 
   const renderUserInfo = (foundUser) => {
     return (
-      <div className="found-user">
-        <div className="user-details">
-          <div className="user-username">{foundUser.username}</div>
-          <div className="user-name">
+      <div className="flex justify-center items-center space-x-6 mt-8">
+        <div className="flex flex-col space-y-2 items-start">
+          <div className="">@{foundUser.username}</div>
+          <div className="">
             {foundUser.firstName} {foundUser.lastName}
           </div>
         </div>
-        <div className="btn-container">
-          <button className="add-btn" onClick={handleAdd}>
+        <div className="flex justify-center">
+          <button
+            className="py-2 px-4 bg-orange-600 text-white rounded text-md shadow-gray-500 shadow-md"
+            onClick={handleAdd}
+          >
             Add to Team
           </button>
         </div>
@@ -76,26 +89,39 @@ export const AddTeamMember = ({
 
   const renderError = () => {
     if (searchStatus) {
-      return <div className="error-message">That username does not exist</div>
+      return (
+        <div className="text-center mt-8 w-auto bg-gray-200 rounded p-2">
+          That username does not exist
+        </div>
+      )
     }
   }
 
   return (
-    <form className="form">
-      <fieldset className="form-group">
+    <fieldset>
+      <div className="flex space-x-4 items-center mb-6">
         <label htmlFor="user-search">Search for user:</label>
         <input
           id="user-search"
+          ref={inputRef}
           type="text"
           placeholder="username"
           value={searchInput}
           onChange={handleInput}
+          onKeyDown={handleEnter}
+          className="bg-white h-10 text-center w-56 focus:outline-none"
         />
-      </fieldset>
-      <button className="search-btn" onClick={handleSearch}>
-        Search
-      </button>
+      </div>
+      <div className="flex justify-center">
+        <button
+          ref={buttonRef}
+          className="py-2 px-4 bg-teal-500 text-white rounded text-md shadow-gray-500 shadow-md"
+          onClick={handleSearch}
+        >
+          Search
+        </button>
+      </div>
       {foundUser.id ? renderUserInfo(foundUser) : renderError()}
-    </form>
+    </fieldset>
   )
 }

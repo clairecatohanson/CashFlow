@@ -10,7 +10,6 @@ export const AllExpenses = ({
   personalTeam,
   userTeams,
   getAndSetUserExpenses,
-  payments,
   setPayments,
   selectedExpense,
   setSelectedExpense,
@@ -25,20 +24,33 @@ export const AllExpenses = ({
   const [filteredExpenses, setFilteredExpenses] = useState([])
 
   return (
-    <div className="your-expenses">
-      <h2 className="page-heading">Expenses</h2>
-      <div className="btns-container">
-        <button
-          className="next-btn"
-          onClick={() => {
-            navigate("/new-expense")
-          }}
-        >
-          Add New Expense
-        </button>
+    // Global Container
+    <div className="bg-gray-100 min-h-screen">
+      {/* Header & Buttons Container */}
+      <div className="flex flex-col items-center justify-between md:flex-row md:items-center w-full bg-gray-200 p-6 mx-auto">
+        {/* Header */}
+        <div className="m-2 text-center md:text-left">
+          <h2 className="text-4xl mb-2">Expenses</h2>
+          <h3 className="text-xl">
+            All of your personal and shared expenses in one place
+          </h3>
+        </div>
+        {/* Buttons */}
+        <div className="m-2">
+          <button
+            className="p-4 bg-orange-300 rounded-md text-lg shadow-orange-700 shadow hover:-translate-y-0.5 duration-150"
+            onClick={() => {
+              navigate("/new-expense")
+            }}
+          >
+            Add New Expense
+          </button>
+        </div>
       </div>
-      <div className="expenses-container">
-        <div className="expenses">
+      {/* Expense List & Expense Details Container */}
+      <div className="flex flex-col-reverse justify-between space-y-reverse space-y-4 items-center xl:flex-row xl:justify-between xl:items-start xl:space-y-reverse-0 xl:space-x-4 mt-8 mx-4 pb-12 text-teal-800 rounded-md">
+        {/* Expense List Container */}
+        <div className="w-full shadow-gray-300 shadow-md bg-gray-100 rounded-md">
           <FilterBar
             categories={categories}
             expenses={expenses}
@@ -56,15 +68,14 @@ export const AllExpenses = ({
           />
           <ExpenseList
             user={user}
-            expenses={expenses}
             filteredExpenses={filteredExpenses}
-            personalTeam={personalTeam}
             userTeams={userTeams}
             setSelectedExpense={setSelectedExpense}
             categories={categories}
           />
         </div>
-        <div className="expense-details">
+        {/* Expense Details Container */}
+        <div className="w-[32rem] min-w-[32rem] border-2 border-teal-600 bg-[#F4F8F2] rounded-xl p-4 ">
           <ExpenseDetails
             user={user}
             selectedExpense={selectedExpense}
@@ -72,7 +83,6 @@ export const AllExpenses = ({
             personalTeam={personalTeam}
             userTeams={userTeams}
             getAndSetUserExpenses={getAndSetUserExpenses}
-            payments={payments}
             setPayments={setPayments}
           />
         </div>
