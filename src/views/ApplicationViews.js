@@ -85,7 +85,7 @@ export const ApplicationViews = () => {
         path="/"
         element={
           <>
-            <NavBar setSelectedExpense={setSelectedExpense} />
+            <NavBar user={user} setSelectedExpense={setSelectedExpense} />
             <Outlet />
           </>
         }
@@ -194,7 +194,13 @@ export const ApplicationViews = () => {
         />
         <Route
           path="profile/:userId"
-          element={<UserProfile user={user} userTeams={userTeams} />}
+          element={
+            <UserProfile
+              user={user}
+              userTeams={userTeams}
+              setSelectedExpense={setSelectedExpense}
+            />
+          }
         />
         <Route
           path="profile/edit"

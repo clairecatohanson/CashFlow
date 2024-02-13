@@ -71,8 +71,7 @@ export const Home = ({ user, expenses, userTeams, setSelectedExpense }) => {
           Recent Shared Expenses
         </h3>
         <SharedExpenses
-          user={user}
-          userTeams={userTeams}
+          setSelectedExpense={setSelectedExpense}
           commonUserTeams={userTeams}
         />
       </section>

@@ -25,29 +25,42 @@ export const Categories = ({ user, categories, setCategories }) => {
   }, [categories, user])
 
   return (
-    <div className="categories-container">
-      <div className="category-list">
-        <CategoryList
-          filteredCategories={publicCategories}
-          sectionHeading={publicHeading}
-          categories={categories}
-          setCategories={setCategories}
-        />
+    // Global Container
+    <div className="min-h-screen bg-gray-100">
+      {/* Heading Container */}
+      <div className="mb-2 text-center md:text-left w-full bg-gray-200 p-6">
+        <h2 className="text-4xl mb-2">Categories</h2>
+        <h3 className="text-xl">
+          Public and private categories for grouping your expenses
+        </h3>
       </div>
-      <div className="category-list">
-        <CategoryList
-          filteredCategories={privateCategories}
-          sectionHeading={privateHeading}
-          categories={categories}
-          setCategories={setCategories}
-        />
-      </div>
-      <div className="category-form">
-        <CategoryForm
-          user={user}
-          categories={categories}
-          setCategories={setCategories}
-        />
+      {/* Card Container */}
+      <div className="flex flex-col space-y-4 items-center lg:flex-row lg:justify-center lg:items-start lg:space-y-0 lg:space-x-8 lg:max-w-[1500px] lg:mx-auto mt-16 p-4">
+        <div className="flex justify-center w-11/12 lg:w-1/3">
+          <CategoryList
+            filteredCategories={publicCategories}
+            sectionHeading={publicHeading}
+            categories={categories}
+            setCategories={setCategories}
+          />
+        </div>
+        <div className="flex justify-center w-11/12 lg:w-1/3">
+          <CategoryList
+            filteredCategories={privateCategories}
+            sectionHeading={privateHeading}
+            categories={categories}
+            setCategories={setCategories}
+          />
+        </div>
+        <div className="flex justify-center w-11/12 lg:w-1/3">
+          <div className="w-4/5 md:w-1/2 lg:w-full">
+            <CategoryForm
+              user={user}
+              categories={categories}
+              setCategories={setCategories}
+            />
+          </div>
+        </div>
       </div>
     </div>
   )

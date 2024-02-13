@@ -5,7 +5,7 @@ import { getUserById } from "../../managers/userManager"
 import { SharedExpenses } from "../expenses/SharedExpenses"
 import { getUserTeamsByTeam } from "../../managers/teamManager"
 
-export const UserProfile = ({ user, userTeams }) => {
+export const UserProfile = ({ user, userTeams, setSelectedExpense }) => {
   const { userId } = useParams()
   const navigate = useNavigate()
 
@@ -47,41 +47,14 @@ export const UserProfile = ({ user, userTeams }) => {
 
   const renderYourTeams = () => {
     return (
-      <div className="profile-teams">
-        <h3 className="section-heading">Your Teams</h3>
-        <ul className="team-name-list">
+      <div className="w-11/12 lg:w-1/2 bg-gray-100 rounded-md p-3 mx-4 shadow-xl shadow-gray-500 h-fit">
+        <h3 className="text-xl my-4 text-center font-semibold">Your Teams</h3>
+        <ul className="flex flex-col items-center space-y-2 my-6">
           {userTeams.length ? (
             userTeams.map((ut) => (
               <li
                 key={`userteam-${ut.id}`}
-                className="team-name-item"
-                onClick={() => {
-                  navigate(`/teams/${ut.id}`)
-                }}
-              >
-                {ut.team.name}
-              </li>
-            ))
-          ) : (
-            <li>You are not currently on any expense sharing teams.</li>
-          )}
-        </ul>
-      </div>
-    )
-  }
-
-  const renderSharedTeams = () => {
-    return (
-      <div className="profile-teams">
-        <h3 className="section-heading">
-          Your Teams with {userProfile.firstName}
-        </h3>
-        <ul className="team-name-list">
-          {commonUserTeams.length ? (
-            commonUserTeams.map((ut) => (
-              <li
-                key={`userteam-${ut.id}`}
-                className="team-name-item"
+                className="w-4/5 text-center p-2 rounded-md even:bg-gray-200 hover:bg-opacity-50 hover:outline hover:outline-2 hover:outline-teal-500/50"
                 onClick={() => {
                   navigate(`/teams/${ut.teamId}`)
                 }}
@@ -90,7 +63,36 @@ export const UserProfile = ({ user, userTeams }) => {
               </li>
             ))
           ) : (
-            <li>
+            <li className="text-center p-4">
+              You are not currently on any expense sharing teams.
+            </li>
+          )}
+        </ul>
+      </div>
+    )
+  }
+
+  const renderSharedTeams = () => {
+    return (
+      <div className="w-11/12 lg:w-1/2 bg-gray-100 rounded-md p-3 mx-4 shadow-xl shadow-gray-500 h-fit">
+        <h3 className="text-xl my-4 text-center font-semibold">
+          Your Teams with {userProfile.firstName}
+        </h3>
+        <ul className="flex flex-col items-center">
+          {commonUserTeams.length ? (
+            commonUserTeams.map((ut) => (
+              <li
+                key={`userteam-${ut.id}`}
+                className="w-4/5 text-center p-2 rounded-md hover:bg-opacity-50 hover:outline hover:outline-2 hover:outline-teal-500/50"
+                onClick={() => {
+                  navigate(`/teams/${ut.teamId}`)
+                }}
+              >
+                {ut.team.name}
+              </li>
+            ))
+          ) : (
+            <li className="text-center p-4">
               You are not currently on any expense sharing teams with @
               {userProfile.username}.
             </li>
@@ -101,36 +103,50 @@ export const UserProfile = ({ user, userTeams }) => {
   }
 
   return (
-    <>
-      <div className="profile-container">
-        <div className="profile-user">
-          <div className="user-avatar">
+    // Global Container
+    <div className="min-h-screen bg-gray-300 py-16 text-orange-800">
+      <div className="flex flex-col items-center lg:flex-row lg:items-start lg:justify-end">
+        {/* User Details */}
+        <div className="flex flex-col justify items-center space-y-2 w-1/2 text-center">
+          {/* Avatar */}
+          <div className="text-8xl">
             <i className="fa-solid fa-user"></i>
           </div>
-          <div className="user-name">
+          {/* Name */}
+          <div className="text-4xl tracking-wide">
             {userProfile.firstName} {userProfile.lastName}
           </div>
-          <div className="user-username">@{userProfile.username}</div>
+          {/* Username */}
+          <div className="text-xl">@{userProfile.username}</div>
+        </div>
+        {/* Edit Profile Button Container */}
+        <div className="flex justify-center w-1/4 mt-10">
           {parseInt(userId) === user.id && (
-            <button className="edit-btn" onClick={handleSubmit}>
+            <button
+              className="p-4 bg-orange-300 rounded-md text-lg shadow-orange-700 shadow hover:-translate-y-0.5 duration-150"
+              onClick={handleSubmit}
+            >
               Edit Profile
             </button>
           )}
         </div>
-        <div className="profile-currentUser">
-          {parseInt(userId) === user.id
-            ? renderYourTeams()
-            : renderSharedTeams()}
-          <div className="profile-expenses">
-            <h3 className="section-heading">Recent Shared Expenses</h3>
-            <SharedExpenses
-              user={user}
-              userTeams={userTeams}
-              commonUserTeams={commonUserTeams}
-            />
-          </div>
+      </div>
+      {/* Card Container */}
+      <div className="flex flex-col space-y-6 lg:flex-row lg:space-y-0 mt-10">
+        {/* Teams Card */}
+        {parseInt(userId) === user.id ? renderYourTeams() : renderSharedTeams()}
+
+        {/* Shared Expenses Card */}
+        <div className="w-11/12 lg:w-1/2 bg-gray-100 rounded-md p-3 mx-4 shadow-xl shadow-gray-500 h-fit">
+          <h3 className="text-xl my-4 text-center font-semibold">
+            Recent Shared Expenses
+          </h3>
+          <SharedExpenses
+            setSelectedExpense={setSelectedExpense}
+            commonUserTeams={commonUserTeams}
+          />
         </div>
       </div>
-    </>
+    </div>
   )
 }

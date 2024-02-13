@@ -7,8 +7,10 @@ export const CategoryList = ({
   setCategories,
 }) => {
   return (
-    <div className="public-categories">
-      <h3 className="column-heading">{sectionHeading}</h3>
+    <div className="bg-gray-100 p-6 rounded-md shadow-md shadow-gray-400 text-orange-800 w-4/5 md:w-1/2 lg:w-full min-w-[350px]">
+      <h3 className="text-xl my-4 text-center font-semibold">
+        {sectionHeading}
+      </h3>
       <ul className="categories">
         {filteredCategories.map((c) => (
           <Category

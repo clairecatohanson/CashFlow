@@ -30,7 +30,7 @@ export const Category = ({ c, categories, setCategories }) => {
     setInput(event.target.value)
   }
 
-  const handleSave = (c) => {
+  const handleBlur = (c) => {
     if (
       categories.find(
         (category) => category.name.toLowerCase() === input.toLowerCase()
@@ -61,17 +61,20 @@ export const Category = ({ c, categories, setCategories }) => {
   const renderButtons = (c) => {
     if (isEditable) {
       return (
-        <div className="list-btns">
-          <button
-            className="save-btn"
+        // Save and Delete Button Container
+        <div className="">
+          {/* Save Button */}
+          {/* <button
+            className="py-1 px-3 bg-gray-200 text-gray-900 border-2 border-gray-900 rounded hover:-translate-y-0.5 hover:shadow-md hover:shadow-gray-400 ml-2"
             onClick={() => {
               handleSave(c)
             }}
           >
             <i className="fa-regular fa-floppy-disk"></i>
-          </button>
+          </button> */}
+          {/* Delete Button */}
           <button
-            className="delete-btn"
+            className="py-1 px-3 bg-gray-200 text-gray-900 border-2 border-gray-900 rounded hover:-translate-y-0.5 hover:shadow-md hover:shadow-gray-400 ml-2"
             onClick={() => {
               handleDelete(c)
             }}
@@ -82,17 +85,20 @@ export const Category = ({ c, categories, setCategories }) => {
       )
     } else {
       return (
-        <div className="list-btns">
+        // Edit and Delete Button Container
+        <div className="">
+          {/* Edit Button */}
           <button
-            className="edit-btn"
+            className="py-1 px-3 bg-gray-200 text-gray-900 border-2 border-gray-900 rounded hover:-translate-y-0.5 hover:shadow-md hover:shadow-gray-400 ml-2"
             onClick={() => {
               handleEdit(c)
             }}
           >
             <i className="fa-regular fa-pen-to-square"></i>
           </button>
+          {/* Delete Button */}
           <button
-            className="delete-btn"
+            className="py-1 px-3 bg-gray-200 text-gray-900 border-2 border-gray-900 rounded hover:-translate-y-0.5 hover:shadow-md hover:shadow-gray-400 ml-2"
             onClick={() => {
               handleDelete(c)
             }}
@@ -105,12 +111,24 @@ export const Category = ({ c, categories, setCategories }) => {
   }
 
   return (
-    <li key={`category-${c.id}`} className="category">
+    // Category Item
+    <li key={`category-${c.id}`} className="flex justify-center space-x-4 py-1">
       {isEditable ? (
-        <input type="text" value={input} onChange={handleInput} />
+        // Input Field
+        <input
+          className="w-3/5 h-10 text-center outline outline-1 rounded"
+          type="text"
+          value={input}
+          onChange={handleInput}
+          onBlur={() => {
+            handleBlur(c)
+          }}
+        />
       ) : (
-        <div className="list-text">{c.name}</div>
+        // Static Text
+        <div className="w-3/5">{c.name}</div>
       )}
+      {/* Render Buttons for custom categories only */}
       {c.userId !== 100 && renderButtons(c)}
     </li>
   )

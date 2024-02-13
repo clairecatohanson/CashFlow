@@ -37,7 +37,7 @@ export const Expense = ({ user, expense, setSelectedExpense, categories }) => {
       <div className="w-1/6 min-w-[100px]">
         {formatDate(expense.date).withYear}
       </div>
-      <div className="w-1/6 min-w-[40px]">
+      <div className="w-1/6 min-w-[80px]">
         {expenseAmount.toLocaleString("en-us", formatCurrency)}
       </div>
       <div className="w-1/2">{formatDescription(expense.description)}</div>
