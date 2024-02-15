@@ -63,6 +63,7 @@ export const Home = ({ user, expenses, userTeams, setSelectedExpense }) => {
             Recent Shared Expenses
           </h3>
           <SharedExpenses
+            user={user}
             setSelectedExpense={setSelectedExpense}
             commonUserTeams={userTeams}
           />
