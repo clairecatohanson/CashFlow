@@ -85,7 +85,7 @@ export const ApplicationViews = () => {
         path="/"
         element={
           <>
-            <NavBar setSelectedExpense={setSelectedExpense} />
+            <NavBar user={user} setSelectedExpense={setSelectedExpense} />
             <Outlet />
           </>
         }
@@ -110,7 +110,6 @@ export const ApplicationViews = () => {
               personalTeam={personalTeam}
               userTeams={userTeams}
               getAndSetUserExpenses={getAndSetUserExpenses}
-              payments={payments}
               setPayments={setPayments}
               selectedExpense={selectedExpense}
               setSelectedExpense={setSelectedExpense}
@@ -178,6 +177,12 @@ export const ApplicationViews = () => {
           }
         />
         <Route
+          path="new-team"
+          element={
+            <CreateTeam user={user} getAndSetUserTeams={getAndSetUserTeams} />
+          }
+        />
+        <Route
           path="categories"
           element={
             <Categories
@@ -187,10 +192,15 @@ export const ApplicationViews = () => {
             />
           }
         />
-        <Route path="new-team" element={<CreateTeam user={user} />} />
         <Route
           path="profile/:userId"
-          element={<UserProfile user={user} userTeams={userTeams} />}
+          element={
+            <UserProfile
+              user={user}
+              userTeams={userTeams}
+              setSelectedExpense={setSelectedExpense}
+            />
+          }
         />
         <Route
           path="profile/edit"

@@ -1,50 +1,78 @@
 import { Link, useNavigate } from "react-router-dom"
-import "./NavBar.css"
+// import "./NavBar.css"
 
-export const NavBar = ({ setSelectedExpense }) => {
+export const NavBar = ({ user, setSelectedExpense }) => {
   const navigate = useNavigate()
 
   return (
-    <nav className="nav-container">
-      <ul className="nav">
-        <li>
-          <Link to="/" className="nav-link">
-            logo
+    // Nav Bar
+    <nav>
+      <ul className="flex justify-between min-h-12 bg-teal-500 p-2">
+        {/* Logo */}
+        <li className="flex justify-left items-center w-48">
+          <Link to="/">
+            <div className="w-10 h-10 bg-orange-100 text-gray-900 text-md text-center rounded">
+              Logo
+            </div>
           </Link>
         </li>
-        <div className="nav-items">
-          <li className="nav-item">
-            <Link to="/" className="nav-link">
-              Home
+        {/* Nav Buttons Container */}
+        <div className="flex justify-between w-72 md:w-96">
+          {/* Home */}
+          <li className="flex justify-center items-center">
+            <Link to="/">
+              <div className="w-20 h-10 hover:text-orange-100 bg-teal-500 hover:bg-orange-500 text-gray-100 text-md text-center rounded flex items-center justify-center">
+                <div>Home</div>
+              </div>
             </Link>
           </li>
-          <li
-            className="nav-item"
-            onClick={() => {
-              setSelectedExpense({})
-            }}
-          >
-            <Link to="/expenses" className="nav-link">
-              Your Expenses
+          {/* Expenses */}
+          <li className="flex justify-center items-center">
+            <Link
+              to="/expenses"
+              onClick={() => {
+                setSelectedExpense({})
+              }}
+            >
+              <div className="w-20 h-10 hover:text-orange-100 bg-teal-500 hover:bg-orange-500 text-gray-100 text-md text-center rounded flex items-center justify-center">
+                <div>Expenses</div>
+              </div>
             </Link>
           </li>
-          <li className="nav-item">
-            <Link to="/teams" className="nav-link">
-              Your Teams
+          {/* Teams */}
+          <li className="flex justify-center items-center">
+            <Link to="/teams">
+              <div className="w-20 h-10 hover:text-orange-100 bg-teal-500 hover:bg-orange-500 text-gray-100 text-md text-center rounded flex items-center justify-center">
+                <div>Teams</div>
+              </div>
             </Link>
           </li>
         </div>
-        <li className="nav-logout">
-          <Link
-            to=""
-            onClick={() => {
-              localStorage.removeItem("numbies_user")
-              navigate("/login", { replace: true })
-            }}
-          >
-            <i className="fa-solid fa-arrow-right-from-bracket"></i>
-          </Link>
-        </li>
+        {/* Profile & Logout Buttons Container */}
+        <div className="flex justify-end w-48 space-x-2 md:space-x-4">
+          {/* Profile */}
+          <li className="flex justify-center items-center">
+            <Link to={`/profile/${user.id}`}>
+              <div className="w-20 h-10 hover:text-orange-100 bg-teal-500 hover:bg-orange-500 text-gray-100 text-md text-center rounded flex items-center justify-center">
+                <div>Profile</div>
+              </div>
+            </Link>
+          </li>
+          {/* Logout */}
+          <li className="flex justify-center items-center">
+            <Link
+              to=""
+              onClick={() => {
+                localStorage.removeItem("numbies_user")
+                navigate("/login", { replace: true })
+              }}
+            >
+              <div className="w-10 h-10 bg-orange-100 hover:bg-orange-500 hover:text-orange-100 text-gray-900 text-md text-center rounded flex items-center justify-center">
+                <i className="fa-solid fa-arrow-right-from-bracket"></i>
+              </div>
+            </Link>
+          </li>
+        </div>
       </ul>
     </nav>
   )

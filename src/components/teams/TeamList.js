@@ -16,7 +16,7 @@ export const TeamList = ({ userTeams }) => {
   }, [userTeams])
 
   return (
-    <ul className="team-list">
+    <ul className="flex flex-col space-y-10">
       {userTeams.map((ut) => (
         <Team key={`userteam-${ut.id}`} ut={ut} teams={teams} />
       ))}

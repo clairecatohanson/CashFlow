@@ -1,10 +1,11 @@
-import { TeamMemberCard } from "./TeamMemberCard"
+import { TeamMemberItem } from "./TeamMemberItem"
 
 export const CurrentTeamMembers = ({ currentUserTeams }) => {
   return (
-    <div className="current-team-members">
+    // Team Members Container
+    <div className="p-6 flex flex-col items-center space-y-6">
       {currentUserTeams.map((ut) => (
-        <TeamMemberCard key={`userteam-${ut.id}`} ut={ut} />
+        <TeamMemberItem key={`userteam-${ut.id}`} ut={ut} />
       ))}
     </div>
   )
