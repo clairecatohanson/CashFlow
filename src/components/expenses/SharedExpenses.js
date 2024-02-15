@@ -7,7 +7,11 @@ import {
   formatDescription,
 } from "../../utils/functions"
 
-export const SharedExpenses = ({ commonUserTeams, setSelectedExpense }) => {
+export const SharedExpenses = ({
+  user,
+  commonUserTeams,
+  setSelectedExpense,
+}) => {
   const navigate = useNavigate()
 
   const [sharedExpenses, setSharedExpenses] = useState([])
@@ -25,6 +29,31 @@ export const SharedExpenses = ({ commonUserTeams, setSelectedExpense }) => {
     }
   }, [commonUserTeams])
 
+  const renderNeedsAttentionIcon = (expense) => {
+    if (expense.userId !== user.id && expense.amount > 0) {
+      if (!expense.payments.length) {
+        return (
+          <div className="w-1/12">
+            <i className="fa-solid fa-magnifying-glass-dollar"></i>
+          </div>
+        )
+      } else if (expense.payments.length) {
+        let paymentSum = 0
+        expense.payments.forEach((payment) => (paymentSum += payment.amount))
+        const foundUT = commonUserTeams.find(
+          (ut) => ut.teamId === expense.team_Id
+        )
+        if (paymentSum < (expense.amount * foundUT.splitPercent) / 100) {
+          return (
+            <div className="w-1/12">
+              <i className="fa-solid fa-magnifying-glass-dollar"></i>
+            </div>
+          )
+        } else return <div className="w-1/12"> </div>
+      }
+    } else return <div className="w-1/12"> </div>
+  }
+
   const renderSharedExpenses = () => {
     return (
       <div className="">
@@ -32,7 +61,7 @@ export const SharedExpenses = ({ commonUserTeams, setSelectedExpense }) => {
           <li className="flex flex-nowrap space-x-2 mb-2 p-2 font-semibold md:text-lg">
             <div className="w-1/6 min-w-[100px]">Date</div>
             <div className="w-1/6 min-w-[80px]">Amount</div>
-            <div className="w-2/3">Description</div>
+            <div className="w-7/12">Description</div>
           </li>
           {sharedExpenses.map((expense, i) => {
             if (i < 10) {
@@ -51,9 +80,10 @@ export const SharedExpenses = ({ commonUserTeams, setSelectedExpense }) => {
                   <div className="w-1/6 min-w-[80px]">
                     {expense.amount.toLocaleString("en-us", formatCurrency)}
                   </div>
-                  <div className="w-2/3">
+                  <div className="w-7/12">
                     {formatDescription(expense.description)}
                   </div>
+                  {renderNeedsAttentionIcon(expense)}
                 </li>
               )
             }

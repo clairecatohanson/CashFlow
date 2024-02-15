@@ -142,6 +142,7 @@ export const UserProfile = ({ user, userTeams, setSelectedExpense }) => {
             Recent Shared Expenses
           </h3>
           <SharedExpenses
+            user={user}
             setSelectedExpense={setSelectedExpense}
             commonUserTeams={commonUserTeams}
           />
