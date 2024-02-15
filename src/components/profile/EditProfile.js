@@ -18,13 +18,15 @@ export const EditProfile = ({ user, setUser }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const userCopy = { ...user }
-    userCopy.username = username
-    userCopy.firstName = firstName
-    userCopy.lastName = lastName
+    const userCopy = {
+      id: user.id,
+      username: username,
+      firstName: firstName,
+      lastName: lastName,
+    }
 
     getUserByUsername(username).then((foundUsers) => {
-      if (foundUsers[0].username === user.username) {
+      if (foundUsers[0]?.username === user.username) {
         setUser(userCopy)
 
         updateUser(userCopy).then(() => {

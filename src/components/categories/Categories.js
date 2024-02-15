@@ -8,8 +8,8 @@ export const Categories = ({ user, categories, setCategories }) => {
   const [publicCategories, setPublicCategories] = useState([])
   const [privateCategories, setPrivateCategories] = useState([])
 
-  const publicHeading = "Ready to use categories:"
-  const privateHeading = "Custom categories made by you:"
+  const publicHeading = "Standard Categories"
+  const privateHeading = "Custom Categories"
 
   useEffect(() => {
     getCategories().then((res) => {
@@ -26,12 +26,12 @@ export const Categories = ({ user, categories, setCategories }) => {
 
   return (
     // Global Container
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100 pb-16">
       {/* Heading Container */}
       <div className="mb-2 text-center md:text-left w-full bg-gray-200 p-6">
         <h2 className="text-4xl mb-2">Categories</h2>
         <h3 className="text-xl">
-          Public and private categories for grouping your expenses
+          Standard and custom categories for grouping your expenses
         </h3>
       </div>
       {/* Card Container */}

@@ -45,32 +45,32 @@ export const TeamDetails = ({ user }) => {
         </div>
       </div>
       {/* Top 2 Cards Container */}
-      <div className="flex flex-col w-4/5 mx-auto mt-10 mb-6 justify-center items-start space-y-6 md:w-[700px] lg:flex-row lg:flex-wrap lg:space-y-0 lg:w-11/12">
+      <div className="flex flex-col w-4/5 mx-auto mt-10 mb-6 justify-center items-start space-y-6 md:flex-row md:space-y-0 md:space-x-6 md:w-11/12">
         {/* Team Members Card */}
-        <section className="bg-gray-100 w-full rounded-md p-3 lg:w-2/5 lg:mr-4 xl:w-[590px] lg:mb-4 shadow-xl shadow-gray-500">
+        <section className="bg-gray-100 w-full rounded-md p-3 md:w-1/2 xl:w-[590px] shadow-xl shadow-gray-300 md:mb-6 mx-auto">
           <h3 className="text-xl my-4 text-center font-semibold">
             Team Members
           </h3>
           <CurrentTeamMembers currentUserTeams={currentUserTeams} />
         </section>
-        {/* Team Spending Snapshot Card */}
-        <section className="bg-gray-100 w-full rounded-md p-3 lg:w-2/5 xl:w-[590px] lg:mb-4 shadow-xl shadow-gray-500">
+        {/* Team Net Debts Card */}
+        <section className="bg-gray-100 w-full rounded-md p-3 md:w-1/2 mx-auto shadow-xl shadow-gray-300">
           <h3 className="text-xl my-4 text-center font-semibold">
-            Team Financial Snapshot
+            Net Unsettled Debts
           </h3>
-          <TopCategories user={user} teamExpenses={teamExpenses} />
+          <NetTeamDebts
+            user={user}
+            currentUserTeams={currentUserTeams}
+            teamExpenses={teamExpenses}
+          />
         </section>
       </div>
-      {/* Team Net Debts Card */}
-      <section className="bg-gray-100 w-4/5 rounded-md p-3 md:w-[700px] lg:w-[800px] mx-auto shadow-xl shadow-gray-500">
+      {/* Team Spending Snapshot Card */}
+      <section className="bg-gray-100 w-11/12 mx-auto rounded-md p-3 lg:mb-4 shadow-xl shadow-gray-300">
         <h3 className="text-xl my-4 text-center font-semibold">
-          Net Unsettled Debts
+          Team Financial Snapshot
         </h3>
-        <NetTeamDebts
-          user={user}
-          currentUserTeams={currentUserTeams}
-          teamExpenses={teamExpenses}
-        />
+        <TopCategories user={user} teamExpenses={teamExpenses} />
       </section>
     </div>
   )

@@ -110,7 +110,7 @@ export const TeamMember = ({
           <label htmlFor={`userTeam-${userTeam.userId}-percent`}>%</label>
           <input
             type="number"
-            autoFocus
+            // autoFocus
             id={`userTeam-${userTeam.userId}-percent`}
             className="w-[4.5rem] h-10 text-center outline outline-1 rounded"
             value={percentInput}

@@ -73,7 +73,7 @@ export const NewExpense = ({
   }
 
   return (
-    <div className="bg-gray-300 min-h-screen">
+    <div className="bg-gray-300 min-h-screen pb-16">
       <div className="flex flex-col items-center space-y-6 lg:flex-row lg:justify-end lg:items-center lg:space-y-0 lg:space-x-6 px-6">
         <div className="lg:ml-auto w-11/12 lg:w-1/2 lg:min-w-[600px] mt-16">
           <ExpenseForm

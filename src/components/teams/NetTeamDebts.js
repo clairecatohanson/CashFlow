@@ -51,7 +51,7 @@ export const NetTeamDebts = ({ user, currentUserTeams, teamExpenses }) => {
 
         const grossOwedToMe = amountOwedToMe - paidToMeByOther
 
-        let netDebt = (grossOwedToOther - grossOwedToMe).toFixed(2)
+        let netDebt = grossOwedToOther - grossOwedToMe
         if (netDebt > 0) {
           teamDebtDetails.push({
             lender: otherUT,

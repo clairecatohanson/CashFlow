@@ -67,7 +67,9 @@ export const Login = () => {
         <form onSubmit={handleLogin} className="py-8 px-4">
           {/* // Headings */}
           <div className="font-sans text-center">
-            <h1 className="text-4xl font-bold mb-4 text-orange-700">Numbers</h1>
+            <h1 className="text-4xl font-bold mb-4 text-orange-700">
+              CashFlow
+            </h1>
             <h2 className="text-2xl text-gray-900">Log In</h2>
           </div>
           {/* // Input username */}

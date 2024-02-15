@@ -19,7 +19,7 @@ export const SharedExpenses = ({ commonUserTeams, setSelectedExpense }) => {
       const expensePromises = teamIds.map((teamId) => getExpensesByTeam(teamId))
       Promise.all(expensePromises).then((expenseRes) => {
         const sharedTeamExpenses = expenseRes.flat()
-        sharedTeamExpenses.sort((a, b) => new Date(a.date) - new Date(b.date))
+        sharedTeamExpenses.sort((a, b) => new Date(b.date) - new Date(a.date))
         setSharedExpenses(sharedTeamExpenses)
       })
     }

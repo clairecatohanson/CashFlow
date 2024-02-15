@@ -49,7 +49,7 @@ export const EditExpense = ({
           className="mt-6 py-4 px-8 bg-teal-500 text-white rounded-lg text-lg shadow-gray-500 shadow-md hover:-translate-y-0.5 duration-150"
           onClick={handleSubmit}
         >
-          Submit Expense
+          Update Expense
         </button>
         <p className="text-center mt-8">or</p>
         <button
@@ -98,7 +98,7 @@ export const EditExpense = ({
   }
 
   return (
-    <div className="bg-gray-300 min-h-screen flex justify-center">
+    <div className="bg-gray-300 min-h-screen flex justify-center pb-16">
       <div className="w-11/12 lg:w-1/2 lg:min-w-[600px] mt-16">
         <ExpenseForm
           handleSubmit={handleSubmit}

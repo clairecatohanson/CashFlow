@@ -12,9 +12,9 @@ export const Home = ({ user, expenses, userTeams, setSelectedExpense }) => {
         Hello, {user.firstName}
       </div>
       {/* Top 2 Cards Container */}
-      <div className="flex flex-col w-4/5 mx-auto mb-6 justify-center items-start space-y-6 md:w-[700px] lg:flex-row lg:flex-wrap lg:space-y-0 lg:w-11/12">
+      <div className="flex flex-col w-11/12 mx-auto mb-6 justify-center items-start space-y-6 md:w-[700px] lg:flex-row lg:flex-wrap lg:space-y-0 lg:w-11/12">
         {/* Quick Actions */}
-        <section className="bg-gray-100 w-full rounded-md p-3 lg:w-2/5 lg:mr-4 xl:w-[590px] lg:mb-4 shadow-xl shadow-gray-500">
+        <section className="bg-gray-100 w-full rounded-md p-3 lg:w-[400px] lg:mr-4 lg:mb-4 shadow-xl shadow-gray-500">
           <h3 className="text-xl my-4 text-center font-semibold">
             Quick Actions
           </h3>
@@ -57,23 +57,23 @@ export const Home = ({ user, expenses, userTeams, setSelectedExpense }) => {
             </Link>
           </div>
         </section>
-        {/* Personal Finance Snapshot */}
-        <section className="bg-gray-100 w-full rounded-md p-3 lg:w-2/5 xl:w-[590px] lg:mb-4 shadow-xl shadow-gray-500">
-          <h3 className="text-xl my-4 text-center font-semibold">
-            Personal Financial Snapshot
-          </h3>
-          <TopCategories user={user} teamExpenses={expenses} />
-        </section>
         {/* Shared Expenses Snapshot */}
+        <section className="bg-gray-100 w-full rounded-md p-3 lg:w-3/5 mx-auto shadow-xl shadow-gray-500">
+          <h3 className="text-xl my-4 text-center font-semibold">
+            Recent Shared Expenses
+          </h3>
+          <SharedExpenses
+            setSelectedExpense={setSelectedExpense}
+            commonUserTeams={userTeams}
+          />
+        </section>
       </div>
-      <section className="bg-gray-100 w-4/5 rounded-md p-3 md:w-[700px] lg:w-[800px] mx-auto shadow-xl shadow-gray-500">
+      {/* Personal Finance Snapshot */}
+      <section className="bg-gray-100 w-11/12 mx-auto rounded-md p-3 lg:mb-4 shadow-xl shadow-gray-500">
         <h3 className="text-xl my-4 text-center font-semibold">
-          Recent Shared Expenses
+          Personal Financial Snapshot
         </h3>
-        <SharedExpenses
-          setSelectedExpense={setSelectedExpense}
-          commonUserTeams={userTeams}
-        />
+        <TopCategories user={user} teamExpenses={expenses} />
       </section>
     </div>
   )

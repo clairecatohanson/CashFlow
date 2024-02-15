@@ -89,7 +89,7 @@ export const SettlePayment = ({
 
   return (
     // Global Container
-    <div className="bg-gray-100 min-h-screen text-orange-800">
+    <div className="bg-gray-100 min-h-screen text-orange-800 pb-16">
       {/* Header Container */}
       <div className="mb-2 text-center md:text-left w-full bg-gray-200 p-6">
         <h2 className="text-4xl mb-2">Settle Expense</h2>
@@ -152,7 +152,7 @@ export const SettlePayment = ({
               </div>
             </div>
             <div className="flex flex-col justify-center items-center space-y-2">
-              <div className="text-3xl">{selectedExpense.user.firstName}</div>
+              <div className="text-3xl">{selectedExpense.user?.firstName}</div>
               <div className="text-8xl">
                 <i className="fa-solid fa-user"></i>
               </div>

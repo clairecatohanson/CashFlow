@@ -54,7 +54,7 @@ export const UserProfile = ({ user, userTeams, setSelectedExpense }) => {
             userTeams.map((ut) => (
               <li
                 key={`userteam-${ut.id}`}
-                className="w-4/5 text-center p-2 rounded-md even:bg-gray-200 hover:bg-opacity-50 hover:outline hover:outline-2 hover:outline-teal-500/50"
+                className="w-4/5 text-center p-2 rounded-md hover:bg-opacity-50 hover:outline hover:outline-2 hover:outline-teal-500/50"
                 onClick={() => {
                   navigate(`/teams/${ut.teamId}`)
                 }}
