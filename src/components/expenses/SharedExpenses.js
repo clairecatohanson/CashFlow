@@ -6,6 +6,7 @@ import {
   formatDate,
   formatDescription,
 } from "../../utils/functions"
+import { DateFilter } from "../filterbar/DateFilter"
 
 export const SharedExpenses = ({
   user,
@@ -15,6 +16,7 @@ export const SharedExpenses = ({
   const navigate = useNavigate()
 
   const [sharedExpenses, setSharedExpenses] = useState([])
+  const [filteredSharedExpenses, setFilteredSharedExpenses] = useState([])
 
   useEffect(() => {
     if (commonUserTeams.length) {
@@ -57,13 +59,18 @@ export const SharedExpenses = ({
   const renderSharedExpenses = () => {
     return (
       <div className="">
+        <DateFilter
+          filteredExpenses={sharedExpenses}
+          setDateFilteredExpenses={setFilteredSharedExpenses}
+        />
+        <div className="h-4 bg-gray-200"></div>
         <ul className="py-4 text-sm md:text-base">
           <li className="flex flex-nowrap space-x-2 mb-2 p-2 font-semibold md:text-lg">
             <div className="w-1/6 min-w-[100px]">Date</div>
             <div className="w-1/6 min-w-[80px]">Amount</div>
             <div className="w-7/12">Description</div>
           </li>
-          {sharedExpenses.map((expense, i) => {
+          {filteredSharedExpenses.map((expense, i) => {
             if (i < 10) {
               return (
                 <li

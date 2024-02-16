@@ -3,6 +3,7 @@ import { ExpenseList } from "./ExpenseList"
 import { ExpenseDetails } from "./ExpenseDetails"
 import { FilterBar } from "../filterbar/FilterBar"
 import { useNavigate } from "react-router-dom"
+import { DateFilter } from "../filterbar/DateFilter"
 
 export const AllExpenses = ({
   user,
@@ -22,6 +23,7 @@ export const AllExpenses = ({
   const [teamDropdown, setTeamDropdown] = useState(0)
   const [dropdownFilteredExpenses, setDropdownFilteredExpenses] = useState([])
   const [filteredExpenses, setFilteredExpenses] = useState([])
+  const [dateFilteredExpenses, setDateFilteredExpenses] = useState([])
 
   return (
     // Global Container
@@ -51,6 +53,11 @@ export const AllExpenses = ({
       <div className="flex flex-col-reverse justify-between space-y-reverse space-y-4 items-center xl:flex-row xl:justify-between xl:items-start xl:space-y-reverse-0 xl:space-x-4 mt-8 mx-4 pb-12 text-teal-800 rounded-md">
         {/* Expense List Container */}
         <div className="w-full shadow-gray-300 shadow-md bg-gray-100 rounded-md">
+          <DateFilter
+            filteredExpenses={filteredExpenses}
+            dateFilteredExpenses={dateFilteredExpenses}
+            setDateFilteredExpenses={setDateFilteredExpenses}
+          />
           <FilterBar
             categories={categories}
             expenses={expenses}
@@ -68,7 +75,7 @@ export const AllExpenses = ({
           />
           <ExpenseList
             user={user}
-            filteredExpenses={filteredExpenses}
+            dateFilteredExpenses={dateFilteredExpenses}
             userTeams={userTeams}
             setSelectedExpense={setSelectedExpense}
             categories={categories}
