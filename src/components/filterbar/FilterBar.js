@@ -49,7 +49,7 @@ export const FilterBar = ({
     if (personalTeam?.id && userTeams && categories.length) {
       return (
         // Filter bar Container
-        <div className="flex flex-wrap space-y-4 md:flex-nowrap md:space-y-0 md:space-x-8 w-full p-4 bg-gray-200 text-teal-800 rounded-t-md">
+        <div className="flex flex-wrap space-y-4 md:flex-nowrap md:space-y-0 md:space-x-8 w-full p-4 bg-gray-200 text-teal-800">
           {/* Description Search Bar */}
           <div className="flex w-80 bg-white h-10">
             <label
