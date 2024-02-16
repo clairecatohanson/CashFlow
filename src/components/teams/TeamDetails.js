@@ -5,6 +5,7 @@ import { CurrentTeamMembers } from "./CurrentTeamMembers"
 import { TopCategories } from "./TopCategories"
 import { NetTeamDebts } from "./NetTeamDebts"
 import { getExpensesByTeam } from "../../managers/expenseManager"
+import { DateFilter } from "../filterbar/DateFilter"
 
 export const TeamDetails = ({ user }) => {
   const { teamId } = useParams()
@@ -12,6 +13,7 @@ export const TeamDetails = ({ user }) => {
 
   const [currentUserTeams, setCurrentUserTeams] = useState([])
   const [teamExpenses, setTeamExpenses] = useState([])
+  const [expensesByDate, setExpensesByDate] = useState([])
 
   useEffect(() => {
     getUserTeamsByTeam(teamId).then((res) => {
@@ -70,7 +72,13 @@ export const TeamDetails = ({ user }) => {
         <h3 className="text-xl my-4 text-center font-semibold">
           Team Financial Snapshot
         </h3>
-        <TopCategories user={user} teamExpenses={teamExpenses} />
+        <div className="border border-teal-600 pb-4 bg-gray-200 mb-8">
+          <DateFilter
+            filteredExpenses={teamExpenses}
+            setDateFilteredExpenses={setExpensesByDate}
+          />
+        </div>
+        <TopCategories user={user} teamExpenses={expensesByDate} />
       </section>
     </div>
   )

@@ -1,9 +1,13 @@
+import { useState } from "react"
 import { Link } from "react-router-dom"
 // import "./Home.css"
 import { SharedExpenses } from "../expenses/SharedExpenses"
 import { TopCategories } from "../teams/TopCategories"
+import { DateFilter } from "../filterbar/DateFilter"
 
 export const Home = ({ user, expenses, userTeams, setSelectedExpense }) => {
+  const [expensesByDate, setExpensesByDate] = useState([])
+
   return (
     // Global Container
     <div className="min-h-screen bg-gray-300 mt-0 pb-10">
@@ -74,7 +78,13 @@ export const Home = ({ user, expenses, userTeams, setSelectedExpense }) => {
         <h3 className="text-xl my-4 text-center font-semibold">
           Personal Financial Snapshot
         </h3>
-        <TopCategories user={user} teamExpenses={expenses} />
+        <div className="border border-teal-600 pb-4 bg-gray-200 mb-8">
+          <DateFilter
+            filteredExpenses={expenses}
+            setDateFilteredExpenses={setExpensesByDate}
+          />
+        </div>
+        <TopCategories user={user} teamExpenses={expensesByDate} />
       </section>
     </div>
   )
