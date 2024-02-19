@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { createUser, getUserByUsername } from "../../managers/userManager"
+import { createTeam, createUserTeam } from "../../managers/teamManager"
 
 export const Register = (props) => {
   const [user, setUser] = useState({
@@ -15,6 +16,19 @@ export const Register = (props) => {
       ...user,
     }
 
+    // createUser(newUser).then((createdUser) => {
+    //   if (createdUser.hasOwnProperty("id")) {
+    //     localStorage.setItem(
+    //       "numbies_user",
+    //       JSON.stringify({
+    //         id: createdUser.id,
+    //         username: createdUser.username,
+    //       })
+    //     )
+
+    //     navigate("/")
+    //   }
+    // })
     createUser(newUser).then((createdUser) => {
       if (createdUser.hasOwnProperty("id")) {
         localStorage.setItem(
@@ -24,8 +38,17 @@ export const Register = (props) => {
             username: createdUser.username,
           })
         )
-
-        navigate("/")
+        createTeam({
+          name: `${createdUser.firstName} ${createdUser.lastName} Personal`,
+        }).then((teamRes) => {
+          createUserTeam({
+            userId: createdUser.id,
+            teamId: teamRes.id,
+            splitPercent: 100,
+          }).then(() => {
+            navigate("/")
+          })
+        })
       }
     })
   }

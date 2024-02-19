@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { formatCurrency } from "../../utils/functions"
-import { Chart, defaults } from "chart.js/auto"
 import { Pie, Bar } from "react-chartjs-2"
 
 export const TopCategories = ({ user, teamExpenses }) => {
@@ -10,14 +9,6 @@ export const TopCategories = ({ user, teamExpenses }) => {
   const [sortedExpenseData, setSortedExpenseData] = useState([])
   const [expenseGroups, setExpenseGroups] = useState({})
   const [expenseGroupTotals, setExpenseGroupTotals] = useState({})
-
-  defaults.maintainAspectRatio = false
-  defaults.responsive = true
-  defaults.plugins.title.display = true
-  defaults.plugins.title.align = "start"
-  defaults.plugins.title.font.size = 20
-  defaults.plugins.title.color = "black"
-  defaults.plugins.legend.maxHeight = 72
 
   useEffect(() => {
     if (user.userTeams) {

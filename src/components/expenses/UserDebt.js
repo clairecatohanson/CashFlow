@@ -21,7 +21,7 @@ export const UserDebt = ({
   const [userOwed, setUserOwed] = useState(0.0)
 
   useEffect(() => {
-    if (borrowerUT.id) {
+    if (borrowerUT?.id) {
       getUserById(borrowerUT?.userId).then((res) => {
         setParticipant(res)
       })

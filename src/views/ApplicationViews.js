@@ -1,5 +1,6 @@
 import { Routes, Route, Outlet } from "react-router-dom"
 import { useState, useEffect } from "react"
+import { Chart, defaults, CategoryScale, TimeScale } from "chart.js/auto"
 import { UserProfile } from "../components/profile/UserProfile"
 import { getUserById } from "../managers/userManager"
 import { EditProfile } from "../components/profile/EditProfile"
@@ -41,7 +42,16 @@ export const ApplicationViews = () => {
     })
 
     getCategories().then((res) => {
-      setCategories(res)
+      const alphabetized = res.sort((a, b) => {
+        const nameA = a.name.toLowerCase()
+        const nameB = b.name.toLowerCase()
+        if (nameA < nameB) {
+          return -1
+        } else if (nameB < nameA) {
+          return 1
+        } else return 0
+      })
+      setCategories(alphabetized)
     })
   }, [])
 
@@ -74,10 +84,18 @@ export const ApplicationViews = () => {
       const userExpenses = res.filter((expense) =>
         teamIds.includes(expense.team_Id)
       )
-      userExpenses.sort((a, b) => new Date(a.date) - new Date(b.date))
+      userExpenses.sort((a, b) => new Date(b.date) - new Date(a.date))
       setExpenses(userExpenses)
     })
   }
+  Chart.register(CategoryScale, TimeScale)
+  defaults.maintainAspectRatio = false
+  defaults.responsive = true
+  defaults.plugins.title.display = true
+  defaults.plugins.title.align = "start"
+  defaults.plugins.title.font.size = 20
+  defaults.plugins.title.color = "black"
+  defaults.plugins.legend.maxHeight = 72
 
   return (
     <Routes>
@@ -189,6 +207,9 @@ export const ApplicationViews = () => {
               user={user}
               categories={categories}
               setCategories={setCategories}
+              expenses={expenses}
+              userTeams={userTeams}
+              personalTeam={personalTeam}
             />
           }
         />
