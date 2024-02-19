@@ -52,11 +52,12 @@ export const DateFilter = ({ filteredExpenses, setDateFilteredExpenses }) => {
       })
       setDateFilteredExpenses(filteredByDate)
     } else setDateFilteredExpenses(filteredExpenses)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dateRange, filteredExpenses])
 
   return (
     // Date Filter Container
-    <div className="flex flex-col space-y-4 md:flex-row md:flex-nowrap md:space-y-0 md:space-x-8 w-full px-4 pt-4 bg-gray-200 text-teal-800 rounded-t-md">
+    <div className="flex flex-col space-y-4 w-full px-4 pt-4 bg-gray-200 text-teal-800 rounded-t-md">
       {/* This Month / Last Month / 90 Days / YTD / Custom Dropdown */}
       <div className="flex w-80">
         <select
@@ -90,31 +91,35 @@ export const DateFilter = ({ filteredExpenses, setDateFilteredExpenses }) => {
       </div>
       {/* If Custom selected, display date picker container */}
       {dateDropdown === 5 && (
-        <div className="flex space-x-4 w-80">
+        <div className="flex flex-col space-y-4">
           {/* Start Date Input */}
-          <input
-            id="start-date"
-            type="date"
-            onChange={(e) => {
-              const startDate = new Date(e.target.value)
-              const rangeCopy = { ...dateRange }
-              rangeCopy.start = startDate
-              setDateRange(rangeCopy)
-            }}
-            className="h-10 focus:outline-none"
-          />
+          <div>
+            <input
+              id="start-date"
+              type="date"
+              onChange={(e) => {
+                const startDate = new Date(e.target.value)
+                const rangeCopy = { ...dateRange }
+                rangeCopy.start = startDate
+                setDateRange(rangeCopy)
+              }}
+              className="h-10 focus:outline-none"
+            />
+          </div>
           {/* End Date Input */}
-          <input
-            id="end-date"
-            type="date"
-            onChange={(e) => {
-              const endDate = new Date(e.target.value)
-              const rangeCopy = { ...dateRange }
-              rangeCopy.end = endDate
-              setDateRange(rangeCopy)
-            }}
-            className="h-10 focus:outline-none"
-          />
+          <div>
+            <input
+              id="end-date"
+              type="date"
+              onChange={(e) => {
+                const endDate = new Date(e.target.value)
+                const rangeCopy = { ...dateRange }
+                rangeCopy.end = endDate
+                setDateRange(rangeCopy)
+              }}
+              className="h-10 focus:outline-none"
+            />
+          </div>
         </div>
       )}
     </div>

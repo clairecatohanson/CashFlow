@@ -11,17 +11,15 @@ export const NavBar = ({ user, setSelectedExpense }) => {
         {/* Logo */}
         <li className="flex justify-left items-center w-48">
           <Link to="/">
-            <div className="w-10 h-10 bg-orange-100 text-gray-900 text-md text-center rounded">
-              Logo
-            </div>
+            <div className="w-10 h-10  text-gray-900 text-md text-center rounded"></div>
           </Link>
         </li>
         {/* Nav Buttons Container */}
-        <div className="flex justify-between w-72 md:w-96">
+        <div className="flex justify-between w-96">
           {/* Home */}
           <li className="flex justify-center items-center">
             <Link to="/">
-              <div className="w-20 h-10 hover:text-orange-100 bg-teal-500 hover:bg-orange-500 text-gray-100 text-md text-center rounded flex items-center justify-center">
+              <div className="w-24 h-10 hover:text-orange-100 bg-teal-500 hover:bg-orange-500 text-gray-100 text-md text-center rounded flex items-center justify-center">
                 <div>Home</div>
               </div>
             </Link>
@@ -34,7 +32,7 @@ export const NavBar = ({ user, setSelectedExpense }) => {
                 setSelectedExpense({})
               }}
             >
-              <div className="w-20 h-10 hover:text-orange-100 bg-teal-500 hover:bg-orange-500 text-gray-100 text-md text-center rounded flex items-center justify-center">
+              <div className="w-24 h-10 hover:text-orange-100 bg-teal-500 hover:bg-orange-500 text-gray-100 text-md text-center rounded flex items-center justify-center">
                 <div>Expenses</div>
               </div>
             </Link>
@@ -42,8 +40,16 @@ export const NavBar = ({ user, setSelectedExpense }) => {
           {/* Teams */}
           <li className="flex justify-center items-center">
             <Link to="/teams">
-              <div className="w-20 h-10 hover:text-orange-100 bg-teal-500 hover:bg-orange-500 text-gray-100 text-md text-center rounded flex items-center justify-center">
+              <div className="w-24 h-10 hover:text-orange-100 bg-teal-500 hover:bg-orange-500 text-gray-100 text-md text-center rounded flex items-center justify-center">
                 <div>Teams</div>
+              </div>
+            </Link>
+          </li>
+          {/* Categories */}
+          <li className="flex justify-center items-center">
+            <Link to="/categories">
+              <div className="w-24 h-10 hover:text-orange-100 bg-teal-500 hover:bg-orange-500 text-gray-100 text-md text-center rounded flex items-center justify-center">
+                <div>Categories</div>
               </div>
             </Link>
           </li>

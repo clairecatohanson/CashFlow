@@ -3,8 +3,16 @@ import { CategoryForm } from "./CategoryForm"
 import { getCategories } from "../../managers/categoryManager"
 // import "./Categories.css"
 import { CategoryList } from "./CategoryList"
+import { CategoryDashboard } from "./CategoryDashboard"
 
-export const Categories = ({ user, categories, setCategories }) => {
+export const Categories = ({
+  user,
+  categories,
+  setCategories,
+  expenses,
+  userTeams,
+  personalTeam,
+}) => {
   const [publicCategories, setPublicCategories] = useState([])
   const [privateCategories, setPrivateCategories] = useState([])
 
@@ -34,8 +42,18 @@ export const Categories = ({ user, categories, setCategories }) => {
           Standard and custom categories for grouping your expenses
         </h3>
       </div>
+      {/* Categories Dashboard Container */}
+      <div className="w-full mx-2 mt-16 p-4">
+        <CategoryDashboard
+          user={user}
+          expenses={expenses}
+          categories={categories}
+          userTeams={userTeams}
+          personalTeam={personalTeam}
+        />
+      </div>
       {/* Card Container */}
-      <div className="flex flex-col space-y-4 items-center lg:flex-row lg:justify-center lg:items-start lg:space-y-0 lg:space-x-8 lg:max-w-[1500px] lg:mx-auto mt-16 p-4">
+      <div className="flex flex-col-reverse space-y-reverse space-y-4 items-center lg:flex-row lg:justify-center lg:items-start lg:space-y-0 lg:space-x-8 lg:max-w-[1500px] lg:mx-auto mt-4 p-4">
         <div className="flex justify-center w-11/12 lg:w-1/3">
           <CategoryList
             filteredCategories={publicCategories}

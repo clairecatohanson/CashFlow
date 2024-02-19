@@ -31,7 +31,7 @@ export const ExpenseDetails = ({
   const [expenseUserTeams, setExpenseUserTeams] = useState([])
 
   useEffect(() => {
-    if (selectedExpense.id && personalTeam.id && user.id) {
+    if (selectedExpense?.id && personalTeam?.id && user?.id) {
       getUserById(selectedExpense.userId).then((res) => {
         setOriginalPayor(res)
       })
