@@ -5,8 +5,9 @@ import { TeamMembers } from "./TeamMembers"
 import { AddTeamMember } from "./AddTeamMember"
 // import "./Teams.css"
 import { createTeam, createUserTeam } from "../../managers/teamManager"
+import { getUserById } from "../../managers/userManager"
 
-export const CreateTeam = ({ user, getAndSetUserTeams }) => {
+export const CreateTeam = ({ user, setUser, getAndSetUserTeams }) => {
   const navigate = useNavigate()
 
   const [teamInput, setTeamInput] = useState("")
@@ -51,6 +52,9 @@ export const CreateTeam = ({ user, getAndSetUserTeams }) => {
           })
           Promise.all(promises).then(() => {
             getAndSetUserTeams(user)
+            getUserById(user.id).then((res) => {
+              setUser(res)
+            })
             navigate(`/teams/${res.id}`)
           })
         })

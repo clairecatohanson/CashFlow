@@ -56,22 +56,28 @@ export const Expense = ({
   }
 
   return (
-    <li
-      className="flex items-center flex-nowrap space-x-2 p-2 rounded-md even:bg-gray-200 hover:bg-opacity-50 hover:outline hover:outline-2 hover:outline-teal-500/50"
-      key={`expense=${expense.id}`}
-      onClick={() => {
-        setSelectedExpense(expense)
-      }}
-    >
-      <div className="w-1/6 min-w-[100px]">
-        {formatDate(expense.date).withYear}
-      </div>
-      <div className="w-1/6 min-w-[80px]">
-        {expenseAmount.toLocaleString("en-us", formatCurrency)}
-      </div>
-      <div className="w-1/2">{formatDescription(expense.description)}</div>
-      <div className="w-1/6 min-w-[110px]">{categoryName}</div>
-      {renderNeedsAttentionIcon(expense)}
-    </li>
+    <>
+      {expenseAmount ? (
+        <li
+          className="flex items-center flex-nowrap space-x-2 p-2 rounded-md even:bg-gray-200 hover:bg-opacity-50 hover:outline hover:outline-2 hover:outline-teal-500/50"
+          key={`expense-${expense.id}`}
+          onClick={() => {
+            setSelectedExpense(expense)
+          }}
+        >
+          <div className="w-1/6 min-w-[100px]">
+            {formatDate(expense.date).withYear}
+          </div>
+          <div className="w-1/6 min-w-[80px]">
+            {expenseAmount.toLocaleString("en-us", formatCurrency)}
+          </div>
+          <div className="w-1/2">{formatDescription(expense.description)}</div>
+          <div className="w-1/6 min-w-[110px]">{categoryName}</div>
+          {renderNeedsAttentionIcon(expense)}
+        </li>
+      ) : (
+        ""
+      )}
+    </>
   )
 }

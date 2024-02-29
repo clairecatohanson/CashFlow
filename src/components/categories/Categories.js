@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import { CategoryForm } from "./CategoryForm"
-import { getCategories } from "../../managers/categoryManager"
 // import "./Categories.css"
 import { CategoryList } from "./CategoryList"
 import { CategoryDashboard } from "./CategoryDashboard"
@@ -18,12 +17,6 @@ export const Categories = ({
 
   const publicHeading = "Standard Categories"
   const privateHeading = "Custom Categories"
-
-  // useEffect(() => {
-  //   getCategories().then((res) => {
-  //     setCategories(res)
-  //   })
-  // }, [setCategories])
 
   useEffect(() => {
     const publicToAll = categories.filter((c) => c.userId === 100)

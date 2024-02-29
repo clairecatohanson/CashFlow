@@ -8,8 +8,9 @@ import {
   editTeam,
   getUserTeamsByTeam,
 } from "../../managers/teamManager"
+import { getUserById } from "../../managers/userManager"
 
-export const EditTeam = ({ user, getAndSetUserTeams }) => {
+export const EditTeam = ({ user, setUser, getAndSetUserTeams }) => {
   const { teamId } = useParams()
   const navigate = useNavigate()
 
@@ -76,6 +77,9 @@ export const EditTeam = ({ user, getAndSetUserTeams }) => {
             }
             editTeam(teamObj).then(() => {
               getAndSetUserTeams(user)
+              getUserById(user.id).then((res) => {
+                setUser(res)
+              })
               navigate(`/teams/${teamId}`)
             })
           })
