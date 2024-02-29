@@ -19,7 +19,7 @@ export const ExpenseList = ({
       </li>
       {dateFilteredExpenses.map((expense) => (
         <Expense
-          key={`expense=${expense.id}`}
+          key={`expense-${expense.id}`}
           user={user}
           expense={expense}
           userTeams={userTeams}

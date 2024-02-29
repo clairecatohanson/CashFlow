@@ -42,15 +42,6 @@ export const ApplicationViews = () => {
     })
 
     getCategories().then((res) => {
-      // const alphabetized = res.sort((a, b) => {
-      //   const nameA = a.name.toLowerCase()
-      //   const nameB = b.name.toLowerCase()
-      //   if (nameA < nameB) {
-      //     return -1
-      //   } else if (nameB < nameA) {
-      //     return 1
-      //   } else return 0
-      // })
       setCategories(res)
     })
   }, [])
@@ -124,7 +115,6 @@ export const ApplicationViews = () => {
           element={
             <AllExpenses
               user={user}
-              setUser={setUser}
               expenses={expenses}
               personalTeam={personalTeam}
               userTeams={userTeams}
@@ -192,13 +182,21 @@ export const ApplicationViews = () => {
         <Route
           path="teams/:teamId/edit"
           element={
-            <EditTeam user={user} getAndSetUserTeams={getAndSetUserTeams} />
+            <EditTeam
+              user={user}
+              setUser={setUser}
+              getAndSetUserTeams={getAndSetUserTeams}
+            />
           }
         />
         <Route
           path="new-team"
           element={
-            <CreateTeam user={user} getAndSetUserTeams={getAndSetUserTeams} />
+            <CreateTeam
+              user={user}
+              setUser={setUser}
+              getAndSetUserTeams={getAndSetUserTeams}
+            />
           }
         />
         <Route
