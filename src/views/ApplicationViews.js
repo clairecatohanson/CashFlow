@@ -42,16 +42,16 @@ export const ApplicationViews = () => {
     })
 
     getCategories().then((res) => {
-      const alphabetized = res.sort((a, b) => {
-        const nameA = a.name.toLowerCase()
-        const nameB = b.name.toLowerCase()
-        if (nameA < nameB) {
-          return -1
-        } else if (nameB < nameA) {
-          return 1
-        } else return 0
-      })
-      setCategories(alphabetized)
+      // const alphabetized = res.sort((a, b) => {
+      //   const nameA = a.name.toLowerCase()
+      //   const nameB = b.name.toLowerCase()
+      //   if (nameA < nameB) {
+      //     return -1
+      //   } else if (nameB < nameA) {
+      //     return 1
+      //   } else return 0
+      // })
+      setCategories(res)
     })
   }, [])
 
@@ -124,6 +124,7 @@ export const ApplicationViews = () => {
           element={
             <AllExpenses
               user={user}
+              setUser={setUser}
               expenses={expenses}
               personalTeam={personalTeam}
               userTeams={userTeams}

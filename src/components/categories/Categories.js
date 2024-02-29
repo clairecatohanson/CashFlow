@@ -19,11 +19,11 @@ export const Categories = ({
   const publicHeading = "Standard Categories"
   const privateHeading = "Custom Categories"
 
-  useEffect(() => {
-    getCategories().then((res) => {
-      setCategories(res)
-    })
-  }, [setCategories])
+  // useEffect(() => {
+  //   getCategories().then((res) => {
+  //     setCategories(res)
+  //   })
+  // }, [setCategories])
 
   useEffect(() => {
     const publicToAll = categories.filter((c) => c.userId === 100)

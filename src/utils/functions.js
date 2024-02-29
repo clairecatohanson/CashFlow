@@ -35,7 +35,7 @@ export const calculateShare = (expense, user) => {
   const userPersonalUserTeam = user.userTeams.find(
     (ut) => ut.splitPercent === 100
   )
-  if (expense.team_Id === userPersonalUserTeam?.teamId) {
+  if (expense.team_Id === userPersonalUserTeam.teamId) {
     return expense.amount
   } else {
     const utForExpense = user.userTeams.find(
