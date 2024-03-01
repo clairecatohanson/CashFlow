@@ -1160,6 +1160,10 @@
     {
       "id": 9,
       "name": "Mike + John 90/10"
+    },
+    {
+      "name": "test",
+      "id": 10
     }
   ],
   "userTeams": [
@@ -1252,6 +1256,18 @@
       "teamId": 5,
       "splitPercent": 10,
       "id": 18
+    },
+    {
+      "userId": 1,
+      "splitPercent": 20,
+      "teamId": 10,
+      "id": 19
+    },
+    {
+      "userId": 2,
+      "splitPercent": 80,
+      "teamId": 10,
+      "id": 20
     }
   ],
   "payments": [
