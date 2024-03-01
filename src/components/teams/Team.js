@@ -33,7 +33,7 @@ export const Team = ({ ut, teams }) => {
 
   return (
     <>
-      {userCount && expenseCount ? (
+      {userCount ? (
         <li
           className="flex flex-col items-center lg:flex-row lg:text-lg lg:justify-between text-center border-2 rounded-lg p-6 hover:border-teal-600"
           onClick={() => {
