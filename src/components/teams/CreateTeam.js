@@ -34,8 +34,10 @@ export const CreateTeam = ({ user, setUser, getAndSetUserTeams }) => {
 
     let totalPercent = 0
     tempUtsCopy.forEach((tm) => {
-      totalPercent += tm.splitPercent
+      const roundedTmPercent = Math.round(tm.splitPercent * 1000) / 1000
+      totalPercent += roundedTmPercent
     })
+    const roundedTotalPercent = Math.round(totalPercent * 1000) / 1000
 
     if (tempUtsCopy.length === 1 && tempUtsCopy[0].userId === user.id) {
       window.alert("Error: teams must contain at least two members.")
@@ -44,7 +46,7 @@ export const CreateTeam = ({ user, setUser, getAndSetUserTeams }) => {
         "Error: team members must be assigned a percent that is greater than 0."
       )
     } else {
-      if (totalPercent === 100.0) {
+      if (roundedTotalPercent === 100) {
         createTeam(newTeam).then((res) => {
           const promises = tempUtsCopy.map((tm) => {
             tm.teamId = res.id
