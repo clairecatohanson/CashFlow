@@ -28,7 +28,7 @@ export const Expense = ({
       const expenseCategory = categories.find(
         (c) => c.id === expense.categoryId
       )
-      setCategoryName(expenseCategory.name)
+      setCategoryName(expenseCategory?.name)
     }
   }, [categories, expense])
 

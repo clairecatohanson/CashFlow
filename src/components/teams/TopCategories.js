@@ -68,17 +68,17 @@ export const TopCategories = ({ user, teamExpenses }) => {
       }
 
       sortedExpenseData.forEach((expense) => {
-        if (expense.category.groupId === 1) {
+        if (expense.category?.groupId === 1) {
           expenseGroupArrays.Essential.push(expense)
-        } else if (expense.category.groupId === 2) {
+        } else if (expense.category?.groupId === 2) {
           expenseGroupArrays.NonEssential.push(expense)
-        } else if (expense.category.groupId === 3) {
+        } else if (expense.category?.groupId === 3) {
           expenseGroupArrays.Savings.push(expense)
-        } else if (expense.category.groupId === 5) {
+        } else if (expense.category?.groupId === 5) {
           expenseGroupArrays.Business.push(expense)
-        } else if (expense.category.groupId === 6) {
+        } else if (expense.category?.groupId === 6) {
           expenseGroupArrays.Tax.push(expense)
-        } else if (expense.category.groupId === 7) {
+        } else if (expense.category?.groupId === 7) {
           expenseGroupArrays.Special.push(expense)
         }
       })
@@ -105,7 +105,7 @@ export const TopCategories = ({ user, teamExpenses }) => {
         </h3>
         <div className="flex flex-row flex-wrap justify-center items-center space-x-6 text-sm">
           {sortedExpenseData.map((dataObj, i) => {
-            if (dataObj.category.groupId !== 4) {
+            if (dataObj.category?.groupId !== 4) {
               if (i < 4) {
                 return (
                   <div key={`category-${dataObj.categoryId}`} className="mb-4">
