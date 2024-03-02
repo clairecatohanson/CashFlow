@@ -18,6 +18,11 @@ export const EditProfile = ({ user, setUser }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    const expandedUserCopy = { ...user }
+    expandedUserCopy.username = username
+    expandedUserCopy.firstName = firstName
+    expandedUserCopy.lastName = lastName
+
     const userCopy = {
       id: user.id,
       username: username,
@@ -27,7 +32,7 @@ export const EditProfile = ({ user, setUser }) => {
 
     getUserByUsername(username).then((foundUsers) => {
       if (foundUsers[0]?.username === user.username) {
-        setUser(userCopy)
+        setUser(expandedUserCopy)
 
         updateUser(userCopy).then(() => {
           navigate(`/profile/${user.id}`)
@@ -35,7 +40,7 @@ export const EditProfile = ({ user, setUser }) => {
       } else if (foundUsers.length > 0) {
         window.alert("That username is already taken. Please try again.")
       } else {
-        setUser(userCopy)
+        setUser(expandedUserCopy)
 
         updateUser(userCopy).then(() => {
           navigate(`/profile/${user.id}`)
