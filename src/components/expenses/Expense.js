@@ -63,6 +63,11 @@ export const Expense = ({
           key={`expense-${expense.id}`}
           onClick={() => {
             setSelectedExpense(expense)
+            window.scrollTo({
+              top: 0,
+              left: 0,
+              behavior: "smooth",
+            })
           }}
         >
           <div className="w-1/6 min-w-[100px]">
