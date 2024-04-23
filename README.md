@@ -55,6 +55,8 @@ If you would like to start the app without any demo data, register your own uniq
 
 ## Demonstration
 
+Video Embedding Note * the videos linked below will display from an embedded video player on Google Chrome only. You'll have to click each Loom link to view these demonstrations from any other browser. If you would like to view these short videos from an embedded video player rather than opening each link, please open this webpage in Google Chrome. 
+
 ### Home Page - Personal Financial Snapshot
 https://www.loom.com/share/9dfa932548dc43068ee39433032f09d4?sid=3143f5bf-0c00-430f-9294-ffd04b5abb26
 
