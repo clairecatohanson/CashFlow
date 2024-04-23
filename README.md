@@ -53,6 +53,11 @@ Explore the demo data as the fictional user, Mike Brown.
 If you would like to start the app without any demo data, register your own unique username and begin adding customized data.
 
 
+## Demonstration
+
+https://www.loom.com/share/afeda84e7c6b43ad9421e5204bc88fa1?sid=bf35f0e4-9e81-4685-8c54-8b70be48ebc6
+
+
 ## Created By
 Claire Hanson
 
