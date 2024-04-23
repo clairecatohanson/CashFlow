@@ -56,16 +56,16 @@ If you would like to start the app without any demo data, register your own uniq
 ## Demonstration
 
 ### Home Page - Personal Financial Snapshot
-https://www.loom.com/share/9dfa932548dc43068ee39433032f09d4?sid=80dc5829-6e72-4d49-86fa-bf7f086b50cf
+https://www.loom.com/share/9dfa932548dc43068ee39433032f09d4?sid=3143f5bf-0c00-430f-9294-ffd04b5abb26
 
 ### Teams - View Your Expense-Sharing Teams and View Single Team Details
-https://www.loom.com/share/825e8eb75f624f758f7098a92041470d?sid=eb35e39a-cd27-445c-a79b-f90fed181e46
+https://www.loom.com/share/825e8eb75f624f758f7098a92041470d?sid=8f0d01f7-610c-4b95-8ea6-9ad7b53b4e38
 
 ### Expenses View - View Amounts Owed and Settle Your Portion of an Expense
-https://www.loom.com/share/a648651109c34a9398d72f8706394102?sid=9c399fd2-850f-41b8-b633-0ccbba3d7042
+https://www.loom.com/share/a648651109c34a9398d72f8706394102?sid=67b04de3-e8fa-4aef-8968-926a9fe28299
 
 ### Categories - View Spending Analytics By Category and Customize Spending Categories
-https://www.loom.com/share/94368ac617e84bbe818a480cfed8ca49?sid=f0534eb4-7c5c-46fd-9b80-8671bf2c0dd0
+https://www.loom.com/share/94368ac617e84bbe818a480cfed8ca49?sid=e8dfb01d-5458-46c6-86cc-dad58c883292
 
 More features await in the app itself. Check it out as demo_mike to experience all of the features!
 
