@@ -61,6 +61,9 @@ https://www.loom.com/share/9dfa932548dc43068ee39433032f09d4?sid=3143f5bf-0c00-43
 ### Teams - View Your Expense-Sharing Teams and View Single Team Details
 https://www.loom.com/share/825e8eb75f624f758f7098a92041470d?sid=8f0d01f7-610c-4b95-8ea6-9ad7b53b4e38
 
+### Teams - Create a New Expense-Sharing Team
+https://www.loom.com/share/28638e43b76447209c87cec1990add44?sid=e86915a0-f5a1-4ae6-a741-f10f97265f4f
+
 ### Expenses View - View Amounts Owed and Settle Your Portion of an Expense
 https://www.loom.com/share/a648651109c34a9398d72f8706394102?sid=67b04de3-e8fa-4aef-8968-926a9fe28299
 
