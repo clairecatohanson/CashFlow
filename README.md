@@ -1,6 +1,6 @@
 # CashFlow
 
-Welcome to CashFlow! Read the documentation below for a description of the app, the target audience, key features, and installation steps. The app comes pre-loaded with a demo user and demo data, or you can opt to create a new account with no data to fully customize your experience.
+Welcome to CashFlow! Read the documentation below for a description of the app, the target audience, key features, installation steps, and a few demonstration videos. The app comes pre-loaded with a demo user and demo data, or you can opt to create a new account with no data to fully customize your experience.
 
 ## Overview
 
