@@ -34,14 +34,14 @@ Complete the following steps in your terminal in the parent directory where you 
 ### 3. Complete installations.
 `npm install`
 
-### 4. Navigate to the demo_api directory and begin serving the demo database using json-server on port 8088.
-`cd demo_api`
+### 4. Open a second termianl, navigate to the demo_api directory, and begin serving the demo database using json-server on port 8088.
+`cd CashFlow/demo_api`
 
 `json-server demo.json -p 8088 --watch`
 
 Note* json-server should have been installed in step 3. If it was not successfully installed, run `npm install json-server` within the CashFlow directory.
 
-### 5. Start the application.
+### 5. Within the first terminal in the CashFlow directory, start the application.
 `npm start`
 
 This should automatically open a new tab in your browser at the login page.
