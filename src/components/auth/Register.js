@@ -2,6 +2,7 @@ import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { createUser, getUserByUsername } from "../../managers/userManager"
 import { createTeam, createUserTeam } from "../../managers/teamManager"
+import cashflow from "../../images/cashflow-logo.png"
 
 export const Register = (props) => {
   const [user, setUser] = useState({
@@ -16,19 +17,6 @@ export const Register = (props) => {
       ...user,
     }
 
-    // createUser(newUser).then((createdUser) => {
-    //   if (createdUser.hasOwnProperty("id")) {
-    //     localStorage.setItem(
-    //       "numbies_user",
-    //       JSON.stringify({
-    //         id: createdUser.id,
-    //         username: createdUser.username,
-    //       })
-    //     )
-
-    //     navigate("/")
-    //   }
-    // })
     createUser(newUser).then((createdUser) => {
       if (createdUser.hasOwnProperty("id")) {
         localStorage.setItem(
@@ -82,8 +70,8 @@ export const Register = (props) => {
           {/* Logo */}
           <li className="flex justify-center items-center">
             <Link to="/login">
-              <div className="w-14 h-14 bg-orange-100 text-gray-900 font-sans text-xl text-center rounded">
-                Logo
+              <div className="w-14 h-14 bg-orange-100 text-gray-900 font-sans text-center rounded">
+                <img src={cashflow} alt="cashflow logo" />
               </div>
             </Link>
           </li>
@@ -92,7 +80,7 @@ export const Register = (props) => {
             {/* Log In Button */}
             <li className="flex justify-center items-center">
               <Link to="/login">
-                <div className="flex justify-center items-center w-24 h-12 bg-orange-500 text-orange-100 font-sans text-xl text-center rounded">
+                <div className="flex justify-center items-center w-24 h-12 bg-orange-500 text-orange-100 font-sans text-center rounded">
                   <div>Log In</div>
                 </div>
               </Link>
@@ -100,7 +88,7 @@ export const Register = (props) => {
             {/* Register Button */}
             <li className="flex justify-center items-center">
               <Link to="/register">
-                <div className="flex justify-center items-center w-24 h-12 bg-gray-100 text-gray-800 font-sans text-xl text-center rounded">
+                <div className="flex justify-center items-center w-24 h-12 bg-gray-100 text-gray-800 font-sans text-center rounded">
                   <div>Register</div>
                 </div>
               </Link>

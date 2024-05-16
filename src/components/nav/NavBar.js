@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom"
 // import "./NavBar.css"
+import cashflow from "../../images/cashflow-logo.png"
 
 export const NavBar = ({ user, setSelectedExpense }) => {
   const navigate = useNavigate()
@@ -11,7 +12,9 @@ export const NavBar = ({ user, setSelectedExpense }) => {
         {/* Logo */}
         <li className="flex justify-left items-center w-48">
           <Link to="/">
-            <div className="w-10 h-10  text-gray-900 text-md text-center rounded"></div>
+            <div className="w-12 h-12">
+              <img src={cashflow} alt="cashflow logo" className="w-12 h-12" />
+            </div>
           </Link>
         </li>
         {/* Nav Buttons Container */}
