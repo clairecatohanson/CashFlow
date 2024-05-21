@@ -1,4 +1,4 @@
-const apiURL = "http://localhost:8000"
+const apiURL = "https://cashflow-api-956pv.ondigitalocean.app"
 
 const checkError = (res) => {
   if (!res.ok) {
