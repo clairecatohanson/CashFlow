@@ -12,7 +12,7 @@ export const Team = ({ ut, teams }) => {
 
   useEffect(() => {
     if (teams.length && ut.id) {
-      const foundTeam = teams.find((t) => t.id === ut.teamId)
+      const foundTeam = teams.find((t) => t.id === ut.team.id)
       setTeamMatch(foundTeam)
     }
   }, [ut, teams])

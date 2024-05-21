@@ -1,39 +1,30 @@
+import {
+  fetchWithResponse,
+  fetchWithoutResponse,
+  deleteOptions,
+  getOptions,
+  postOptions,
+  putOptions,
+} from "./fetcher"
+
 export const getCategories = async () => {
-  const response = await fetch("http://localhost:8088/categories")
-  return await response.json()
+  return await fetchWithResponse("categories", getOptions())
 }
 
-export const createCateogry = async (newCategory) => {
-  const postOptions = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(newCategory),
-  }
-
-  return await fetch("http://localhost:8088/categories", postOptions)
+export const createCategory = async (newCategory) => {
+  return await fetchWithResponse("categories", postOptions(newCategory))
 }
 
 export const updateCategory = async (updatedCategory) => {
-  const putOptions = {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(updatedCategory),
-  }
-
-  return await fetch(
-    `http://localhost:8088/categories/${updatedCategory.id}`,
-    putOptions
+  return await fetchWithoutResponse(
+    `categories/${updatedCategory.id}`,
+    putOptions(updatedCategory)
   )
 }
 
 export const deleteCategory = async (category) => {
-  const deleteOptions = {
-    method: "DELETE",
-    headers: { "Content-Type": "application/json" },
-  }
-
-  return await fetch(
-    `http://localhost:8088/categories/${category.id}`,
-    deleteOptions
+  return await fetchWithoutResponse(
+    `categories/${category.id}`,
+    deleteOptions()
   )
 }

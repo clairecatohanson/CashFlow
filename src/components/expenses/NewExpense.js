@@ -21,17 +21,23 @@ export const NewExpense = ({
 
   const formHeading = "Enter a New Expense"
   useEffect(() => {
-    setIsShared("")
+    if (user.id && personalTeam.team?.id) {
+      setIsShared("")
 
-    const blankExpense = {
-      date: "",
-      description: "",
-      amount: "",
-      categoryId: "",
-      userId: user.id,
-      team_Id: personalTeam ? personalTeam.teamId : "",
+      const blankExpense = {
+        date: "",
+        description: "",
+        amount: "",
+        categoryId: "",
+        // category: { id: "" },
+        userId: user.id,
+        // user: { id: user.id },
+        team_Id: personalTeam.team.id,
+        // team: { id: personalTeam.team.id },
+      }
+      console.log(blankExpense)
+      setSelectedExpense(blankExpense)
     }
-    setSelectedExpense(blankExpense)
   }, [user, personalTeam])
 
   const renderButtons = () => {

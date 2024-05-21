@@ -9,7 +9,7 @@ export const TeamList = ({ userTeams }) => {
   useEffect(() => {
     getTeams().then((res) => {
       const teamIds = []
-      userTeams.forEach((ut) => teamIds.push(ut.teamId))
+      userTeams.forEach((ut) => teamIds.push(ut.team.id))
       const currentTeams = res.filter((t) => teamIds.includes(t.id))
       setTeams(currentTeams)
     })

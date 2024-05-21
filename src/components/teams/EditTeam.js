@@ -22,6 +22,10 @@ export const EditTeam = ({ user, setUser, getAndSetUserTeams }) => {
   useEffect(() => {
     if (teamId) {
       getUserTeamsByTeam(teamId).then((res) => {
+        res.forEach((ut) => {
+          ut.userId = ut.user.id
+          ut.teamId = ut.team.id
+        })
         setTeamUserTeams(res)
         setTempUserTeams(res)
         setTeamNameInput(res[0].team.name)
@@ -48,14 +52,14 @@ export const EditTeam = ({ user, setUser, getAndSetUserTeams }) => {
 
     let totalPercent = 0
     tempUtsCopy.forEach((tm) => {
-      const roundedTmPercent = Math.round(tm.splitPercent * 1000) / 1000
+      const roundedTmPercent = Math.round(tm.splitFraction * 1000) / 1000
       totalPercent += roundedTmPercent
     })
     const roundedTotalPercent = Math.round(totalPercent * 1000) / 1000
 
-    if (tempUtsCopy.length === 1 && tempUtsCopy[0].userId === user.id) {
+    if (tempUtsCopy.length === 1 && tempUtsCopy[0].user.id === user.id) {
       window.alert("Error: teams must contain at least two members.")
-    } else if (tempUtsCopy.find((ut) => ut.splitPercent <= 0)) {
+    } else if (tempUtsCopy.find((ut) => ut.splitFraction <= 0)) {
       window.alert(
         "Error: team members must be assigned a percent that is greater than 0."
       )
@@ -68,7 +72,7 @@ export const EditTeam = ({ user, setUser, getAndSetUserTeams }) => {
             const newUT = {
               userId: ut.userId,
               teamId: parseInt(teamId),
-              splitPercent: ut.splitPercent,
+              splitFraction: ut.splitFraction,
             }
             return createUserTeam(newUT)
           })

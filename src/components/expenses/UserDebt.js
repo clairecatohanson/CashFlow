@@ -21,15 +21,15 @@ export const UserDebt = ({
   const [userOwed, setUserOwed] = useState(0.0)
 
   useEffect(() => {
-    if (borrowerUT?.id) {
-      getUserById(borrowerUT?.userId).then((res) => {
+    if (borrowerUT.id) {
+      getUserById(borrowerUT.user.id).then((res) => {
         setParticipant(res)
       })
     }
   }, [borrowerUT, selectedExpense])
 
   useEffect(() => {
-    if (selectedExpense.id && !!participant.userTeams?.length) {
+    if (selectedExpense.id && !!participant.user_teams?.length) {
       const participantShare = calculateShare(selectedExpense, participant)
       setUserShare(participantShare)
     }
@@ -50,7 +50,7 @@ export const UserDebt = ({
     return (
       <div className="flex flex-col items-center mb-4">
         <div>
-          {participant.firstName} has paid you{" "}
+          {participant.first_name} has paid you{" "}
           <span className="font-semibold">
             {amountPaid.toLocaleString("en-us", formatCurrency)}
           </span>{" "}
@@ -68,7 +68,7 @@ export const UserDebt = ({
     return (
       <div className="flex flex-col items-center">
         <div className="mb-4">
-          You have paid {originalPayor.firstName}{" "}
+          You have paid {originalPayor.first_name}{" "}
           <span className="font-semibold">
             {amountPaid.toLocaleString("en-us", formatCurrency)}
           </span>{" "}

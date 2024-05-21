@@ -41,7 +41,7 @@ export const SettlePayment = ({
         const fractionalShare = calculateShare(selectedExpense, user)
         setPayorShare(fractionalShare)
       }
-      const payorUT = UTs.find((ut) => ut.teamId === selectedExpense.team_Id)
+      const payorUT = UTs.find((ut) => ut.team.id === selectedExpense.team.id)
       setPayorUserTeam(payorUT)
     })
 
@@ -63,7 +63,7 @@ export const SettlePayment = ({
     if (amountRadio === "full-amount") {
       payAmount = payorOwes
     } else if (amountRadio === "custom-amount-radio") {
-      payAmount = parseInt(amountInput)
+      payAmount = parseFloat(amountInput)
     }
 
     const datetime = new Date().toISOString()
@@ -72,7 +72,6 @@ export const SettlePayment = ({
       expenseId: selectedExpense.id,
       amount: payAmount,
       datePaid: datetime,
-      userId: user.id,
     }
 
     createPayment(newPayment).then(() => {
@@ -115,7 +114,7 @@ export const SettlePayment = ({
             <div className="text-center leading-[3rem] md:leading-normal text-lg md:text-xl tracking-wide">
               Based on your percentage share of{" "}
               <span className="font-semibold bg-orange-300 p-2 rounded-lg">
-                {payorUserTeam?.splitPercent}%
+                {payorUserTeam?.splitFraction}%
               </span>{" "}
               in the team{" "}
               <span className="font-semibold bg-orange-300 px-2 md:p-2 rounded-lg inline-block">
@@ -152,7 +151,7 @@ export const SettlePayment = ({
               </div>
             </div>
             <div className="flex flex-col justify-center items-center space-y-2">
-              <div className="text-3xl">{selectedExpense.user?.firstName}</div>
+              <div className="text-3xl">{selectedExpense.user?.first_name}</div>
               <div className="text-8xl">
                 <i className="fa-solid fa-user"></i>
               </div>

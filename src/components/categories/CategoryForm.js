@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { createCateogry, getCategories } from "../../managers/categoryManager"
+import { createCategory, getCategories } from "../../managers/categoryManager"
 
 export const CategoryForm = ({ user, categories, setCategories }) => {
   const [category, setCategory] = useState("")
@@ -31,10 +31,11 @@ export const CategoryForm = ({ user, categories, setCategories }) => {
         groupId: groupId,
       }
 
-      createCateogry(newCategory).then(() => {
+      createCategory(newCategory).then(() => {
         getCategories().then((res) => {
           setCategories(res)
           setCategory("")
+          setGroupId("")
         })
       })
     }
@@ -58,7 +59,7 @@ export const CategoryForm = ({ user, categories, setCategories }) => {
       </fieldset>
       <fieldset className="w-full text-center my-6">
         <select
-          defaultValue=""
+          value={groupId}
           onChange={(e) => setGroupId(parseInt(e.target.value))}
           name="expense-group"
           className="w-4/5 bg-white rounded h-10 text-center text-orange-800"

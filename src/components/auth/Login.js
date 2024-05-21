@@ -1,32 +1,25 @@
 import { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
-import { getUserByUsername } from "../../managers/userManager"
+import { login } from "../../managers/userManager"
 // import "./Login.css"
 import cashflow from "../../images/cashflow-logo.png"
 
 export const Login = () => {
   const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
   const navigate = useNavigate()
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault()
 
-    return getUserByUsername(username).then((foundUsers) => {
-      if (foundUsers.length === 1) {
-        const user = foundUsers[0]
-        localStorage.setItem(
-          "numbies_user",
-          JSON.stringify({
-            id: user.id,
-            username: user.username,
-          })
-        )
-
-        navigate("/")
-      } else {
-        window.alert("Invalid login")
-      }
-    })
+    const userCredentials = { username: username, password: password }
+    const response = await login(userCredentials)
+    if (response.valid) {
+      localStorage.setItem("numbies_user", JSON.stringify(response))
+      navigate("/")
+    } else {
+      window.alert("Invalid login")
+    }
   }
 
   return (
@@ -85,6 +78,20 @@ export const Login = () => {
                 placeholder="Enter your username"
                 required
                 autoFocus
+              />
+            </div>
+          </fieldset>
+          {/* Input password */}
+          <fieldset>
+            <div className="flex justify-center items-center">
+              <input
+                type="password"
+                id="password"
+                value={password}
+                className="w-4/5 text-center text-orange-700 m-6 p-4 border border-teal-400 focus:outline-none"
+                onChange={(evt) => setPassword(evt.target.value)}
+                placeholder="Enter your password"
+                required
               />
             </div>
           </fieldset>

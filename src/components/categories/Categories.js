@@ -19,9 +19,9 @@ export const Categories = ({
   const privateHeading = "Custom Categories"
 
   useEffect(() => {
-    const publicToAll = categories.filter((c) => c.userId === 100)
+    const publicToAll = categories.filter((c) => c.user === 100)
     setPublicCategories(publicToAll)
-    const userCategories = categories.filter((c) => c.userId === user.id)
+    const userCategories = categories.filter((c) => c.user === user.id)
     setPrivateCategories(userCategories)
   }, [categories, user])
 

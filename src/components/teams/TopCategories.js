@@ -11,24 +11,24 @@ export const TopCategories = ({ user, teamExpenses }) => {
   const [expenseGroupTotals, setExpenseGroupTotals] = useState({})
 
   useEffect(() => {
-    if (user.userTeams) {
+    if (user.user_teams?.length && teamExpenses.length) {
       const expenseData = []
       teamExpenses.forEach((expense) => {
         let adjustedAmount = 0
         if (!teamId) {
-          const expenseTeamId = expense.team_Id
-          const foundUT = user.userTeams.find(
-            (ut) => ut.teamId === expenseTeamId
+          const expenseTeamId = expense.team.id
+          const foundUT = user.user_teams.find(
+            (ut) => ut.team === expenseTeamId
           )
-          adjustedAmount = (foundUT.splitPercent * expense.amount) / 100
+          adjustedAmount = (foundUT.splitFraction * expense.amount) / 100
         } else {
           adjustedAmount = expense.amount
         }
         expenseData.push({
-          categoryId: expense.categoryId,
+          categoryId: expense.category.id,
           category: expense.category,
           amount: adjustedAmount,
-          teamId: expense.team_Id,
+          teamId: expense.team.id,
         })
       })
 
@@ -68,17 +68,17 @@ export const TopCategories = ({ user, teamExpenses }) => {
       }
 
       sortedExpenseData.forEach((expense) => {
-        if (expense.category?.groupId === 1) {
+        if (expense.category?.group === 1) {
           expenseGroupArrays.Essential.push(expense)
-        } else if (expense.category?.groupId === 2) {
+        } else if (expense.category?.group === 2) {
           expenseGroupArrays.NonEssential.push(expense)
-        } else if (expense.category?.groupId === 3) {
+        } else if (expense.category?.group === 3) {
           expenseGroupArrays.Savings.push(expense)
-        } else if (expense.category?.groupId === 5) {
+        } else if (expense.category?.group === 5) {
           expenseGroupArrays.Business.push(expense)
-        } else if (expense.category?.groupId === 6) {
+        } else if (expense.category?.group === 6) {
           expenseGroupArrays.Tax.push(expense)
-        } else if (expense.category?.groupId === 7) {
+        } else if (expense.category?.group === 7) {
           expenseGroupArrays.Special.push(expense)
         }
       })

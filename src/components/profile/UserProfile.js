@@ -25,11 +25,11 @@ export const UserProfile = ({ user, userTeams, setSelectedExpense }) => {
       } else {
         const sharedUTs = []
         const utPromises = userTeams.map((ut) => {
-          return getUserTeamsByTeam(ut.teamId)
+          return getUserTeamsByTeam(ut.team.id)
         })
         Promise.all(utPromises).then((res) => {
           res.forEach((arr) => {
-            const foundUT = arr.find((ut) => ut.userId === parseInt(userId))
+            const foundUT = arr.find((ut) => ut.user.id === parseInt(userId))
             if (foundUT) {
               sharedUTs.push(foundUT)
             }
@@ -56,7 +56,7 @@ export const UserProfile = ({ user, userTeams, setSelectedExpense }) => {
                 key={`userteam-${ut.id}`}
                 className="w-4/5 text-center p-2 rounded-md hover:bg-opacity-50 hover:outline hover:outline-2 hover:outline-teal-500/50"
                 onClick={() => {
-                  navigate(`/teams/${ut.teamId}`)
+                  navigate(`/teams/${ut.team.id}`)
                 }}
               >
                 {ut.team.name}
@@ -76,7 +76,7 @@ export const UserProfile = ({ user, userTeams, setSelectedExpense }) => {
     return (
       <div className="w-11/12 lg:w-1/2 bg-gray-100 rounded-md p-3 mx-4 shadow-xl shadow-gray-500 h-fit">
         <h3 className="text-xl my-4 text-center font-semibold">
-          Your Teams with {userProfile.firstName}
+          Your Teams with {userProfile.first_name}
         </h3>
         <ul className="flex flex-col items-center">
           {commonUserTeams.length ? (
@@ -85,7 +85,7 @@ export const UserProfile = ({ user, userTeams, setSelectedExpense }) => {
                 key={`userteam-${ut.id}`}
                 className="w-4/5 text-center p-2 rounded-md hover:bg-opacity-50 hover:outline hover:outline-2 hover:outline-teal-500/50"
                 onClick={() => {
-                  navigate(`/teams/${ut.teamId}`)
+                  navigate(`/teams/${ut.team.id}`)
                 }}
               >
                 {ut.team.name}
@@ -114,7 +114,7 @@ export const UserProfile = ({ user, userTeams, setSelectedExpense }) => {
           </div>
           {/* Name */}
           <div className="text-4xl tracking-wide">
-            {userProfile.firstName} {userProfile.lastName}
+            {userProfile.first_name} {userProfile.last_name}
           </div>
           {/* Username */}
           <div className="text-xl">@{userProfile.username}</div>

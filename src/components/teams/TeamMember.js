@@ -18,9 +18,9 @@ export const TeamMember = ({
       getUserById(userTeam.userId).then((res) => {
         setCurrentTM(res)
       })
-      setPercentInput(userTeam.splitPercent)
+      setPercentInput(userTeam.splitFraction)
     }
-    if (!userTeam.splitPercent) {
+    if (!userTeam.splitFraction) {
       setIsEditable(true)
     }
   }, [userTeam])
@@ -29,7 +29,7 @@ export const TeamMember = ({
     if (percentInput) {
       const updatedUserTeam = {
         userId: userTeam.userId,
-        splitPercent: parseFloat(percentInput),
+        splitFraction: parseFloat(percentInput),
       }
 
       const foundIndex = tempUserTeams.findIndex(
@@ -47,6 +47,7 @@ export const TeamMember = ({
   }
 
   const handleDelete = (e) => {
+    e.preventDefault()
     if (userTeam.userId === user.id) {
       window.alert(
         "Error: you cannot remove yourself from a team that you are creating or editing."
@@ -69,8 +70,8 @@ export const TeamMember = ({
   }
 
   const handleEdit = (userTeam) => {
-    if (userTeam.splitPercent) {
-      setPercentInput(userTeam.splitPercent)
+    if (userTeam.splitFraction) {
+      setPercentInput(userTeam.splitFraction)
     }
     setIsEditable(true)
   }
@@ -80,7 +81,7 @@ export const TeamMember = ({
       (ut) => ut.userId === userTeam.userId
     )
     const teamUTsCopy = structuredClone(teamUserTeams)
-    teamUTsCopy[foundTeamUtIndex].splitPercent = parseFloat(percentInput)
+    teamUTsCopy[foundTeamUtIndex].splitFraction = parseFloat(percentInput)
     setTeamUserTeams(teamUTsCopy)
     setIsEditable(false)
   }
@@ -103,14 +104,13 @@ export const TeamMember = ({
   return (
     <li className="flex justify-end items-center space-x-4">
       <div className="w-[200px]">
-        {currentTM.firstName} {currentTM.lastName}
+        {currentTM.first_name} {currentTM.last_name}
       </div>
       {isEditable ? (
         <div className="flex justify-start items-center space-x-1 w-1/3">
           <label htmlFor={`userTeam-${userTeam.userId}-percent`}>%</label>
           <input
             type="number"
-            // autoFocus
             id={`userTeam-${userTeam.userId}-percent`}
             className="w-[4.5rem] h-10 text-center outline outline-1 rounded"
             value={percentInput}

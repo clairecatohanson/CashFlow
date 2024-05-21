@@ -21,18 +21,18 @@ export const FilterBar = ({
       setDropdownFilteredExpenses(expenses)
     } else if (categoryDropdown && !teamDropdown) {
       const categoryMatches = expenses.filter(
-        (e) => e.categoryId === categoryDropdown
+        (e) => e.category.id === categoryDropdown
       )
       setDropdownFilteredExpenses(categoryMatches)
     } else if (!categoryDropdown && teamDropdown) {
-      const teamMatches = expenses.filter((e) => e.team_Id === teamDropdown)
+      const teamMatches = expenses.filter((e) => e.team.id === teamDropdown)
       setDropdownFilteredExpenses(teamMatches)
     } else if (categoryDropdown && teamDropdown) {
       const categoryMatches = expenses.filter(
-        (e) => e.categoryId === categoryDropdown
+        (e) => e.category.id === categoryDropdown
       )
       const categoryTeamMatches = categoryMatches.filter(
-        (e) => e.team_Id === teamDropdown
+        (e) => e.team.id === teamDropdown
       )
       setDropdownFilteredExpenses(categoryTeamMatches)
     }
@@ -83,12 +83,12 @@ export const FilterBar = ({
                   Team
                 </option>
                 <option value="0">All Teams</option>
-                <option value={personalTeam.teamId}>Personal Expenses</option>
+                <option value={personalTeam.team.id}>Personal Expenses</option>
                 {userTeams.map((ut) => (
                   <option
-                    key={`team-${ut.teamId}`}
-                    value={ut.teamId}
-                    id={ut.teamId}
+                    key={`team-${ut.team.id}`}
+                    value={ut.team.id}
+                    id={ut.team.id}
                   >
                     {ut.team.name}
                   </option>

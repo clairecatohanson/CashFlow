@@ -7,27 +7,27 @@ export const EditProfile = ({ user, setUser }) => {
   const navigate = useNavigate()
 
   const [username, setUsername] = useState(user.username)
-  const [firstName, setFirstName] = useState(user.firstName)
-  const [lastName, setLastName] = useState(user.lastName)
+  const [firstName, setFirstName] = useState(user.first_name)
+  const [lastName, setLastName] = useState(user.last_name)
 
   useEffect(() => {
     setUsername(user.username)
-    setFirstName(user.firstName)
-    setLastName(user.lastName)
+    setFirstName(user.first_name)
+    setLastName(user.last_name)
   }, [user])
 
   const handleSubmit = (e) => {
     e.preventDefault()
     const expandedUserCopy = { ...user }
     expandedUserCopy.username = username
-    expandedUserCopy.firstName = firstName
-    expandedUserCopy.lastName = lastName
+    expandedUserCopy.first_name = firstName
+    expandedUserCopy.last_name = lastName
 
     const userCopy = {
       id: user.id,
       username: username,
-      firstName: firstName,
-      lastName: lastName,
+      first_name: firstName,
+      last_name: lastName,
     }
 
     getUserByUsername(username).then((foundUsers) => {

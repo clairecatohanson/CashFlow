@@ -1,23 +1,19 @@
-export const deletePayment = async (id) => {
-  const deleteOptions = {
-    method: "DELETE",
-  }
+import {
+  fetchWithResponse,
+  fetchWithoutResponse,
+  deleteOptions,
+  getOptions,
+  postOptions,
+} from "./fetcher"
 
-  return await fetch(`http://localhost:8088/payments/${id}`, deleteOptions)
+export const deletePayment = async (id) => {
+  return await fetchWithoutResponse(`payments/${id}`, deleteOptions())
 }
 
 export const getPayments = async () => {
-  const response = await fetch("http://localhost:8088/payments")
-  return await response.json()
+  return await fetchWithResponse("payments", getOptions())
 }
 
 export const createPayment = async (payment) => {
-  const postOptions = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payment),
-  }
-
-  const response = await fetch("http://localhost:8088/payments", postOptions)
-  return await response.json()
+  return await fetchWithResponse("payments", postOptions(payment))
 }

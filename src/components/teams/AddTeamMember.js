@@ -44,7 +44,7 @@ export const AddTeamMember = ({
 
     const newUserTeam = {
       userId: foundUser.id,
-      splitPercent: "",
+      splitFraction: "",
     }
     const utArrayCopy = structuredClone(teamUserTeams)
     const utArrayUserIds = []
@@ -72,7 +72,7 @@ export const AddTeamMember = ({
         <div className="flex flex-col space-y-2 items-start">
           <div className="">@{foundUser.username}</div>
           <div className="">
-            {foundUser.firstName} {foundUser.lastName}
+            {foundUser.first_name} {foundUser.last_name}
           </div>
         </div>
         <div className="flex justify-center">

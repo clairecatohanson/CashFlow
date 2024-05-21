@@ -49,31 +49,35 @@ export const ApplicationViews = () => {
   const getAndSetUserTeams = (user) => {
     getUserTeamsByUser(user).then((res) => {
       const selfRemoved = res.filter(
-        (userTeam) => userTeam.splitPercent !== 100
+        (userTeam) => userTeam.splitFraction !== 100
       )
-      const self = res.find((userTeam) => userTeam.splitPercent === 100)
+      const self = res.find((userTeam) => userTeam.splitFraction === 100)
       setUserTeams(selfRemoved)
       setPersonalTeam(self)
     })
   }
   useEffect(() => {
-    getAndSetUserTeams(user)
+    if (user.id) {
+      getAndSetUserTeams(user)
+    }
   }, [user])
 
   useEffect(() => {
-    getAndSetUserExpenses()
+    if (userTeams.length && personalTeam.team) {
+      getAndSetUserExpenses()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userTeams, personalTeam])
 
   const getAndSetUserExpenses = () => {
-    const teamIds = [personalTeam?.teamId]
+    const teamIds = [personalTeam.team?.id]
     userTeams.forEach((ut) => {
-      teamIds.push(ut.teamId)
+      teamIds.push(ut.team.id)
     })
 
     getExpensesWithDetails().then((res) => {
       const userExpenses = res.filter((expense) =>
-        teamIds.includes(expense.team_Id)
+        teamIds.includes(expense.team.id)
       )
       userExpenses.sort((a, b) => new Date(b.date) - new Date(a.date))
       setExpenses(userExpenses)

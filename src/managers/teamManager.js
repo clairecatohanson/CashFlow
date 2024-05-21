@@ -1,69 +1,50 @@
+import {
+  fetchWithResponse,
+  fetchWithoutResponse,
+  deleteOptions,
+  getOptions,
+  postOptions,
+  putOptions,
+} from "./fetcher"
+
 export const getUserTeamsByUser = async (user) => {
-  const response = await fetch(
-    `http://localhost:8088/userTeams?userId=${user.id}&_expand=team`
+  return await fetchWithResponse(
+    `userteams?userId=${user.id}&_expand=team`,
+    getOptions()
   )
-  return await response.json()
 }
 
 export const getUserTeamsByTeam = async (teamId) => {
-  const response = await fetch(
-    `http://localhost:8088/userTeams?teamId=${teamId}&_expand=user&_expand=team`
+  return await fetchWithResponse(
+    `userteams?teamId=${teamId}&_expand=user&_expand=team`,
+    getOptions()
   )
-  return await response.json()
 }
 
 export const createTeam = async (newTeam) => {
-  const postOptions = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(newTeam),
-  }
-
-  const response = await fetch("http://localhost:8088/teams", postOptions)
-  return response.json()
+  return await fetchWithResponse("teams", postOptions(newTeam))
 }
 
 export const createUserTeam = async (userTeam) => {
-  const postOptions = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(userTeam),
-  }
-
-  const response = await fetch("http://localhost:8088/userTeams", postOptions)
-  return await response.json()
+  return await fetchWithResponse("userteams", postOptions(userTeam))
 }
 
 export const deleteTeam = async (teamId) => {
-  const deleteOptions = {
-    method: "DELETE",
-  }
-  return await fetch(`http://localhost:8088/teams/${teamId}`, deleteOptions)
+  return await fetchWithoutResponse(`teams/${teamId}`, deleteOptions())
 }
 
 export const editTeam = async (team) => {
-  const putOptions = {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(team),
-  }
-  return await fetch(`http://localhost:8088/teams/${team.id}`, putOptions)
+  return await fetchWithoutResponse(`teams/${team.id}`, putOptions(team))
 }
 
 export const getTeams = async () => {
-  const response = await fetch("http://localhost:8088/teams")
-  return await response.json()
+  return await fetchWithResponse("teams", getOptions())
 }
 
 export const getTeamById = async (teamId) => {
-  const response = await fetch(`http://localhost:8088/teams/${teamId}`)
-  return await response.json()
+  return await fetchWithResponse(`teams/${teamId}`, getOptions())
 }
 
 export const deleteUserTeam = async (userTeamId) => {
-  const deleteOptions = { method: "DELETE" }
-  return await fetch(
-    `http://localhost:8088/userTeams/${userTeamId}`,
-    deleteOptions
-  )
+  return await fetchWithoutResponse(`userteams/${userTeamId}`, deleteOptions())
 }
