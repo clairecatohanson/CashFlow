@@ -13,7 +13,7 @@ export const Home = ({ user, expenses, userTeams, setSelectedExpense }) => {
     <div className="min-h-screen bg-gray-300 mt-0 pb-10">
       {/* Greeting */}
       <div className="font-medium tracking-normal-wide text-5xl italic text-center py-14">
-        Hello, {user.firstName}
+        Hello, {user.first_name}
       </div>
       {/* Top 2 Cards Container */}
       <div className="flex flex-col w-11/12 mx-auto mb-6 justify-center items-start space-y-6 md:w-[700px] lg:flex-row lg:flex-wrap lg:space-y-0 lg:w-11/12">

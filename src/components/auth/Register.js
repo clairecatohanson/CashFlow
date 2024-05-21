@@ -1,12 +1,13 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import { createUser, getUserByUsername } from "../../managers/userManager"
+import { createUser } from "../../managers/userManager"
 import { createTeam, createUserTeam } from "../../managers/teamManager"
 import cashflow from "../../images/cashflow-logo.png"
 
 export const Register = (props) => {
   const [user, setUser] = useState({
     firstName: "",
+    password: "",
     lastName: "",
     username: "",
   })
@@ -18,42 +19,27 @@ export const Register = (props) => {
     }
 
     createUser(newUser).then((createdUser) => {
-      if (createdUser.hasOwnProperty("id")) {
-        localStorage.setItem(
-          "numbies_user",
-          JSON.stringify({
-            id: createdUser.id,
-            username: createdUser.username,
-          })
-        )
-        createTeam({
-          name: `${createdUser.firstName} ${createdUser.lastName} Personal`,
-        }).then((teamRes) => {
-          createUserTeam({
-            userId: createdUser.id,
-            teamId: teamRes.id,
-            splitPercent: 100,
-          }).then(() => {
-            navigate("/")
-          })
-        })
+      if (createdUser.valid) {
+        localStorage.setItem("numbies_user", JSON.stringify(createdUser))
+        navigate("/")
+        // createTeam({
+        //   name: `${createdUser.first_name} ${createdUser.last_name} Personal`,
+        // }).then((teamRes) => {
+        //   createUserTeam({
+        //     userId: createdUser.id,
+        //     teamId: teamRes.id,
+        //     splitPercent: 100,
+        //   }).then(() => {
+        //     navigate("/")
+        //   })
+        // })
       }
     })
   }
 
   const handleRegister = (e) => {
     e.preventDefault()
-    getUserByUsername(user.username).then((response) => {
-      if (response.length > 0) {
-        // Duplicate username. No good.
-        window.alert(
-          "Account with that username already exists. Please try a new one."
-        )
-      } else {
-        // Good username, create user.
-        registerNewUser()
-      }
-    })
+    registerNewUser()
   }
 
   const updateUser = (evt) => {
@@ -106,20 +92,7 @@ export const Register = (props) => {
             </h1>
             <h2 className="text-2xl text-gray-900">Please Register</h2>
           </div>
-          {/* Input Username */}
-          <fieldset>
-            <div className="flex justify-center items-center">
-              <input
-                onChange={updateUser}
-                type="text"
-                id="username"
-                className="w-4/5 text-center text-orange-700 m-6 p-4 border border-teal-400 focus:outline-none"
-                placeholder="Username"
-                required
-                autoFocus
-              />
-            </div>
-          </fieldset>
+
           {/* Input First Name */}
           <fieldset>
             <div className="flex justify-center items-center">
@@ -142,6 +115,33 @@ export const Register = (props) => {
                 id="lastName"
                 className="w-4/5 text-center text-orange-700 m-6 p-4 border border-teal-400 focus:outline-none"
                 placeholder="Last name"
+                required
+              />
+            </div>
+          </fieldset>
+          {/* Input Username */}
+          <fieldset>
+            <div className="flex justify-center items-center">
+              <input
+                onChange={updateUser}
+                type="text"
+                id="username"
+                className="w-4/5 text-center text-orange-700 m-6 p-4 border border-teal-400 focus:outline-none"
+                placeholder="Username"
+                required
+                autoFocus
+              />
+            </div>
+          </fieldset>
+          {/* Input Password */}
+          <fieldset>
+            <div className="flex justify-center items-center">
+              <input
+                onChange={updateUser}
+                type="password"
+                id="password"
+                className="w-4/5 text-center text-orange-700 m-6 p-4 border border-teal-400 focus:outline-none"
+                placeholder="Password"
                 required
               />
             </div>

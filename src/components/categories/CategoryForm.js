@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { createCateogry, getCategories } from "../../managers/categoryManager"
+import { createCategory, getCategories } from "../../managers/categoryManager"
 
 export const CategoryForm = ({ user, categories, setCategories }) => {
   const [category, setCategory] = useState("")
@@ -31,7 +31,7 @@ export const CategoryForm = ({ user, categories, setCategories }) => {
         groupId: groupId,
       }
 
-      createCateogry(newCategory).then(() => {
+      createCategory(newCategory).then(() => {
         getCategories().then((res) => {
           setCategories(res)
           setCategory("")

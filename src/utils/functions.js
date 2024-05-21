@@ -32,17 +32,17 @@ export const formatDescription = (description) => {
 }
 
 export const calculateShare = (expense, user) => {
-  const userPersonalUserTeam = user.userTeams.find(
-    (ut) => ut.splitPercent === 100
+  const userPersonalUserTeam = user.user_teams.find(
+    (ut) => ut.splitFraction === 100
   )
-  if (expense.team_Id === userPersonalUserTeam.teamId) {
+  if (expense.team.id === userPersonalUserTeam.team.id) {
     return expense.amount
   } else {
-    const utForExpense = user.userTeams.find(
-      (ut) => ut.teamId === expense.team_Id
+    const utForExpense = user.user_teams.find(
+      (ut) => ut.team === expense.team.id
     )
 
-    const userPercent = utForExpense?.splitPercent
+    const userPercent = utForExpense?.splitFraction
     const userTotal = (expense.amount * userPercent) / 100
     return userTotal
   }
@@ -53,7 +53,7 @@ export const calculatePaid = (selectedExpense, participant) => {
 
   if (selectedExpense.payments.length) {
     const participantPayments = selectedExpense.payments.filter(
-      (p) => p.userId === participant.id
+      (p) => p.user === participant.id
     )
     participantPayments.forEach((p) => (amountPaid += p.amount))
   }

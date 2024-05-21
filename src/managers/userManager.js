@@ -1,35 +1,42 @@
+import {
+  fetchWithResponse,
+  fetchWithoutResponse,
+  getOptions,
+  putOptions,
+} from "./fetcher"
+
 export const createUser = async (newUser) => {
-  const postOptions = {
+  const postDetails = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(newUser),
   }
-  const response = await fetch("http://localhost:8088/users", postOptions)
-  return await response.json()
+  return await fetchWithResponse("register", postDetails)
+}
+
+export const login = async (user) => {
+  const postDetails = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(user),
+  }
+  return await fetchWithResponse("login", postDetails)
 }
 
 export const getUserByUsername = async (username) => {
-  const response = await fetch(
-    `http://localhost:8088/users?username=${username}`
-  )
-  return await response.json()
+  return await fetchWithResponse(`users?username=${username}`, getOptions())
 }
 
 export const getUserById = async (userId) => {
-  const response = await fetch(
-    `http://localhost:8088/users/${userId}?_embed=userTeams`
+  return await fetchWithResponse(
+    `users/${userId}?_embed=userTeams`,
+    getOptions()
   )
-  return await response.json()
 }
 
 export const updateUser = async (updatedUser) => {
-  const putOptions = {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(updatedUser),
-  }
-  return await fetch(
-    `http://localhost:8088/users/${updatedUser.id}`,
-    putOptions
+  return await fetchWithoutResponse(
+    `users/${updatedUser.id}`,
+    putOptions(updatedUser)
   )
 }

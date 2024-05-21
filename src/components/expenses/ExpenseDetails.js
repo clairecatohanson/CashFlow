@@ -31,18 +31,21 @@ export const ExpenseDetails = ({
   const [expenseUserTeams, setExpenseUserTeams] = useState([])
 
   useEffect(() => {
-    if (selectedExpense?.id && personalTeam?.id && user?.id) {
-      getUserById(selectedExpense.userId).then((res) => {
-        setOriginalPayor(res)
+    if (selectedExpense.user?.id && personalTeam.team?.id && user.id) {
+      const expenseUserId = selectedExpense.user.id
+      getUserById(expenseUserId).then((res) => {
+        if (res) {
+          setOriginalPayor(res)
+        }
       })
 
-      if (selectedExpense.team_Id === personalTeam.teamId) {
+      if (selectedExpense.team.id === personalTeam.team.id) {
         setIsPersonal(true)
         setIsPaidByUser(true)
       } else {
         setIsPersonal(false)
         setIsPaidByUser(false)
-        if (selectedExpense.userId === user.id) {
+        if (selectedExpense.user.id === user.id) {
           setIsPaidByUser(true)
         }
       }
@@ -50,15 +53,15 @@ export const ExpenseDetails = ({
   }, [selectedExpense, personalTeam, user])
 
   useEffect(() => {
-    if (user.userTeams && selectedExpense.id && userTeams.length) {
+    if (user.user_teams && selectedExpense.id && userTeams.length) {
       const loggedInUserShare = calculateShare(selectedExpense, user)
       setCurrentUserShare(loggedInUserShare)
     }
 
-    if (selectedExpense.team_Id) {
-      getUserTeamsByTeam(selectedExpense.team_Id).then((UTs) => {
+    if (selectedExpense.team?.id && user.id) {
+      getUserTeamsByTeam(selectedExpense.team.id).then((UTs) => {
         setExpenseUserTeams(UTs)
-        const selfRemoved = UTs.filter((ut) => ut.userId !== user.id)
+        const selfRemoved = UTs.filter((ut) => ut.user.id !== user.id)
         setBorrowers(selfRemoved)
       })
     }
@@ -123,7 +126,9 @@ export const ExpenseDetails = ({
           {/* Payor Info */}
           <div className="ml-6 mt-4">
             <div>Team: {expenseUserTeams[0]?.team.name}</div>
-            <div>Paid by: {isPaidByUser ? "You" : originalPayor.firstName}</div>
+            <div>
+              Paid by: {isPaidByUser ? "You" : originalPayor.first_name}
+            </div>
           </div>
           {/* Date & Description */}
           <div className="bg-white rounded-xl p-4 m-4">
@@ -150,7 +155,7 @@ export const ExpenseDetails = ({
             <div className="mx-6">
               {borrowers.map((borrowerUT) => (
                 <UserDebt
-                  key={`user-${borrowerUT.userId}`}
+                  key={`user-${borrowerUT.user.id}`}
                   borrowerUT={borrowerUT}
                   user={user}
                   selectedExpense={selectedExpense}

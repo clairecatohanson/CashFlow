@@ -17,7 +17,7 @@ export const Expense = ({
   const [categoryName, setCategoryName] = useState("")
 
   useEffect(() => {
-    if (user.userTeams && expense.id) {
+    if (user.user_teams && expense.id) {
       const splitAmount = calculateShare(expense, user)
       setExpenseAmount(splitAmount)
     }
@@ -26,14 +26,14 @@ export const Expense = ({
   useEffect(() => {
     if (categories.length && expense.id) {
       const expenseCategory = categories.find(
-        (c) => c.id === expense.categoryId
+        (c) => c.id === expense.category.id
       )
       setCategoryName(expenseCategory?.name)
     }
   }, [categories, expense])
 
   const renderNeedsAttentionIcon = (expense) => {
-    if (expense.userId !== user.id && expense.amount > 0) {
+    if (expense.user.id !== user.id && expense.amount > 0) {
       if (!expense.payments.length) {
         return (
           <div className="w-1/12">
@@ -43,8 +43,8 @@ export const Expense = ({
       } else if (expense.payments.length) {
         let paymentSum = 0
         expense.payments.forEach((payment) => (paymentSum += payment.amount))
-        const foundUT = userTeams.find((ut) => ut.teamId === expense.team_Id)
-        if (paymentSum < (expense.amount * foundUT.splitPercent) / 100) {
+        const foundUT = userTeams.find((ut) => ut.team.id === expense.team.id)
+        if (paymentSum < (expense.amount * foundUT.splitFraction) / 100) {
           return (
             <div className="w-1/12">
               <i className="fa-solid fa-magnifying-glass-dollar"></i>

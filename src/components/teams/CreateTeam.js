@@ -19,7 +19,7 @@ export const CreateTeam = ({ user, setUser, getAndSetUserTeams }) => {
     if (newTeam.name) {
       const firstUserTeam = {
         userId: user.id,
-        splitPercent: "",
+        splitFraction: "",
       }
       const utArray = [firstUserTeam]
       setTeamUserTeams(utArray)
@@ -34,14 +34,14 @@ export const CreateTeam = ({ user, setUser, getAndSetUserTeams }) => {
 
     let totalPercent = 0
     tempUtsCopy.forEach((tm) => {
-      const roundedTmPercent = Math.round(tm.splitPercent * 1000) / 1000
+      const roundedTmPercent = Math.round(tm.splitFraction * 1000) / 1000
       totalPercent += roundedTmPercent
     })
     const roundedTotalPercent = Math.round(totalPercent * 1000) / 1000
 
-    if (tempUtsCopy.length === 1 && tempUtsCopy[0].userId === user.id) {
+    if (tempUtsCopy.length === 1 && tempUtsCopy[0].user.id === user.id) {
       window.alert("Error: teams must contain at least two members.")
-    } else if (tempUtsCopy.find((ut) => ut.splitPercent <= 0)) {
+    } else if (tempUtsCopy.find((ut) => ut.splitFraction <= 0)) {
       window.alert(
         "Error: team members must be assigned a percent that is greater than 0."
       )
@@ -49,7 +49,7 @@ export const CreateTeam = ({ user, setUser, getAndSetUserTeams }) => {
       if (roundedTotalPercent === 100) {
         createTeam(newTeam).then((res) => {
           const promises = tempUtsCopy.map((tm) => {
-            tm.teamId = res.id
+            tm.team.id = res.id
             createUserTeam(tm)
           })
           Promise.all(promises).then(() => {

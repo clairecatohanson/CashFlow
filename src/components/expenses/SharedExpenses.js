@@ -21,7 +21,7 @@ export const SharedExpenses = ({
   useEffect(() => {
     if (commonUserTeams.length) {
       const teamIds = []
-      commonUserTeams.forEach((ut) => teamIds.push(ut.teamId))
+      commonUserTeams.forEach((ut) => teamIds.push(ut.team.id))
       const expensePromises = teamIds.map((teamId) => getExpensesByTeam(teamId))
       Promise.all(expensePromises).then((expenseRes) => {
         const sharedTeamExpenses = expenseRes.flat()
@@ -32,7 +32,7 @@ export const SharedExpenses = ({
   }, [commonUserTeams])
 
   const renderNeedsAttentionIcon = (expense) => {
-    if (expense.userId !== user.id && expense.amount > 0) {
+    if (expense.user.id !== user.id && expense.amount > 0) {
       if (!expense.payments.length) {
         return (
           <div className="w-1/12">
@@ -43,9 +43,9 @@ export const SharedExpenses = ({
         let paymentSum = 0
         expense.payments.forEach((payment) => (paymentSum += payment.amount))
         const foundUT = commonUserTeams.find(
-          (ut) => ut.teamId === expense.team_Id
+          (ut) => ut.team.id === expense.team.id
         )
-        if (paymentSum < (expense.amount * foundUT.splitPercent) / 100) {
+        if (paymentSum < (expense.amount * foundUT.splitFraction) / 100) {
           return (
             <div className="w-1/12">
               <i className="fa-solid fa-magnifying-glass-dollar"></i>

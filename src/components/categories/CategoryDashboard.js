@@ -20,10 +20,10 @@ export const CategoryDashboard = ({
     if (selectedCategoryId && dateFilteredExpenses) {
       const categoryExpenses = dateFilteredExpenses.filter(
         (expense) =>
-          parseInt(expense.categoryId) === parseInt(selectedCategoryId)
+          parseInt(expense.category.id) === parseInt(selectedCategoryId)
       )
       const categoryExpensesAll = expenses.filter(
-        (expense) => expense.categoryId === selectedCategoryId
+        (expense) => expense.category.id === selectedCategoryId
       )
       setExpensesByCategory(categoryExpenses)
       setAllExpensesByCategory(categoryExpensesAll)
@@ -69,28 +69,28 @@ export const CategoryDashboard = ({
         return (
           expenseDate.getMonth() === month &&
           expenseDate.getFullYear() === year &&
-          expense.category.groupId !== 4
+          expense.category.group !== 4
         )
       })
 
       filteredByMonth.forEach((expense) => {
-        if (expense.team_Id === personalTeam.teamId) {
+        if (expense.team.id === personalTeam.teamId) {
           spendingByMonth[key] += expense.amount
         } else {
-          const foundUT = userTeams.find((ut) => ut.teamId === expense.team_Id)
-          spendingByMonth[key] += (expense.amount * foundUT.splitPercent) / 100
+          const foundUT = userTeams.find((ut) => ut.team.id === expense.team.id)
+          spendingByMonth[key] += (expense.amount * foundUT.splitFraction) / 100
         }
       })
     }
 
     expensesByCategory.forEach((e) => {
-      if (e.category.groupId !== 4) {
-        if (e.team_Id === personalTeam.teamId) {
+      if (e.category.group !== 4) {
+        if (e.team.id === personalTeam.teamId) {
           spendingByUserTeam.Personal += e.amount
         } else {
-          const foundUT = userTeams.find((ut) => ut.teamId === e.team_Id)
+          const foundUT = userTeams.find((ut) => ut.team.id === e.team.id)
           spendingByUserTeam[foundUT.team.name] +=
-            (e.amount * foundUT.splitPercent) / 100
+            (e.amount * foundUT.splitFraction) / 100
         }
       }
     })

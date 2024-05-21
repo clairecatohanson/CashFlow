@@ -15,7 +15,7 @@ export const TeamMemberItem = ({ ut }) => {
         <div className="">@{ut.user?.username}</div>
         {/* Split Percentage */}
         <div className="bg-orange-300 p-1 rounded-xl w-12 flex justify-center items-center">
-          {ut.splitPercent}%
+          {ut.splitFraction}%
         </div>
       </Link>
     </div>

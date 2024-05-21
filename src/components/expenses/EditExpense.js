@@ -27,14 +27,18 @@ export const EditExpense = ({
   const formHeading = "Edit Expense"
 
   useEffect(() => {
-    getExpenseById(expenseId).then((res) => {
-      setSelectedExpense(res)
-    })
+    if (expenseId) {
+      getExpenseById(expenseId).then((res) => {
+        res.categoryId = res.category.id
+        res.team_Id = res.team.id
+        setSelectedExpense(res)
+      })
+    }
   }, [expenseId])
 
   useEffect(() => {
-    if (personalTeam) {
-      if (personalTeam.teamId === selectedExpense.team_Id) {
+    if (personalTeam.team && selectedExpense.team) {
+      if (personalTeam.team.id === selectedExpense.team.id) {
         setIsShared(false)
       } else {
         setIsShared(true)
@@ -72,13 +76,15 @@ export const EditExpense = ({
       description: selectedExpense.description,
       amount: selectedExpense.amount,
       categoryId: selectedExpense.categoryId,
-      userId: selectedExpense.userId,
       team_Id: selectedExpense.team_Id,
     }
     if (updatedExpense.team_Id) {
       updateExpense(updatedExpense).then(() => {
+        getExpenseById(updatedExpense.id).then((res) => {
+          setSelectedExpense(res)
+        })
         getAndSetUserExpenses()
-        setSelectedExpense(updatedExpenseWithDetails)
+        // setSelectedExpense(updatedExpenseWithDetails)
         navigate("/expenses")
       })
     } else {
