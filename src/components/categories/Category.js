@@ -19,7 +19,7 @@ export const Category = ({ c, categories, setCategories }) => {
   const handleEdit = (category) => {
     setIsEditable(true)
     setInput(category.name)
-    setGroupId(category.groupId)
+    setGroupId(category.group)
   }
 
   const handleDelete = (category) => {
@@ -174,7 +174,7 @@ export const Category = ({ c, categories, setCategories }) => {
         <div className="w-3/5">{c.name}</div>
       )}
       {/* Render Buttons for custom categories only */}
-      {c.userId !== 100 && renderButtons(c)}
+      {c.user !== 100 && renderButtons(c)}
     </li>
   )
 }

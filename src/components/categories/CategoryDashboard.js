@@ -74,7 +74,7 @@ export const CategoryDashboard = ({
       })
 
       filteredByMonth.forEach((expense) => {
-        if (expense.team.id === personalTeam.teamId) {
+        if (expense.team.id === personalTeam.team.id) {
           spendingByMonth[key] += expense.amount
         } else {
           const foundUT = userTeams.find((ut) => ut.team.id === expense.team.id)
@@ -85,7 +85,7 @@ export const CategoryDashboard = ({
 
     expensesByCategory.forEach((e) => {
       if (e.category.group !== 4) {
-        if (e.team.id === personalTeam.teamId) {
+        if (e.team.id === personalTeam.team.id) {
           spendingByUserTeam.Personal += e.amount
         } else {
           const foundUT = userTeams.find((ut) => ut.team.id === e.team.id)
