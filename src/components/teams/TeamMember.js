@@ -47,6 +47,7 @@ export const TeamMember = ({
   }
 
   const handleDelete = (e) => {
+    e.preventDefault()
     if (userTeam.userId === user.id) {
       window.alert(
         "Error: you cannot remove yourself from a team that you are creating or editing."
@@ -110,7 +111,6 @@ export const TeamMember = ({
           <label htmlFor={`userTeam-${userTeam.userId}-percent`}>%</label>
           <input
             type="number"
-            // autoFocus
             id={`userTeam-${userTeam.userId}-percent`}
             className="w-[4.5rem] h-10 text-center outline outline-1 rounded"
             value={percentInput}

@@ -63,7 +63,7 @@ export const SettlePayment = ({
     if (amountRadio === "full-amount") {
       payAmount = payorOwes
     } else if (amountRadio === "custom-amount-radio") {
-      payAmount = parseInt(amountInput)
+      payAmount = parseFloat(amountInput)
     }
 
     const datetime = new Date().toISOString()

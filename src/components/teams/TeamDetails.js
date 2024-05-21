@@ -16,13 +16,15 @@ export const TeamDetails = ({ user }) => {
   const [expensesByDate, setExpensesByDate] = useState([])
 
   useEffect(() => {
-    getUserTeamsByTeam(teamId).then((res) => {
-      setCurrentUserTeams(res)
-    })
+    if (teamId) {
+      getUserTeamsByTeam(teamId).then((res) => {
+        setCurrentUserTeams(res)
+      })
 
-    getExpensesByTeam(teamId).then((res) => {
-      setTeamExpenses(res)
-    })
+      getExpensesByTeam(teamId).then((res) => {
+        setTeamExpenses(res)
+      })
+    }
   }, [teamId])
 
   return (

@@ -49,7 +49,7 @@ export const AddTeamMember = ({
     const utArrayCopy = structuredClone(teamUserTeams)
     const utArrayUserIds = []
     utArrayCopy.forEach((ut) => {
-      utArrayUserIds.push(ut.user.id)
+      utArrayUserIds.push(ut.userId)
     })
     if (!utArrayUserIds.includes(newUserTeam.userId)) {
       utArrayCopy.push(newUserTeam)

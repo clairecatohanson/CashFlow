@@ -7,10 +7,10 @@ export const NetTeamDebts = ({ user, currentUserTeams, teamExpenses }) => {
 
   useEffect(() => {
     const teamDebtDetails = []
-    if (currentUserTeams && teamExpenses && user) {
-      const myUserTeam = currentUserTeams.find((ut) => ut.userId === user.id)
+    if (currentUserTeams?.length && teamExpenses?.length && user.id) {
+      const myUserTeam = currentUserTeams.find((ut) => ut.user.id === user.id)
       const otherUserTeams = currentUserTeams.filter(
-        (ut) => ut.userId !== user.id
+        (ut) => ut.user.id !== user.id
       )
       const expensesPaidByMe = teamExpenses.filter((e) => e.user.id === user.id)
       let sumPaidByMe = 0
@@ -18,7 +18,7 @@ export const NetTeamDebts = ({ user, currentUserTeams, teamExpenses }) => {
 
       otherUserTeams.forEach((otherUT) => {
         const expensesPaidByOther = teamExpenses.filter(
-          (e) => e.user.id === otherUT.userId
+          (e) => e.user.id === otherUT.user.id
         )
 
         let sumPaidByOther = 0
@@ -27,7 +27,7 @@ export const NetTeamDebts = ({ user, currentUserTeams, teamExpenses }) => {
         })
 
         const amountOwedToOther =
-          (sumPaidByOther * myUserTeam?.splitFraction) / 100
+          (sumPaidByOther * myUserTeam.splitFraction) / 100
 
         let paidToOtherByMe = 0
         expensesPaidByOther.forEach((e) => {
@@ -130,7 +130,7 @@ export const NetTeamDebts = ({ user, currentUserTeams, teamExpenses }) => {
             >
               {/* Team User Details */}
               <Link
-                to={`/profile/${debtObj.otherUser.userId}`}
+                to={`/profile/${debtObj.otherUser.user.id}`}
                 className="w-1/2"
               >
                 <div className="flex flex-col space-y-2 items-center">

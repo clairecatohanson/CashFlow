@@ -22,6 +22,10 @@ export const EditTeam = ({ user, setUser, getAndSetUserTeams }) => {
   useEffect(() => {
     if (teamId) {
       getUserTeamsByTeam(teamId).then((res) => {
+        res.forEach((ut) => {
+          ut.userId = ut.user.id
+          ut.teamId = ut.team.id
+        })
         setTeamUserTeams(res)
         setTempUserTeams(res)
         setTeamNameInput(res[0].team.name)
@@ -53,7 +57,7 @@ export const EditTeam = ({ user, setUser, getAndSetUserTeams }) => {
     })
     const roundedTotalPercent = Math.round(totalPercent * 1000) / 1000
 
-    if (tempUtsCopy.length === 1 && tempUtsCopy[0].userId === user.id) {
+    if (tempUtsCopy.length === 1 && tempUtsCopy[0].user.id === user.id) {
       window.alert("Error: teams must contain at least two members.")
     } else if (tempUtsCopy.find((ut) => ut.splitFraction <= 0)) {
       window.alert(
