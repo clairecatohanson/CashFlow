@@ -4,15 +4,6 @@ Welcome to CashFlow! Read the documentation below for a description of the app, 
 
 This UI of this app was built with React / Javascript and styled with tailwindcss. The API was built with Django / Python.
 
-## Deployed Application
-
-Check out the deployed application here: [CashFlow](https://cashflow-6qcmj.ondigitalocean.app)
-
-Login with the credentials below to experience the app with demo data:
-
-* username: demo-mike
-* password: cashflowuser
-
 ## Overview
 
 CashFlow is a user-friendly personal finance web application designed to streamline expense sharing and payment tracking among friends and family. Shared expenses are seamlessly integrated with each user's private personal expenses, ensuring a smooth and hassle-free financial management experience. With CashFlow, users can effortlessly keep track of who owes them money for past expenses or how much they owe their friends, eliminating the risk of overlooking shared expenses. In addition, the web app provides insightful visualization tools that allow users to easily monitor their spending trends over time, empowering them to make informed decisions and gain valuable insights into their financial habits.
@@ -52,7 +43,12 @@ https://www.loom.com/share/a648651109c34a9398d72f8706394102?sid=67b04de3-e8fa-4a
 ### Categories - View Spending Analytics By Category and Customize Spending Categories
 https://www.loom.com/share/94368ac617e84bbe818a480cfed8ca49?sid=e8dfb01d-5458-46c6-86cc-dad58c883292
 
-More features await in the app itself. Check it out as demo-mike to experience all of the features!
+
+
+### Demo Credentials
+
+* username: demo-mike
+* password: cashflowuser
 
 ## Created By
 Claire Hanson
